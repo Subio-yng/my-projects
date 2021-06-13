@@ -9,7 +9,7 @@ bool simple(int n) {
             return false;
         }
     }
-    return true;
+    return n > 1;
 }
 
 int main() {
