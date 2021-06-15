@@ -2,23 +2,21 @@
 #include <algorithm>
 #include <vector>
 
-// Time complexity: O(n * m)
 // Space complexity: O(n * m)
 
 int main() {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
+    const int MAX = 10000000;
     int n, m;
     scanf("%d %d ", &n, &m);
-    std::vector<std::vector<int>> maze(n, std::vector<int>(m));
+    std::vector<std::vector<int>> maze(n, std::vector<int>(m, 0));
     for (int i = 0; i < n; i++) {
         for (int j = 0; j <= m; j++) {
             char temp;
             scanf("%c", &temp);
             if (temp == '@') {
-                maze[i][j] = 10000000;
-            } else if (temp == ' ') {
-                maze[i][j] = 0;
+                maze[i][j] = MAX;
             }
         }
     }
@@ -29,7 +27,7 @@ int main() {
     int xBug = 1, yBug = 1;
     int move = 0, direction = 1;
     while (xBug != m - 2 || yBug != n - 2) {
-        if (move > 10000000) {
+        if (move > MAX) {
             printf("-1");
             return 0;
         }
