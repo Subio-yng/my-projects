@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <algorithm>
+#include <math.h>
 
 // Time complexity: O(1)
 // Space complexity: O(1)
@@ -9,12 +10,6 @@ int main() {
 	freopen("output.txt", "w", stdout);
 	int space, sideTime, cutlets;
 	scanf("%d %d %d", &space, &sideTime, &cutlets);
-	int ans = (cutlets << 1) / space;
-	if ((cutlets << 1) % space > 0) {
-		ans++;
-	}
-	ans = std::max(ans, 2);
-	ans *= sideTime;
-	printf("%d", ans);
+	printf("%d", std::max((cutlets << 1) / space + ((cutlets << 1) % space > 0), 2) * sideTime);
 	return 0;
 }
