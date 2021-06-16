@@ -1,0 +1,2 @@
+The fastest train is "ER-200".
+Its speed is 165 km/h, approximately.
