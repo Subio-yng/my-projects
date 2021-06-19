@@ -19,7 +19,7 @@ int main() {
             printf("%c", str[i % (int) str.length()]);
         }
     } else {
-        n = n * -1 - 1;
+        n = -n - 1;
         std::string root;
         for (int i = 0; i < (int) str.length() >> n; i++) {
             root += str[i];
