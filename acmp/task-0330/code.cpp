@@ -2,7 +2,7 @@
 #include <math.h>
 
 // Time complexity: O(1)
-// Space complexity: o(1)
+// Space complexity: O(1)
 
 int main() {
     int x1, y1;
@@ -10,7 +10,11 @@ int main() {
     int x2, y2;
     scanf("%d %d", &x2, &y2);
     if ((x1 + y1) % 2 == (x2 + y2) % 2) {
-        printf("%d", 1 + (abs(x2 - x1) != abs(y2 - y1)));
+        if (abs(x2 - x1) == abs(y2 - y1)) {
+            printf("1");
+        } else {
+            printf("2");
+        }
     } else {
         printf("0");
     }
