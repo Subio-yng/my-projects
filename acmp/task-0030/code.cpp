@@ -12,6 +12,12 @@ struct Time {
 
     int second;
 
+    static Time read() {
+        Time a;
+        scanf("%d:%d:%d", &a.hour, &a.minute, &a.second);
+        return a;
+    }
+
     bool operator <= (Time a) {
         if (a.hour != this->hour) {
             return this->hour < a.hour;
@@ -26,10 +32,8 @@ struct Time {
 int main() {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
-    Time start;
-    scanf("%d:%d:%d", &start.hour, &start.minute, &start.second);
-    Time end;
-    scanf("%d:%d:%d", &end.hour, &end.minute, &end.second);
+    Time start = Time::read();
+    Time end = Time::read();
     std::vector<int> cnt(10, 0);
     while (start <= end) {
         cnt[start.hour / 10]++;
