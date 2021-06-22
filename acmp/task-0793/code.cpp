@@ -39,8 +39,8 @@ int sumPrime(int n) {
 }
 
 int main() {
-    //freopen("input.txt", "r", stdin);
-    //freopen("output.txt", "w", stdout);
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
     while (true) {
         int num;
         int code = scanf("%d", &num);
