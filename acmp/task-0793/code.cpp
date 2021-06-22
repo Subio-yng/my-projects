@@ -25,7 +25,7 @@ int sumPrime(int n) {
     int sum = 0, temp = n;
     int dev = 2;
     while (n > 1) {
-        if (dev == temp) {
+        if (dev * dev > temp) {
             break;
         }
         if (isPrime(dev) && n % dev == 0) {
