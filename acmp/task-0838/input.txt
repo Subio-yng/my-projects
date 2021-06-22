@@ -1,0 +1,7 @@
+program solution;
+uses
+  sysutils, math;
+begin
+  assign(input, '.in');
+  assign(output, '.out');
+end.
