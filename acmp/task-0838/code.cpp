@@ -30,7 +30,7 @@ int main() {
         }
         if (buf == '+' || buf == '-' ||
             buf == '\'' || buf == '\"' || buf == '='
-            ) {
+        ) {
             sumJoule += SPECIALCHAR;
         }
         if (buf == ' ') {
@@ -45,16 +45,16 @@ int main() {
         if (buf == '[' || buf == ']' ||
             buf == '{' || buf == '}' ||
             buf == '<' || buf == '>'
-            ) {
+        ) {
             sumJoule += BRACKET;
         }
         if (buf >= 'A' && buf <= 'Z') {
-            buf++;
-            sumJoule += (buf - 'A') % 10 + (buf - 'A') / 10 + SHIFT;
+            int val = buf - 'A' + 1;
+            sumJoule += val % 10 + val / 10 + SHIFT;
         }
         if (buf >= 'a' && buf <= 'z') {
-            buf++;
-            sumJoule += (buf - 'a') % 10 + (buf - 'a') / 10;
+            int val = buf - 'a' + 1;
+            sumJoule += val % 10 + val / 10;
         }
         if (buf >= '0' && buf <= '9') {
             sumJoule += NUMBER - (buf - '0');
