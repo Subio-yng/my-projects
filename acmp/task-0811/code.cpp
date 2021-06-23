@@ -6,12 +6,14 @@
 
 struct Coord {
 
-	int y;
+	int i;
 
-	int x;
+	int j;
 
-	Coord(int y, int x) :
-		y(y), x(x) {}
+	Coord(int i, int j)
+		: i(i)
+		, j(j) 
+	{}
 };
 
 int main() {
@@ -53,7 +55,7 @@ int main() {
 	}
 	printf("%d\n", ans.size());
 	for (int i = 0; i < (int) ans.size(); i++) {
-		printf("%d %d\n", ans[i].y, ans[i].x);
+		printf("%d %d\n", ans[i].i, ans[i].j);
 	}
 	return 0;
 }
