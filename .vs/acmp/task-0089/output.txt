@@ -1,2 +1,0 @@
-The fastest train is "Train2".
-Its speed is 39000 km/h, approximately.
