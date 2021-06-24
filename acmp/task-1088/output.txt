@@ -1,0 +1,4 @@
+King
+Queen
+Rook
+Pawn
