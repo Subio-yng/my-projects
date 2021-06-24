@@ -4,18 +4,16 @@
 // Space complexity: O(1)
 
 int main() {
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
     int n;
     scanf("%d", &n);
     int count = 0;
-    while (n != 0) {
+    do {
         int prev = n;
         scanf("%d", &n);
         if (n > prev) {
             count++;
         }
-    }
+    } while (n != 0);
     printf("%d", count);
     return 0;
 }
