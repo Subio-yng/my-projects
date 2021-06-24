@@ -4,17 +4,14 @@
 // Space complexity: O(1)
 
 int main() {
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    int n;
-    scanf("%d", &n);
     int sum = 0;
-    int length = 0;
-    while (n != 0) {
+    int length = -1;
+    int n;
+    do {
+        scanf("%d", &n);
         sum += n;
         length++;
-        scanf("%d", &n);
-    }
+    } while (n != 0);
     printf("%.3f", sum * 1.0 / length);
     return 0;
 }
