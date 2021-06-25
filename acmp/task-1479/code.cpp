@@ -3,17 +3,16 @@
 // Time complexity: O(1)
 // Space complexity: O(1)
 
+long long abs(long long a) {
+    if (a < 0) {
+        return a * -1;
+    }
+    return a;
+}
+
 int main() {
     long long n, div;
     scanf("%lld %lld", &n, &div);
-    long long remnant = n % div;
-    if (remnant < 0) {
-        if (div < 0) {
-            remnant += div * -1;
-        } else {
-            remnant += div;
-        }
-    }
-    printf("%lld", remnant);
+    printf("%lld", (n % div + abs(div)) % div);
     return 0;
 }
