@@ -10,11 +10,7 @@ int main() {
     scanf("%d %d", &x1, &y1);
     int x2, y2;
     scanf("%d %d", &x2, &y2);
-    if ((x2 + 2 == x1 || x2 - 2 == x1) &&
-        (y2 + 1 == y1 || y2 - 1 == y1) ||
-        (y2 + 2 == y1 || y2 - 2 == y1) &&
-        (x2 + 1 == x1 || x2 - 1 == x1)
-    ) {
+    if ((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) == 5) {
         printf("YES");
     } else {
         printf("NO");
