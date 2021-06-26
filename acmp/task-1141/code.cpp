@@ -1,25 +1,25 @@
 #include <stdio.h>
 
-// Time comeplexity: O(n)
+// Time complexity: O(n)
 // Space complexity: O(1)
 
 int main() {
     int cur;
     int prev;
     scanf("%d", &cur);
-    int maxSequence = 1, temp = 1;
+    int maxCount = 1, curCount = 1;
     do {
         prev = cur;
         scanf("%d", &cur);
         if (cur == prev) {
-            temp++;
+            curCount++;
         } else {
-            if (temp > maxSequence) {
-                maxSequence = temp;
+            if (curCount > maxCount) {
+                maxCount = curCount;
             }
-            temp = 1;
+            curCount = 1;
         }
     } while (cur != 0);
-    printf("%d", maxSequence);
+    printf("%d", maxCount);
     return 0;
 }
