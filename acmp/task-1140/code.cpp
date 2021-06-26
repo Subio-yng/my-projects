@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// Time comeplexity: O(cur)
+// Time comeplexity: O(n)
 // Space complexity: O(1)
 
 int main() {
