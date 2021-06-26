@@ -1,18 +1,18 @@
 #include <stdio.h>
 
-// Time comeplexity: O(n)
+// Time comeplexity: O(cur)
 // Space complexity: O(1)
 
 int main() {
-    int n;
+    int cur;
     int prev;
-    scanf("%d", &n);
-    int sum = n;
+    scanf("%d", &cur);
+    int sum = cur;
     do {
-        prev = n;
-        scanf("%d", &n);
-        sum += n;
-    } while (n != 0 || prev != 0);
+        prev = cur;
+        scanf("%d", &cur);
+        sum += cur;
+    } while (cur != 0 || prev != 0);
     printf("%d", sum);
     return 0;
 }
