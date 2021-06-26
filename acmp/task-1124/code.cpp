@@ -10,9 +10,9 @@ int main() {
     scanf("%d %d", &y1, &x1);
     int y2, x2;
     scanf("%d %d", &y2, &x2);
-    if ((y1 == y2 && (x2 - x1 == 1 || x2 - x1 == 2) && x1 > 1) &&
+    if (y1 == y2 && (x2 - x1 == 1 || x2 - x1 == 2) && x1 > 1 &&
         !(x1 != 2 && x2 - x1 == 2)
-        ) {
+    ) {
         printf("YES");
     } else {
         printf("NO");
