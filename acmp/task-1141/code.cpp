@@ -4,14 +4,14 @@
 // Space complexity: O(1)
 
 int main() {
-    int n;
+    int cur;
     int prev;
-    scanf("%d", &n);
+    scanf("%d", &cur);
     int maxSequence = 1, temp = 1;
     do {
-        prev = n;
-        scanf("%d", &n);
-        if (n == prev) {
+        prev = cur;
+        scanf("%d", &cur);
+        if (cur == prev) {
             temp++;
         } else {
             if (temp > maxSequence) {
@@ -19,7 +19,7 @@ int main() {
             }
             temp = 1;
         }
-    } while (n != 0);
+    } while (cur != 0);
     printf("%d", maxSequence);
     return 0;
 }
