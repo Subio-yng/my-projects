@@ -17,17 +17,17 @@ int main() {
         return 0;
     }
     int next = -1;
-    int locMaxCount = 0;
+    int localMaxCount = 0;
     do {
         if (next != -1) {
             prev = cur;
             cur = next;
         }
         scanf("%d", &next);
-        if (next != 0 && cur > prev && cur > next) {
-            locMaxCount++;
+        if (next != 0 && prev < cur && cur > next) {
+            localMaxCount++;
         }
     } while (next != 0);
-    printf("%d", locMaxCount);
+    printf("%d", localMaxCount);
     return 0;
 }
