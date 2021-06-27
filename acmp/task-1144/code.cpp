@@ -17,19 +17,22 @@ int main() {
         return 0;
     }
     int next = -1;
-    int posI = 0, posJ = -1, i = 0;
-    int minDistance = 0;
+    int prevLocalMaxIndex = 0;
+    int curLocalMaxIndex = -1;
+    int minDistance = 0, i = 0;
     do {
         if (next != -1) {
             prev = cur;
             cur = next;
         }
         scanf("%d", &next);
-        if (next != 0 && cur > prev && cur > next) {
-            posI = posJ;
-            posJ = i;
-            if (posI != -1 && (minDistance == 0 || posJ - posI < minDistance)) {
-                minDistance = posJ - posI;
+        if (next != 0 && prev < ñur && cur > next) {
+            prevLocalMaxIndex = curLocalMaxIndex;
+            curLocalMaxIndex = i;
+            if (prevLocalMaxIndex != -1 && 
+                (minDistance == 0 || curLocalMaxIndex - prevLocalMaxIndex < minDistance)
+            ) {
+                minDistance = curLocalMaxIndex - prevLocalMaxIndex;
             }
         }
         i++;
