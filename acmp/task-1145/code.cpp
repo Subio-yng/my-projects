@@ -6,17 +6,16 @@
 
 int main() {
     int n;
-    double s = 0;
     int length = -1;
-    int sum = 0;
+    int sumSquares = 0, sum = 0;
     do {
         length++;
         scanf("%d", &n);
-        s += n;
-        sum += n * n;
+        sum += n;
+        sumSquares += n * n;
     } while (n != 0);
-    double avg = s / length;
-    double ans = sqrt((sum - 2 * s * avg + length * std::pow(avg, 2)) / (length - 1));
+    double avg = sum / length;
+    double ans = sqrt((sumSquares - 2 * sum * avg + length * std::pow(avg, 2)) / (length - 1));
     printf("%.3f", ans);
     return 0;
 }
