@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// Time comeplexity: O(n)
+// Time complexity: O(n)
 // Space complexity: O(1)
 
 int main() {
@@ -17,9 +17,10 @@ int main() {
         return 0;
     }
     int next = -1;
-    int prevLocalMaxIndex = 0;
+    int prevLocalMaxIndex = -1;
     int curLocalMaxIndex = -1;
-    int minDistance = 0, i = 0;
+    int minDistance = 0;
+    int i = 0;
     do {
         if (next != -1) {
             prev = cur;
