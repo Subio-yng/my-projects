@@ -1,29 +1,22 @@
 #include <stdio.h>
-#include <vector>
-#include <math.h>
+#include <cmath>
 
-// Time comeplexity: O(n)
-// Space complexity: O(n)
+// Time complexity: O(n)
+// Space complexity: O(1)
 
 int main() {
     int n;
-    std::vector<int> vec;
     double s = 0;
+    int length = -1;
+    int sum = 0;
     do {
+        length++;
         scanf("%d", &n);
-        if (n != 0) {
-            vec.push_back(n);
-        }
         s += n;
+        sum += n * n;
     } while (n != 0);
-    s /= (int) vec.size();
-    double ans = 0;
-    int i = 0;
-    do {
-        ans += pow(vec[i] * 1.0 - s, 2);
-        i++;
-    } while (i < (int) vec.size());
-    ans = sqrt(ans / ((int) vec.size() - 1));
+    double avg = s / length;
+    double ans = sqrt((sum - 2 * s * avg + length * std::pow(avg, 2)) / (length - 1));
     printf("%.3f", ans);
     return 0;
 }
