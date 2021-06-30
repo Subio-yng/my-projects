@@ -1,22 +1,21 @@
 #include <stdio.h>
 #include <string>
 
-// Time complexity: O(len(part))
-// Space complexity: O(buf)
+// Time complexity: O(len(cipher) * len(part))
+// Space complexity: O(len(cipher) + len(part))
 
 int main() {
-    const int MAXDENOMINATOR = 25;
+    const int ALPHABET_SIZE = 26;
     char buf[1 + 40];
     scanf("%s", &buf);
     std::string cipher(buf);
     scanf("%s", &buf);
     std::string part(buf);
-    bool ans = true;
-    for (int i = 0; i <= MAXDENOMINATOR; i++) {
+    for (int i = 0; i < ALPHABET_SIZE; i++) {
         std::string temp;
         for (int j = 0; j < (int) part.length(); j++) {
             if (part[j] + i > 'Z') {
-                temp += 'A' + part[j] + i - 'Z' - 1;
+                temp += part[j] + i + 'A' - 'Z' - 1;
             } else {
                 temp += part[j] + i;
             }
@@ -29,12 +28,9 @@ int main() {
                     printf("%c", cipher[j] - i);
                 }
             }
-            ans = false;
-            break;
+            return 0;
         }
     }
-    if (ans) {
-        printf("IMPOSSIBLE");
-    }
+    printf("IMPOSSIBLE");
     return 0;
 }
