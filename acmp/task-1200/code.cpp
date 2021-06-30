@@ -7,8 +7,9 @@
 void staff() {
     char buf[1 + 100];
     char end;
-    scanf("%s%c", &buf, &end);
-    if (end != '\n') {
+    scanf("%s", &buf);
+    int code = scanf("%c", &end);
+    if (end != '\n' || code == EOF) {
         staff();
     }
     std::string name(buf);
