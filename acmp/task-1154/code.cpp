@@ -15,7 +15,7 @@ int main() {
         MINIP <= n2 && n2 <= MAXIP &&
         MINIP <= n3 && n3 <= MAXIP &&
         MINIP <= n4 && n4 <= MAXIP
-        ) {
+    ) {
         printf("Good");
     } else {
         printf("Bad");
