@@ -3,11 +3,11 @@
 // Time complexity: O(1)
 // Space complexity: O(1)
 
-const int MAXIP = 255;
-const int MINIP = 0;
+const int MAX_IP = 255;
+const int MIN_IP = 0;
 
 bool isOk(long long n) {
-    return MINIP <= n && n <= MAXIP;
+    return MIN_IP <= n && n <= MAX_IP;
 }
 
 int main() {
