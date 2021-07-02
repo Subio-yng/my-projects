@@ -11,8 +11,8 @@ struct Coord {
 
     int y;
 
-    double Len(int x2, int y2) {
-        return sqrt(pow(x - x2, 2) + pow(y - y2, 2));
+    double len(Coord coord) {
+        return sqrt(pow(x - coord.x, 2) + pow(y - coord.y, 2));
     }
 };
 
@@ -23,21 +23,22 @@ int main() {
     for (int i = 0; i < n; i++) {
         scanf("%d %d", &list[i].x, &list[i].y);
     }
-    double minLenght = INT_MAX;
+    double minLength = INT_MAX;
     int idMinI = 1;
     int idMinJ = 2;
-    double maxLenght = INT_MIN;
+    double maxLength = INT_MIN;
     int idMaxI = 1;
     int idMaxJ = 2;
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
-            if (list[i].Len(list[j].x, list[j].y) > maxLenght) {
-                maxLenght = list[i].Len(list[j].x, list[j].y);
+            double length = list[i].len(list[j].x);
+            if (length > maxLength) {
+                maxLength = length;
                 idMaxI = i + 1;
                 idMaxJ = j + 1;
             }
-            if (list[i].Len(list[j].x, list[j].y) < minLenght) {
-                minLenght = list[i].Len(list[j].x, list[j].y);
+            if (length < minLength) {
+                minLength = length;
                 idMinI = i + 1;
                 idMinJ = j + 1;
             }
