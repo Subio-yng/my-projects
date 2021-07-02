@@ -16,9 +16,9 @@ int main() {
     scanf("%d", &x);
     int ans = list[0];
     for (int i = 1; i < n; i++) {
-        if (abs(x - list[i]) < abs(x - ans)) {
-            ans = list[i];
-        } else if (abs(x - list[i]) == abs(x - ans) && list[i] < ans) {
+        if (abs(x - list[i]) < abs(x - ans) ||
+            abs(x - list[i]) == abs(x - ans) && list[i] < ans
+        ) {
             ans = list[i];
         }
     }
