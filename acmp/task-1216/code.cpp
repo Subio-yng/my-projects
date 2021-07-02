@@ -13,14 +13,16 @@ int main() {
     }
     int left, right;
     scanf("%d %d", &left, &right);
+    left--;
+    right--;
     int max = INT_MIN;
-    int num = 0;
-    for (int i = left - 1; i < right; i++) {
+    int idMax = 0;
+    for (int i = left; i <= right; i++) {
         if (list[i] > max) {
             max = list[i];
-            num = i + 1;
+            idMax = i + 1;
         }
     }
-    printf("%d %d", max, num);
+    printf("%d %d", max, idMax);
     return 0;
 }
