@@ -31,7 +31,7 @@ int main() {
     int idMaxJ = 2;
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
-            double length = list[i].len(list[j].x);
+            double length = list[i].len(list[j]);
             if (length > maxLength) {
                 maxLength = length;
                 idMaxI = i + 1;
