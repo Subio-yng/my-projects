@@ -13,9 +13,13 @@ int main() {
     }
     int left, right;
     scanf("%d %d", &left, &right);
-    std::reverse(line.begin() + left - 1, line.begin() + right);
+    left--;
+    right--;
+    std::reverse(line.begin() + left, line.begin() + right + 1);
     scanf("%d %d", &left, &right);
-    std::reverse(line.begin() + left - 1, line.begin() + right);
+    left--;
+    right--;
+    std::reverse(line.begin() + left, line.begin() + right + 1);
     for (int i = 0; i < n; i++) {
         printf("%d ", line[i]);
     }
