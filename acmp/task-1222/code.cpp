@@ -1,13 +1,11 @@
 #include <stdio.h>
-#include <vector>
+#include <map>
 #include <string>
 
-// Time complexity: O(n * inquiries)
+// Time complexity: O(n)
 // Space complexity: O(n)
 
 struct Subscriber {
-
-	int phoneNumber;
 
 	std::string name;
 
@@ -17,24 +15,20 @@ struct Subscriber {
 int main() {
 	int n, inquiries;
 	scanf("%d %d", &n, &inquiries);
-	std::vector<Subscriber> directory(n);
+	std::map<int, Subscriber> directory;
 	for (int i = 0; i < n; i++) {
-		scanf("%d", &directory[i].phoneNumber);
+		int phoneNumber;
+		scanf("%d", &phoneNumber);
 		char buf[1 + 100];
 		scanf(" %[^\n]s", &buf);
-		directory[i].name = buf;
+		directory[phoneNumber].name = buf;
 		scanf(" %[^\n]s", &buf);
-		directory[i].address = buf;
+		directory[phoneNumber].address = buf;
 	}
 	for (int i = 0; i < inquiries; i++) {
-		int number;
-		scanf("%d", &number);
-		for (int j = 0; j < n; j++) {
-			if (directory[j].phoneNumber == number) {
-				printf("%s (%s)\n", directory[j].name.c_str(), directory[j].address.c_str());
-				break;
-			}
-		}
+		int phoneNumber;
+		scanf("%d", &phoneNumber);
+		printf("%s (%s)\n", directory[phoneNumber].name.c_str(), directory[phoneNumber].address.c_str());
 	}
 	return 0;
 }
