@@ -2,7 +2,7 @@
 #include <map>
 #include <string>
 
-// Time complexity: O(n)
+// Time complexity: O(n * log(n) + m * log(n))
 // Space complexity: O(n)
 
 struct Subscriber {
