@@ -20,7 +20,7 @@ int main() {
 	if (side(n1, n2) + side(n1, n3) == side(n2, n3) ||
 		side(n2, n3) + side(n2, n1) == side(n1, n3) ||
 		side(n3, n1) + side(n3, n2) == side(n1, n2)
-		) {
+	) {
 		printf("Yes");
 	} else {
 		printf("No");
