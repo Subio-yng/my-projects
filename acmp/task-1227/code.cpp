@@ -7,11 +7,11 @@ long long getF(int n) {
 	if (n <= 1) {
 		return 1;
 	}
-	return n * F(n - 1);
+	return n * getF(n - 1);
 }
 
 long long getC(int n, int k) {
-	return F(n) / (F(k) * F(n - k));
+	return getF(n) / (getF(k) * getF(n - k));
 }
 
 int main() {
