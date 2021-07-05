@@ -8,6 +8,12 @@ struct Point {
 	int x;
 
 	int y;
+
+	static Point read() {
+		Point a;
+		scanf("%d %d", &a.x, &a.y);
+		return a;
+	}
 };
 
 int side(Point a, Point b) {
@@ -15,8 +21,9 @@ int side(Point a, Point b) {
 }
 
 int main() {
-	Point n1, n2, n3;
-	scanf("%d %d %d %d %d %d", &n1.x, &n1.y, &n2.x, &n2.y, &n3.x, &n3.y);
+	Point n1 = Point::read();
+	Point n2 = Point::read();
+	Point n3 = Point::read();
 	if (side(n1, n2) + side(n1, n3) == side(n2, n3) ||
 		side(n2, n3) + side(n2, n1) == side(n1, n3) ||
 		side(n3, n1) + side(n3, n2) == side(n1, n2)
