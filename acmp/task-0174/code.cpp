@@ -20,8 +20,9 @@ int main() {
 				minId = i;
 			}
 		}
-		if ((maxMoney + spouses[minId]) / 2.0 > maxMoney) {
-			maxMoney = (maxMoney + spouses[minId]) / 2.0;
+		double profit = (maxMoney + spouses[minId]) / 2.0;
+		if (profit > maxMoney) {
+			maxMoney = profit;
 		}
 		n--;
 		std::swap(spouses[minId], spouses[n]);
