@@ -16,7 +16,6 @@ struct Enrollee {
 int main() {
     int n, places;
     scanf("%d %d", &n, &places);
-    places--;
     std::vector<Enrollee> list(n);
     for (int i = 0; i < n; i++) {
         char buf[1 + 10];
@@ -31,6 +30,6 @@ int main() {
         }
         return left.name > right.name;
     });
-    printf("%s %d", list[places].name.c_str(), list[places].sumScore);
+    printf("%s %d", list[places - 1].name.c_str(), list[places - 1].sumScore);
     return 0;
 }
