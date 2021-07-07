@@ -1,37 +1,36 @@
 #include <stdio.h>
 #include <string>
 
-// Time complexity: O(n)
+// Time complexity: O(fileSize)
 // Space complexity: O(buf)
 
 int main() {
-    const std::string name = "Fedya";
-    int hour, minute, second;
+    const int N_USERS = 2;
+    const std::string name1 = "Fedya";
     char buf[1 + 250];
-    scanf("%d:%d:%d: %s signed on", &hour, &minute, &second, &buf);
-    std::string nameInterlocutor(buf);
-    int n = 1;
-    while (true) {
-        int hour, minute, second;
-        scanf("%d:%d:%d: ", &hour, &minute, &second);
-        char buf[1 + 250];
-        scanf("%[^\n]s", &buf);
-        std::string phrase(buf);
-        if (phrase == nameInterlocutor + " signed off") {
-            break;
-        }
-        if (phrase.back() == '.') {
-            phrase.back() = ',';
-        } else if (phrase.back() != '!' && phrase.back() != '?') {
-            phrase += ',';
-        }
-        printf("\"%s\" --- skazal ", phrase.c_str());
-        if (n % 2 == 0) {
-            printf("%s.\n", nameInterlocutor.c_str());
+    scanf("%*d:%*d:%*d: %s signed on", &buf);
+    std::string name2(buf);
+    int curUser = 0;
+    bool first = true;
+    while (first) {
+        scanf("%*d:%*d:%*d: %[^\n]s", &buf);
+        std::string terminatePhrase(buf);
+        if (terminatePhrase == name2 + " signed off") {
+            first = !first;
         } else {
-            printf("%s.\n", name.c_str());
+            if (terminatePhrase.back() == '.') {
+                terminatePhrase.back() = ',';
+            } else if (terminatePhrase.back() != '!' && terminatePhrase.back() != '?') {
+                terminatePhrase += ',';
+            }
+            printf("\"%s\" --- skazal ", terminatePhrase.c_str());
+            if (curUser % 2 == 0) {
+                printf("%s.\n", name1.c_str());
+            } else {
+                printf("%s.\n", name2.c_str());
+            }
+            curUser = N_USERS - 1 - curUser;
         }
-        n++;
     }
     return 0;
 }
