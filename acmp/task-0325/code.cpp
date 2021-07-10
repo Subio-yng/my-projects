@@ -5,43 +5,47 @@
 
 struct Coord {
 
-    int x;
+    int i;
 
-    int y;
+    int j;
 
     static Coord read() {
-        char x1, y1;
-        scanf("%c%c", &x1, &y1);
+        char i1, j1;
+        scanf("%c%c", &i1, &j1);
         Coord a;
-        a.x = x1 - 'a' + 1;
-        a.y = y1 - '0';
+        a.i = i1 - 'a' + 1;
+        a.j = j1 - '0';
         return a;
     }
 };
 
-bool moveKnight(int x1, int y1, int x2, int y2) {
-    return 1 <= x1 && x1 <= 8 &&
-        1 <= y1 && y1 <= 8 &&
-        (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) == 5;
+bool isCorrectMove(int i, int j) {
+    return 1 <= i && i <= 8 &&
+        1 <= j && j <= 8;
+}
+
+bool moveKnight(int i1, int j1, int i2, int j2) {
+    return isCorrectMove(i1, j1) &&
+        (i1 - i2) * (i1 - i2) + (j1 - j2) * (j1 - j2) == 5;
 }
 
 int main() {
     Coord start = Coord::read();
     scanf(", ");
     Coord end = Coord::read();
-    if (moveKnight(start.x, start.y, end.x, end.y)) {
+    if (moveKnight(start.i, start.j, end.i, end.j)) {
         printf("1");
-    } else if (moveKnight(start.x - 1, start.y - 2, end.x, end.y) ||
-               moveKnight(start.x - 1, start.y + 2, end.x, end.y) ||
-               moveKnight(start.x + 1, start.y - 2, end.x, end.y) ||
-               moveKnight(start.x + 1, start.y + 2, end.x, end.y) ||
-               moveKnight(start.x - 2, start.y + 1, end.x, end.y) ||
-               moveKnight(start.x + 2, start.y + 1, end.x, end.y) ||
-               moveKnight(start.x + 2, start.y - 1, end.x, end.y) ||
-               moveKnight(start.x - 2, start.y - 1, end.x, end.y)
-               ) {
-        printf("2");
     } else {
+        for (int i = 1; i <= 2; i++) {
+            if (moveKnight(start.i - i, start.j - (3 - i), end.i, end.j) ||
+                moveKnight(start.i + i, start.j - (3 - i), end.i, end.j) ||
+                moveKnight(start.i + i, start.j + (3 - i), end.i, end.j) ||
+                moveKnight(start.i - i, start.j + (3 - i), end.i, end.j)
+            ) {
+                printf("2");
+                return 0;
+            }
+        }
         printf("NO");
     }
     return 0;
