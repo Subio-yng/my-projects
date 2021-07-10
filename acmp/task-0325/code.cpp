@@ -36,14 +36,14 @@ int main() {
     if (moveKnight(start.i, start.j, end.i, end.j)) {
         printf("1");
     } else {
-        for (int i = 1; i <= 2; i++) {
-            if (moveKnight(start.i - i, start.j - (3 - i), end.i, end.j) ||
-                moveKnight(start.i + i, start.j - (3 - i), end.i, end.j) ||
-                moveKnight(start.i + i, start.j + (3 - i), end.i, end.j) ||
-                moveKnight(start.i - i, start.j + (3 - i), end.i, end.j)
-            ) {
-                printf("2");
-                return 0;
+        for (int di = -2; di <= 2; di++) {
+            for (int dj = -2; dj <= 2; dj++) {
+                if (di * di + dj * dj == 5 &&
+                    moveKnight(start.i + di, start.j + dj, end.i, end.j)
+                ) {
+                    printf("2");
+                    return 0;
+                }
             }
         }
         printf("NO");
