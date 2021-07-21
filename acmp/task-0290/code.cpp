@@ -29,7 +29,7 @@ int main() {
                 for (int l = 0; l < m1; l++) {
                     if (k + i >= n2 || l + j >= m2 ||
                         base[k][l] == '#' && territory[k + i][l + j] == '.'
-                        ) {
+                    ) {
                         ans = false;
                         break;
                     }
