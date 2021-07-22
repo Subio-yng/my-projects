@@ -1,41 +1,38 @@
 #include <stdio.h>
 #include <vector>
 
-// Time complexity: O(n1 * m1 * n2 * m2)
-// Space complexity: O(n * m)
+// Time complexity: O(sizeBase * sizeMap)
+// Space complexity: O(sizeMap)
 
 int main() {
-    int n1, m1;
-    scanf("%d %d", &n1, &m1);
-    std::vector<std::vector<char>> base(n1, std::vector<char>(m1));
-    for (int i = 0; i < n1; i++) {
-        for (int j = 0; j < m1; j++) {
+    int sizeBaseI, sizeBaseJ;
+    scanf("%d %d", &sizeBaseI, &sizeBaseJ);
+    std::vector<std::vector<char>> base(sizeBaseI, std::vector<char>(sizeBaseJ));
+    for (int i = 0; i < sizeBaseI; i++) {
+        for (int j = 0; j < sizeBaseJ; j++) {
             scanf(" %c", &base[i][j]);
         }
     }
-    int n2, m2;
-    scanf(" %d %d", &n2, &m2);
-    std::vector<std::vector<char>> territory(n2, std::vector<char>(m2));
-    for (int i = 0; i < n2; i++) {
-        for (int j = 0; j < m2; j++) {
-            scanf(" %c", &territory[i][j]);
+    int sizeMapI, sizeMapJ;
+    scanf("%d %d", &sizeMapI, &sizeMapJ);
+    std::vector<std::vector<char>> map(sizeMapI, std::vector<char>(sizeMapJ));
+    for (int i = 0; i < sizeMapI; i++) {
+        for (int j = 0; j < sizeMapJ; j++) {
+            scanf(" %c", &map[i][j]);
         }
     }
     int count = 0;
-    for (int i = 0; i < n2; i++) {
-        for (int j = 0; j < m2; j++) {
+    for (int iMap = 0; iMap + sizeBaseI <= sizeMapI; iMap++) {
+        for (int jMap = 0; jMap + sizeBaseJ <= sizeMapJ; jMap++) {
             bool ans = true;
-            for (int k = 0; k < n1; k++) {
-                for (int l = 0; l < m1; l++) {
-                    if (k + i >= n2 || l + j >= m2 ||
-                        base[k][l] == '#' && territory[k + i][l + j] == '.'
+            for (int iBase = 0; iBase < sizeBaseI && ans; iBase++) {
+                for (int jBase = 0; jBase < sizeBaseJ; jBase++) {
+                    if (base[iBase][jBase] == '#' &&
+                        map[iBase + iMap][jBase + jMap] == '.'
                     ) {
                         ans = false;
                         break;
                     }
-                }
-                if (!ans) {
-                    break;
                 }
             }
             if (ans) {
