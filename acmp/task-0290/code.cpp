@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <vector>
 
-// Time complexity: O(sizeBase * sizeMap)
-// Space complexity: O(sizeMap)
+// Time complexity: O(sizeBaseI * sizeBaseJ * sizeMapI * sizeMapJ)
+// Space complexity: O(sizeMapI * sizeMapJ)
 
 int main() {
     int sizeBaseI, sizeBaseJ;
