@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// Time complexity: O(n * log(n))
+// Time complexity: O(n * sqrt(n))
 // Space complexity: O(1)
 
 bool isPrime(int n) {
