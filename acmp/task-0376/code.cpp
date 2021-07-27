@@ -6,34 +6,42 @@
 int main() {
     int endDay, endMonth;
     scanf("%d %d", &endDay, &endMonth);
-    int startDay, startMonth;
-    scanf("%d %d", &startDay, &startMonth);
-    int year;
-    scanf("%d", &year);
+    int curDay, curMonth;
+    scanf("%d %d", &curDay, &curMonth);
+    int curYear;
+    scanf("%d", &curYear);
     int days = 0;
-    while (startDay != endDay || startMonth != endMonth) {
-        startDay++;
-        if ((startMonth == 4 || startMonth == 6 ||
-             startMonth == 9 || startMonth == 11) &&
-            startDay == 31 || startDay == 32
-            ) {
-            startDay = 1;
-            startMonth++;
-        } else if (startMonth == 2) {
-            if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
-                if (startDay == 30) {
-                    startDay = 1;
-                    startMonth++;
-                }
-            } else if (startDay == 29) {
-                startDay = 1;
-                startMonth++;
+    int daysInFebruary;
+    if (curYear % 4 == 0 && curYear % 100 != 0 || curYear % 400 == 0) {
+        daysInFebruary = 29;
+    } else {
+        daysInFebruary = 28;
+    }
+    while (curDay != endDay || curMonth != endMonth) {
+        int daysInMonth;
+        if (curMonth == 2) {
+            daysInMonth = daysInFebruary;
+        } else if (curMonth == 4 || curMonth == 6 ||
+                   curMonth == 9 || curMonth == 11
+                   ) {
+            daysInMonth = 30;
+        } else {
+            daysInMonth = 31;
+        }
+        if (curDay == daysInMonth) {
+            curDay = 0;
+            curMonth++;
+        }
+        if (curMonth == 13) {
+            curMonth = 1;
+            curYear++;
+            if (curYear % 4 == 0 && curYear % 100 != 0 || curYear % 400 == 0) {
+                daysInFebruary = 29;
+            } else {
+                daysInFebruary = 28;
             }
         }
-        if (startMonth == 13) {
-            startMonth = 1;
-            year++;
-        }
+        curDay++;
         days++;
     }
     printf("%d", days);
