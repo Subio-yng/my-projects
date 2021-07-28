@@ -1,0 +1,4 @@
+Ping statistics for 209.85.135.147:
+Packets: Sent = 4 Received = 3 Lost = 1 (25% loss)
+Approximate round trip times:
+Minimum = 100 Maximum = 300 Average = 200
