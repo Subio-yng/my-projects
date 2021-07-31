@@ -4,10 +4,11 @@
 // Space complexity: O(1)
 
 int main() {
+    const int MAX_TEMPERATURE = 200;
     int n;
     scanf("%d", &n);
-    int cnt[201];
-    for (int i = 0; i < 201; i++) {
+    int cnt[MAX_TEMPERATURE + 1];
+    for (int i = 0; i <= MAX_TEMPERATURE; i++) {
         cnt[i] = 0;
     }
     for (int i = 0; i < n; i++) {
@@ -15,9 +16,9 @@ int main() {
         scanf("%d", &val);
         cnt[val + 100]++;
     }
-    for (int i = 0; i < 201; i++) {
-        for (int k = 0; k < cnt[i]; k++) {
-            printf("%d ", i - 100);
+    for (int iNum = 0; iNum <= MAX_TEMPERATURE; iNum++) {
+        for (int iCount = 0; iCount < cnt[iNum]; iCount++) {
+            printf("%d ", iNum - 100);
         }
     }
     return 0;
