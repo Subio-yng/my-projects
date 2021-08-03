@@ -25,7 +25,7 @@ int main() {
     while (curDate.day != endDate.day ||
            curDate.month != endDate.month ||
            curDate.year != endDate.year
-        ) {
+    ) {
         int daysInFebruary;
         if (curDate.year % 4 == 0 && curDate.year % 100 != 0 ||
             curDate.year % 400 == 0
