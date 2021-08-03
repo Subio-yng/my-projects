@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// Time complexity: O(curRobots * years)
+// Time complexity: O(years)
 // Space complexity: O(1)
 
 int main() {
