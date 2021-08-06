@@ -11,12 +11,12 @@ int main() {
     scanf("%s", &buf);
     std::string str(buf);
     int maxLen = 0;
-    std::vector<int> words(ALPHABET_SIZE, -1);
+    std::vector<int> firstPos(ALPHABET_SIZE, -1);
     for (int i = 0; i < (int) str.length(); i++) {
-        if (words[str[i] - 'a'] == -1) {
-            words[str[i] - 'a'] = i;
-        } else if (i - words[str[i] - 'a'] > maxLen) {
-            maxLen = i - words[str[i] - 'a'];
+        if (firstPos[str[i] - 'a'] == -1) {
+            firstPos[str[i] - 'a'] = i;
+        } else if (i - firstPos[str[i] - 'a'] > maxLen) {
+            maxLen = i - firstPos[str[i] - 'a'];
         }
     }
     printf("%d", maxLen);
