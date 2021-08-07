@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <vector>
-#include <algorithm>
 
-// Time complexity: O(n * log(n))
+// Time complexity: O(n)
 // Space complexity: O(n)
 
 int main() {
@@ -17,7 +16,7 @@ int main() {
     for (int i = 1; i < n - 1; i++) {
         if (list[i] % 10 == 5 && list[i + 1] < list[i] &&
             maxScoreId < i && list[i] > score
-        ) {
+            ) {
             score = list[i];
         }
         if (list[i] > list[maxScoreId]) {
@@ -28,13 +27,13 @@ int main() {
     if (score == 0) {
         printf("0");
     } else {
-        std::sort(list.rbegin(), list.rend());
+        int place = 1;
         for (int i = 0; i < n; i++) {
-            if (list[i] == score) {
-                printf("%d", i + 1);
-                break;
+            if (list[i] > score) {
+                place++;
             }
         }
+        printf("%d", place);
     }
     return 0;
 }
