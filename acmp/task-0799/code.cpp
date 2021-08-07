@@ -16,7 +16,7 @@ int main() {
     for (int i = 1; i < n - 1; i++) {
         if (list[i] % 10 == 5 && list[i + 1] < list[i] &&
             maxScoreId < i && list[i] > score
-            ) {
+        ) {
             score = list[i];
         }
         if (list[i] > list[maxScoreId]) {
