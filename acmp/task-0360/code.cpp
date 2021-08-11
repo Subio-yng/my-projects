@@ -61,32 +61,20 @@ int main() {
                 maxSum = std::max(maxSum, table[i][j] + table[i][j + 1] + table[i][j + 2]);
             }
             // triangles left_up
-            if (i > 0 && j > 0 && table[i - 1][j] > table[i][j - 1]) {
+            if (i > 0 && j > 0) {
                 maxSum = std::max(maxSum, table[i][j] + table[i - 1][j] + table[i - 1][j - 1]);
             }
-            if (i > 0 && j > 0 && table[i][j - 1] > table[i - 1][j]) {
-                maxSum = std::max(maxSum, table[i][j] + table[i][j - j] + table[i - 1][j - 1]);
-            }
             // triangles right_up
-            if (i > 0 && j + 1 < n && table[i - 1][j] > table[i][j + 1]) {
-                maxSum = std::max(maxSum, table[i][j] + table[i - 1][j] + table[i - 1][j + 1]);
-            }
-            if (i > 0 && j + 1 < n && table[i][j + 1] > table[i - 1][j]) {
+            if (i > 0 && j + 1 < n) {
                 maxSum = std::max(maxSum, table[i][j] + table[i][j + 1] + table[i - 1][j + 1]);
             }
             // triangles left_down
-            if (i + 1 < n && j > 0 && table[i][j - 1] > table[i + 1][j]) {
+            if (i + 1 < n && j > 0) {
                 maxSum = std::max(maxSum, table[i][j] + table[i][j - 1] + table[i + 1][j - 1]);
             }
-            if (i + 1 < n && j > 0 && table[i + 1][j] > table[i][j - 1]) {
-                maxSum = std::max(maxSum, table[i][j] + table[i + 1][j] + table[i + 1][j - 1]);
-            }
             // triangles right_down
-            if (i + 1 < n && j + 1 < n && table[i + 1][j] > table[i][j + 1]) {
+            if (i + 1 < n && j + 1 < n) {
                 maxSum = std::max(maxSum, table[i][j] + table[i + 1][j] + table[i + 1][j + 1]);
-            }
-            if (i + 1 < n && j + 1 < n && table[i][j + 1] > table[i + 1][j]) {
-                maxSum = std::max(maxSum, table[i][j] + table[i][j + 1] + table[i + 1][j + 1]);
             }
         }
     }
