@@ -4,18 +4,16 @@
 // Space complexity: O(1)
 
 int main() {
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
 	int n;
 	scanf("%d", &n);
-	int ans = 0;
-	for (int a = 1; a < n; a++) {
-		for (int b = a; b < n; b++) {
-            if (n - a - b >= b << 1) {
-                ans += (n - a - b >> 1) - b + 1;
-			}
+	int count = 0;
+	for (int a = 1; a * 4 <= n; a++) {
+		for (int b = a; a + b * 3 <= n; b++) {
+			int minC = b;
+			int maxC = (n - a - b) / 2;
+			count += maxC - minC + 1;
 		}
 	}
-	printf("%d", ans);
+	printf("%d", count);
 	return 0;
 }
