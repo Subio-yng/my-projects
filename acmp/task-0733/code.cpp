@@ -11,24 +11,24 @@ int main() {
     for (int i = 0; i < n; i++) {
         scanf("%d", &sequence[i]);
     }
-    std::vector<int> leftId = {0};
-    for (int i = 1; i < n - 1; i++) {
-        if (sequence[leftId.back()] <= sequence[i]) {
-            leftId.push_back(i);
+    std::vector<int> left = {sequence[0]};
+    for (int i = 1; i < n; i++) {
+        if (left.back() <= sequence[i]) {
+            left.push_back(sequence[i]);
         }
     }
-    std::vector<int> rightId;
-    for (int i = n - 1; i > leftId.back(); i--) {
-        if (i == n - 1 || sequence[rightId.back()] <= sequence[i]) {
-            rightId.push_back(i);
+    std::vector<int> right;
+    for (int i = n - 1; sequence[i] < left.back(); i--) {
+        if (i == n - 1 || right.back() <= sequence[i]) {
+            right.push_back(sequence[i]);
         }
     }
-    printf("%d\n", leftId.size() + rightId.size());
-    for (int i = 0; i < (int) leftId.size(); i++) {
-        printf("%d ", sequence[leftId[i]]);
+    printf("%d\n", left.size() + right.size());
+    for (int i = 0; i < (int) left.size(); i++) {
+        printf("%d ", left[i]);
     }
-    for (int i = (int) rightId.size() - 1; i >= 0; i--) {
-        printf("%d ", sequence[rightId[i]]);
+    for (int i = (int) right.size() - 1; i >= 0; i--) {
+        printf("%d ", right[i]);
     }
     return 0;
 }
