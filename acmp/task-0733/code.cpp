@@ -1,39 +1,39 @@
 #include <stdio.h>
 #include <vector>
 
-// Time complexity: O(n^2)
+// Time complexity: O(n)
 // Space complexity: O(n)
 
 int main() {
+    const int INF = 1000001;
     int n;
     scanf("%d", &n);
-    std::vector<int> sequence(n);
-    for (int i = 0; i < n; i++) {
+    std::vector<int> sequence(n + 2, INF);
+    for (int i = 1; i <= n; i++) {
         scanf("%d", &sequence[i]);
     }
-    for (int i = 0; i < (int) sequence.size(); i++) {
-        bool left = false;
-        for (int j = i - 1; j >= 0; j--) {
-            if (sequence[j] > sequence[i]) {
-                left = true;
-                break;
-            }
+    std::vector<int> st(1, 0);
+    std::vector<int> listIdRightMax(n, -1);
+    for (int i = 1; i <= n; i++) {
+        while (sequence[st.back()] < sequence[i]) {
+            listIdRightMax[st.back() - 1] = i;
+            st.pop_back();
         }
-        bool right = false;
-        for (int j = i + 1; j < (int) sequence.size(); j++) {
-            if (sequence[j] > sequence[i]) {
-                right = true;
-                break;
+        st.push_back(i);
+    }
+    std::vector<int> ans = {sequence[1]};
+    int leftMax = sequence[1];
+    for (int i = 2; i <= n; i++) {
+        if (listIdRightMax[i - 1] == -1 || leftMax <= sequence[i]) {
+            ans.push_back(sequence[i]);
+            if (leftMax < sequence[i]) {
+                leftMax = sequence[i];
             }
-        }
-        if (right && left) {
-            sequence.erase(sequence.begin() + i);
-            i--;
         }
     }
-    printf("%d\n", sequence.size());
-    for (int i = 0; i < (int) sequence.size(); i++) {
-        printf("%d ", sequence[i]);
+    printf("%d\n", ans.size());
+    for (int i = 0; i < (int) ans.size(); i++) {
+        printf("%d ", ans[i]);
     }
     return 0;
 }
