@@ -11,9 +11,9 @@ int main() {
     for (int i = 0; i < n; i++) {
         scanf("%d", &sequence[i]);
     }
-    std::vector<int> left = {sequence[0]};
-    for (int i = 1; i < n; i++) {
-        if (left.back() <= sequence[i]) {
+    std::vector<int> left;
+    for (int i = 0; i < n; i++) {
+        if (i == 0 || left.back() <= sequence[i]) {
             left.push_back(sequence[i]);
         }
     }
