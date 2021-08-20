@@ -5,35 +5,30 @@
 // Space complexity: O(n)
 
 int main() {
-    const int INF = 1000001;
     int n;
     scanf("%d", &n);
-    std::vector<int> sequence(n + 2, INF);
-    for (int i = 1; i <= n; i++) {
+    std::vector<int> sequence(n);
+    for (int i = 0; i < n; i++) {
         scanf("%d", &sequence[i]);
     }
-    std::vector<int> st(1, 0);
-    std::vector<int> listIdRightMax(n, -1);
-    for (int i = 1; i <= n; i++) {
-        while (sequence[st.back()] < sequence[i]) {
-            listIdRightMax[st.back() - 1] = i;
-            st.pop_back();
-        }
-        st.push_back(i);
-    }
-    std::vector<int> ans = {sequence[1]};
-    int leftMax = sequence[1];
-    for (int i = 2; i <= n; i++) {
-        if (listIdRightMax[i - 1] == -1 || leftMax <= sequence[i]) {
-            ans.push_back(sequence[i]);
-            if (leftMax < sequence[i]) {
-                leftMax = sequence[i];
-            }
+    std::vector<int> leftId = {0};
+    for (int i = 1; i < n - 1; i++) {
+        if (sequence[leftId.back()] <= sequence[i]) {
+            leftId.push_back(i);
         }
     }
-    printf("%d\n", ans.size());
-    for (int i = 0; i < (int) ans.size(); i++) {
-        printf("%d ", ans[i]);
+    std::vector<int> rightId;
+    for (int i = n - 1; i > leftId.back(); i--) {
+        if (i == n - 1 || sequence[rightId.back()] <= sequence[i]) {
+            rightId.push_back(i);
+        }
+    }
+    printf("%d\n", leftId.size() + rightId.size());
+    for (int i = 0; i < (int) leftId.size(); i++) {
+        printf("%d ", sequence[leftId[i]]);
+    }
+    for (int i = (int) rightId.size() - 1; i >= 0; i--) {
+        printf("%d ", sequence[rightId[i]]);
     }
     return 0;
 }
