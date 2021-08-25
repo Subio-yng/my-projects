@@ -6,8 +6,9 @@
 // Space complexity: O(len)
 
 std::vector<int> getPrefixFunction(std::string sample) {
-    std::vector<int> p((int) sample.size(), 0);
-    for (int i = 1; i < sample.length(); i++) {
+    int len = (int) sample.length();
+    std::vector<int> p(len, 0);
+    for (int i = 1; i < len; i++) {
         int prev = p[i - 1];
         while (prev > 0 && sample[i] != sample[prev]) {
             prev = p[prev - 1];
