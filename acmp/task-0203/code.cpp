@@ -1,26 +1,46 @@
 #include <stdio.h>
+#include <vector>
 #include <string>
-#include <algorithm>
 
-// Time complexity: O(len(n)^2)
+// Time complexity: O(len(str))
 // Space complexity: O(buf)
 
+std::vector<int> getPrefixFunction(std::string sample) {
+	std::vector<int> p((int) sample.size(), 0);
+	for (int i = 1; i < sample.length(); i++) {
+		int prev = p[i - 1];
+		while (prev > 0 && sample[i] != sample[prev]) {
+			prev = p[prev - 1];
+		}
+		if (sample[i] == sample[prev]) {
+			prev++;
+		}
+		p[i] = prev;
+	}
+	return p;
+}
+
 int main() {
-    char buf[1 + 10000];
-    scanf("%s", &buf);
-    std::string str1(buf);
-    scanf(" %s", &buf);
-    std::string str2(buf);
-    for (int i = 0; i < (int) str2.length(); i++) {
-        if (str2 == str1) {
-            printf("%d", i);
-            return 0;
-        }
-        str2.push_back(str2[0]);
-        std::reverse(str2.begin(), str2.end());
-        str2.pop_back();
-        std::reverse(str2.begin(), str2.end());
-    }
-    printf("-1");
-    return 0;
+	char buf[1 + 10000];
+	scanf("%s", &buf);
+	std::vector<int> pStr1 = getPrefixFunction(buf);
+	std::string str1(buf);
+	scanf("%s", &buf);
+	std::string str2(buf);
+	str2 += str2;
+	int j = 0;
+	for (int i = 0; i < (int) str2.length(); i++) {
+		if (str1[j] == str2[i]) {
+			j++;
+			if (j == (int) str1.length()) {
+				printf("%d", i - j + 1);
+				return 0;
+			}
+		} else if (j != 0) {
+			j = pStr1[j - 1];
+			i--;
+		}
+	}
+	printf("-1");
+	return 0;
 }
