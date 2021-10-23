@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <algorithm>
 
-// Time complexity: O(log(kind1))
+// Time complexity: O(log(max(kind1, kind2)))
 // Space complexity: O(1)
 
 int main() {
@@ -9,11 +9,10 @@ int main() {
     scanf("%d", &n);
     long long kind1, kind2;
     scanf("%lld %lld", &kind1, &kind2);
-    if (kind2 > kind1) {
-        std::swap(kind1, kind2);
-    }
     while (kind1 != kind2) {
-        kind1 /= 2;
+        if (kind1 > kind2) {
+            kind1 /= 2;
+        }
         if (kind1 < kind2) {
             kind2 /= 2;
         }
