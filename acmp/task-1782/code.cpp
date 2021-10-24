@@ -6,7 +6,7 @@
 int main() {
     int n;
     scanf("%d", &n);
-    if (1 <= n && n <= 10) {
+    if (1 <= n && n <= 9) {
         printf("nine");
     } else {
         printf("error");
