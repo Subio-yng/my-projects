@@ -5,8 +5,8 @@
 // Space complexity: O(1)
 
 int main() {
-    long n, m;
-    scanf("%ld %ld", &n, &m);
-    printf("%ld", std::min(std::min(n, m), (n + m) / 3));
+    long long n, m;
+    scanf("%lld %lld", &n, &m);
+    printf("%lld", std::min(std::min(n, m), (n + m) / 3));
     return 0;
 }
