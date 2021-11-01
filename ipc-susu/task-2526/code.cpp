@@ -1,30 +1,29 @@
 #include <stdio.h>
 #include <algorithm>
+#include <vector>
 
 // Time complexity: O(countThrows)
 // Space complexity: O(1)
 
 int main() {
-    int length;
-    scanf("%d", &length);
-    int countThrows;
-    scanf("%d", &countThrows);
-    int player1 = 0, player2 = 0;
-    bool move = true;
-    for (int i = 0; i < countThrows; i++) {
-        int score;
-        scanf("%d", &score);
-        if (player1 < length && player2 < length) {
-            if (move) {
-                player1 = std::min((player1 + score), length);
-            } else {
-                player2 = std::min((player2 + score), length);
-            }
-            if (score < 6) {
-                move = !move;
-            }
-        }
-    }
-    printf("%d\n%d", player1, player2);
-    return 0;
+	const int N_PLAYERS = 2;
+	int length;
+	scanf("%d", &length);
+	int countThrows;
+	scanf("%d", &countThrows);
+	std::vector<int> pos(N_PLAYERS, 0);
+	int iPlayer = 0;
+	for (int i = 0; i < countThrows; i++) {
+		int score;
+		scanf("%d", &score);
+		if (pos[0] >= length || pos[1] >= length) {
+			break;
+		}
+		pos[iPlayer] = std::min(pos[iPlayer] + score, length);
+		if (score != 6) {
+			iPlayer = N_PLAYERS - 1 - iPlayer;
+		}
+	}
+	printf("%d\n%d", pos[0], pos[1]);
+	return 0;
 }
