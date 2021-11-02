@@ -1,0 +1,12 @@
+while (robot.getColumn() != 5 || robot.getRow() != 5) {
+    if (robot.canMove(0) && !robot.canMove(-1)) {
+        robot.moveForward();
+    } else {
+        if (!robot.canMove(-1) && !robot.canMove(0)) {
+            robot.turn(1);
+        } else {
+            robot.turn(-1);
+        }
+        robot.moveForward();
+    }
+}
