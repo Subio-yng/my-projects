@@ -1,0 +1,30 @@
+for (var count = 0; count < 3; count++) {
+    if(robot.isDisorder()) {
+        robot.swap();
+    } else {
+    }
+    robot.moveTo(1);
+}
+for (var count2 = 0; count2 < 3; count2++) {
+    if(robot.isDisorder()) {
+        robot.swap();
+    } else {
+    }
+    robot.moveTo(-1);
+}
+for (var count3 = 0; count3 < 2; count3++) {
+    if(robot.isDisorder()) {
+        robot.swap();
+    } else {
+    }
+    robot.moveTo(1);
+}
+if(robot.isDisorder()) {
+    robot.swap();
+} else {
+}
+robot.moveTo(-1);
+if(robot.isDisorder()) {
+    robot.swap();
+} else {
+}
