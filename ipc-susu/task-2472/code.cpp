@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <vector>
+#include <algorithm>
 
 // Time complexity: O(n)
 // Space complexity: O(n)
@@ -17,9 +18,7 @@ int main() {
 	for (int i = 0; i < n - 1; i++) {
 		part1 += list[i] * list[i];
 		part2 -= list[i];
-		if (part1 * part2 > maxMul) {
-			maxMul = part1 * part2;
-		}
+		maxMul = std::max(maxMul, part1 * part2);
 	}
 	printf("%lld", maxMul);
 	return 0;
