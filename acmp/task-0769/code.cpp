@@ -18,7 +18,7 @@ int main() {
     std::sort(list.begin(), list.end());
     int items = 1;
     for (int i = 1; i < n; i++) {
-        if (list[i].substr(0, (int) list[i - 1].length()) != list[i - 1]) {
+        if (!list[i]._Starts_with(list[i - 1])) {
             items++;
         }
     }
