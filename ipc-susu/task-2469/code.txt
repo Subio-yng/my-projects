@@ -47,5 +47,3 @@ for (var count2 = 0; count2 < 12; count2++) {
   }
   robot.moveTo(-1);
 }
-
-green = green - 1;
