@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <algorithm>
-#include <math.h>
 
 // Time complexity: O(1)
 // Space complexity: O(1)
@@ -34,11 +33,9 @@ bool onOneLine(Coord queen, Coord bK, Coord wK) {
     return abs(queen.x * bK.y - bK.x * queen.y) / 2.0 == 0;
 }
 
-bool isInOrder(Coord queen, Coord wK, Coord bK) {
-    return std::min(queen.x, bK.x) <= wK.x &&
-        wK.x <= std::max(queen.x, bK.x) &&
-        std::min(queen.y, bK.y) <= wK.y &&
-        wK.y <= std::max(queen.y, bK.y);
+bool isInOrder(int queen, int wK, int bK) {
+    return std::min(queen, bK) <= wK &&
+        wK <= std::max(queen, bK);
 }
 
 int main() {
@@ -47,7 +44,9 @@ int main() {
     Coord blackKing = Coord::read();
     if (isQueenMove(whiteQueen, blackKing)) {
         if (onOneLine(whiteQueen, blackKing, whiteKing)) {
-            if (isInOrder(whiteQueen, whiteKing, blackKing)) {
+            if (isInOrder(whiteQueen.x, whiteKing.x, blackKing.x) &&
+                isInOrder(whiteQueen.y, whiteKing.y, blackKing.y)
+            ) {
                 printf("NO");
             } else {
                 printf("YES");
