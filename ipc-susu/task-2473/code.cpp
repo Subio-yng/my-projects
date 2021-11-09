@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <algorithm>
 #include <vector>
-#include "climits"
+#include <climits>
 
 // Time complexity: O(southSize * log(southSize) + eastSize * log(eastSize))
 // Space complexity: O(southSize + eastSize)
