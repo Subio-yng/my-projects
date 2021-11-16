@@ -17,7 +17,7 @@ int main() {
     std::string commands(buf);
     int robotX = 0;
     int nextX = 1;
-    bool box = false;
+    bool hasBox = false;
     for (int i = 0; i < (int) commands.length(); i++) {
         if (commands[i] == 'R') {
             nextX *= -1;
@@ -26,18 +26,18 @@ int main() {
             if (commands[i] == 'F' && room[robotX] == room[robotX + nextX]) {
                 robotX += nextX;
             }
-            if (commands[i] == 'T' && !box &&
+            if (commands[i] == 'T' && !hasBox &&
                 room[robotX] <= room[robotX + nextX] &&
                 room[robotX + nextX] - room[robotX] < 3 &&
                 room[robotX + nextX] > 0
-                ) {
-                box = true;
+            ) {
+                hasBox = true;
                 room[robotX + nextX]--;
             }
-            if (commands[i] == 'D' && box &&
+            if (commands[i] == 'D' && hasBox &&
                 abs(room[robotX] - room[robotX + nextX]) < 2
-                ) {
-                box = false;
+            ) {
+                hasBox = false;
                 room[robotX + nextX]++;
             }
             if (commands[i] == 'C' && abs(room[robotX] - room[robotX + nextX]) == 1) {
