@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 
-// Time complexity: O(size)
+// Time complexity: O(size + len(commands))
 // Space complexity: O(size)
 
 int main() {
