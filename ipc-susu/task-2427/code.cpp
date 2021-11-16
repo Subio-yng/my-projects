@@ -5,7 +5,7 @@
 // Space complexity: O(1)
 
 bool isFirstClass(std::string str) {
-    const int MAX_ACTION = 245;
+    const int MAX_ACTION = 3 * 9 * 9 + 1;
     for (int j = 0; j < MAX_ACTION; j++) {
         int nextNumber = 0;
         for (int i = 0; i < (int) str.length(); i++) {
