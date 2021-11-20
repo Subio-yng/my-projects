@@ -1,0 +1,15 @@
+for (var count = 0; count < 4; count++) {
+  robot.moveTo(0,1);
+  if (robot.isHot(-1)) {
+    robot.moveTo(0,-1);
+    break;
+  }
+}
+for (var count2 = 0; count2 < 4; count2++) {
+  robot.moveTo(1,0);
+  if (robot.isHot(-1)) {
+    robot.moveTo(-1,0);
+    break;
+  }
+}
+robot.dig();
