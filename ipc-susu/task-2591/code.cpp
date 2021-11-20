@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// Time complexity: O(1)
+// Time complexity: O(n)
 // Space complexity: O(1)
 
 int main() {
