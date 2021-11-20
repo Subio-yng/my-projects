@@ -1,0 +1,19 @@
+var id, color1, color2;
+
+
+for (var count3 = 0; count3 < 6; count3++) {
+  id = robot.getPosition();
+  color1 = robot.getColour();
+  var repeat_end = 13 - (id + id);
+  for (var count = 0; count < repeat_end; count++) {
+    robot.moveTo(1);
+  }
+  color2 = robot.getColour();
+  robot.paint(color1);
+  var repeat_end2 = 13 - (id + id);
+  for (var count2 = 0; count2 < repeat_end2; count2++) {
+    robot.moveTo(-1);
+  }
+  robot.paint(color2);
+  robot.moveTo(1);
+}
