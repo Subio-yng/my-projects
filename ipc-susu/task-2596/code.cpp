@@ -12,8 +12,8 @@ struct DishStats {
 	int count;
 
 	DishStats()
-	: lastId(-1)
-	, count(0)
+		: lastId(-1)
+		, count(0)
 	{}
 };
 
@@ -26,14 +26,15 @@ int main() {
 	for (int i = 0; i < n; i++) {
 		int dish;
 		scanf("%d", &dish);
-		if (list[dish].lastId == -1 || i - list[dish].lastId > len) {
-			list[dish].lastId = i;
-			list[dish].count++;
+		DishStats &dishStats = list[dish];
+		if (dishStats.lastId == -1 || i - list[dish].lastId > len) {
+			dishStats.lastId = i;
+			dishStats.count++;
 		}
-		if (list[dish].count > maxCount ||
-			list[dish].count == maxCount && dish < greaterDish
+		if (dishStats.count > maxCount ||
+			dishStats.count == maxCount && dish < greaterDish
 		) {
-			maxCount = list[dish].count;
+			maxCount = dishStats.count;
 			greaterDish = dish;
 		}
 	}
