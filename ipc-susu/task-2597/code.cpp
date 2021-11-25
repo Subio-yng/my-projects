@@ -15,30 +15,32 @@ int main() {
 	int m;
 	scanf("%d", &m);
 	for (int i = 0; i < m; i++) {
-		int id, val;
-		scanf("%d %d", &id, &val);
-		id--;
-		auto curColony = colonies.lower_bound(id);
+		int idColony, valColony;
+		scanf("%d %d", &idColony, &valColony);
+		idColony--;
+		auto curColony = colonies.lower_bound(idColony);
 		long long sum = 0;
-		int dif = 0;
-		while (val > 0) {
+		int diff = 0;
+		while (valColony > 0) {
 			if (curColony == colonies.end()) {
 				curColony = colonies.lower_bound(0);
 			}
-			if (curColony->first < id) {
-				dif += curColony->first + n - id;
+			int curIdColony = curColony->first;
+			int &curValColony = curColony->second;
+			if (curIdColony < idColony) {
+				diff += curIdColony + n - idColony;
 			} else {
-				dif += curColony->first - id;
+				diff += curIdColony - idColony;
 			}
-			sum += 1LL * std::min(curColony->second, val) * dif;
-			id = curColony->first;
-			if (curColony->second < val) {
-				val -= curColony->second;
-				colonies.erase(curColony->first);
-				curColony = colonies.lower_bound(id);
+			sum += 1LL * std::min(curValColony, valColony) * diff;
+			idColony = curIdColony;
+			if (curValColony < valColony) {
+				valColony -= curValColony;
+				colonies.erase(curIdColony);
+				curColony = colonies.lower_bound(idColony);
 			} else {
-				curColony->second -= val;
-				val = 0;
+				curValColony -= valColony;
+				valColony = 0;
 			}
 		}
 		printf("%lld\n", sum);
