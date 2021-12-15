@@ -7,7 +7,7 @@
 int main() {
     int n;
     scanf("%d", &n);
-    std::vector<long long> step(n + 3);
+    std::vector<long long> step(n + 2);
     step[0] = 1;
     step[1] = 1;
     step[2] = 2;
