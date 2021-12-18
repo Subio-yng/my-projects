@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 
-// Time complexity: O(n^2)
+// Time complexity: O(n)
 // Space complexity: O(n)
 
 struct Man {
@@ -12,6 +12,12 @@ struct Man {
     int twoTicket;
 
     int threeTicket;
+
+    static Man read() {
+        Man a;
+        scanf("%d %d %d", &a.oneTicket, &a.twoTicket, &a.threeTicket);
+        return a;
+    }
 };
 
 int main() {
@@ -19,7 +25,7 @@ int main() {
     scanf("%d", &n);
     std::vector<Man> list(n + 2);
     for (int i = 1; i <= n; i++) {
-        scanf("%d %d %d", &list[i].oneTicket, &list[i].twoTicket, &list[i].threeTicket);
+        list[i] = Man::read();
     }
     std::reverse(list.begin(), list.end());
     std::vector<int> time(n + 2);
