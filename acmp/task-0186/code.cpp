@@ -14,9 +14,10 @@ int main() {
     }
     std::sort(list.begin(), list.end());
     std::vector<int> minGab(n);
-    minGab[1] = list[1] - list[0];
-    for (int cur = 2; cur < n; cur++) {
-        if (cur == 2) {
+    for (int cur = 1; cur < n; cur++) {
+        if (cur == 1) {
+            minGab[cur] = list[cur] - list[cur - 1];
+        } else if (cur == 2) {
             minGab[cur] = list[cur] - list[cur - 2];
         } else if (cur == 3) {
             minGab[cur] = std::max(minGab[cur - 2], list[cur] - list[cur - 1]);
