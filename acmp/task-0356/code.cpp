@@ -2,8 +2,8 @@
 #include <vector>
 #include <algorithm>
 
-// Time complexity: O(nCoin * (fullBank - emptyBank))
-// Space complexity: O(nCoin)
+// Time complexity: O(nCoins * (fullBank - emptyBank))
+// Space complexity: O(nCoins)
 
 struct Coin {
 
@@ -26,26 +26,28 @@ struct Cell {
 };
 
 int main() {
-    const int INF = 900000000;
+    const int INF = (int) 1e9;
     int emptyBank, fullBank;
     scanf("%d %d", &emptyBank, &fullBank);
-    int nCoin;
-    scanf("%d", &nCoin);
-    std::vector<Coin> coins(nCoin);
-    for (int i = 0; i < nCoin; i++) {
+    int nCoins;
+    scanf("%d", &nCoins);
+    std::vector<Coin> coins(nCoins);
+    for (int i = 0; i < nCoins; i++) {
         coins[i] = Coin::read();
     }
     std::vector<Cell> bank(fullBank - emptyBank + 1, {INF, -INF});
     bank[0] = {0, 0};
     for (int curBank = 1; curBank <= fullBank - emptyBank; curBank++) {
-        for (int curCoin = 0; curCoin < nCoin; curCoin++) {
+        for (int curCoin = 0; curCoin < nCoins; curCoin++) {
             if (coins[curCoin].weight <= curBank) {
-                bank[curBank].maxSum = std::max(bank[curBank].maxSum,
-                                                bank[curBank - coins[curCoin].weight].maxSum +
-                                                coins[curCoin].price);
-                bank[curBank].minSum = std::min(bank[curBank].minSum,
-                                                bank[curBank - coins[curCoin].weight].minSum +
-                                                coins[curCoin].price);
+                bank[curBank].maxSum = std::max(
+                    bank[curBank].maxSum,
+                    bank[curBank - coins[curCoin].weight].maxSum + coins[curCoin].price
+                );
+                bank[curBank].minSum = std::min(
+                    bank[curBank].minSum,
+                    bank[curBank - coins[curCoin].weight].minSum + coins[curCoin].price
+                );
             }
         }
     }
