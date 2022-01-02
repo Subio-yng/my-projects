@@ -2,6 +2,9 @@
 #include <vector>
 #include <algorithm>
 
+// Time complexity: O(n * sumWeight)
+// Space complexity: O(n)
+
 int main() {
 	int n;
 	scanf("%d", &n);
@@ -25,7 +28,7 @@ int main() {
 			}
 		}
 	}
-	printf("%d\n", kits[sumWeight].size());
+	printf("%d\n", (int) kits[sumWeight].size());
 	for (int i = 0; i < (int) kits[sumWeight].size(); i++) {
 		printf("%d ", kits[sumWeight][i]);
 	}
