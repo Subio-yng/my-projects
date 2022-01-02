@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <vector>
-#include <algorithm>
 
 // Time complexity: O(n * sumWeight)
 // Space complexity: O(n)
