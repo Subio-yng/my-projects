@@ -13,7 +13,6 @@ int main() {
 		scanf("%d", &list[i]);
 	}
 	std::vector<std::vector<int>> winDiff(len, std::vector<int>(len));
-	winDiff[0][1] = list[0];
 	for (int iLen = 1; iLen <= len; iLen++) {
 		for (int iLeft = 0; iLeft + iLen <= len; iLeft++) {
 			int iRight = iLeft + iLen - 1;
