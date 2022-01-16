@@ -25,20 +25,20 @@ struct Box {
 
 bool checkHeight(Box n1, Box n2, Box n3) {
     return n1.height + n2.height <= n3.height &&
-        std::max(n1.len, n2.len) <= n3.len &&
-        std::max(n1.width, n2.width) <= n3.width;
+           std::max(n1.len, n2.len) <= n3.len &&
+           std::max(n1.width, n2.width) <= n3.width;
 }
 
 bool checkLen(Box n1, Box n2, Box n3) {
     return std::max(n1.height, n2.height) <= n3.height &&
-        n1.len + n2.len <= n3.len &&
-        std::max(n1.width, n2.width) <= n3.width;
+           n1.len + n2.len <= n3.len &&
+           std::max(n1.width, n2.width) <= n3.width;
 }
 
 bool checkWidth(Box n1, Box n2, Box n3) {
     return std::max(n1.height, n2.height) <= n3.height &&
-        std::max(n1.len, n2.len) <= n3.len &&
-        n1.width + n2.width <= n3.width;
+           std::max(n1.len, n2.len) <= n3.len &&
+           n1.width + n2.width <= n3.width;
 }
 
 bool isFit(Box n1, Box n2, Box n3) {
@@ -46,7 +46,7 @@ bool isFit(Box n1, Box n2, Box n3) {
         if (checkHeight(n1, n2, n3) ||
             checkLen(n1, n2, n3) ||
             checkWidth(n1, n2, n3)
-            ) {
+        ) {
             return true;
         }
         n1.turn();
