@@ -12,16 +12,18 @@ int main() {
     } else if (a == 0 && b == 0 && c != 0) {
         printf("0");
     } else if (a == 0 && b != 0) {
-        printf("1\n%lf", (double) -c / b);
+        double x = (double) -c / b;
+        printf("1\n%lf", x);
     } else {
         long long d = b * b - 1LL * 4 * a * c;
+        double x1 = (-b - sqrt(d)) / 2.0 / a;
+        double x2 = (-b + sqrt(d)) / 2.0 / a;
         if (d < 0) {
             printf("0");
         } else if (d == 0) {
-            printf("1\n%lf", -b / 2.0 / a);
+            printf("1\n%lf", x1);
         } else {
-            printf("2\n%lf\n%lf", (-b - sqrt(d)) / 2.0 / a,
-                                  (-b + sqrt(d)) / 2.0 / a);
+            printf("2\n%lf\n%lf", x1, x2);
         }
     }
     return 0;
