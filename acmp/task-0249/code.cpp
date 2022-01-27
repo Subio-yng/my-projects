@@ -6,10 +6,10 @@
 // Time complexity: O(len^3)
 // Space complexity: O(len^2)
 
-bool areBracketsMathces(char l, char r) {
-    return l == '(' && r == ')' ||
-        l == '[' && r == ']' ||
-        l == '{' && r == '}';
+bool areBracketsMatches(char left, char right) {
+    return left == '(' && right == ')' ||
+        left == '[' && right == ']' ||
+        left == '{' && right == '}';
 }
 
 int main() {
@@ -18,31 +18,31 @@ int main() {
     scanf("%s", &buf);
     std::string str(buf);
     int len = (int) str.length();
-    std::vector<std::vector<int>> change(len, std::vector<int>(len, MAX));
+    std::vector<std::vector<int>> minChanges(len, std::vector<int>(len, MAX));
     for (int iLen = 1; iLen <= len; iLen++) {
         for (int iLeft = 0; iLeft + iLen <= len; iLeft++) {
             int iRight = iLeft + iLen - 1;
             if (iLen == 1) {
-                change[iLeft][iRight] = 1;
+                minChanges[iLeft][iRight] = 1;
             } else if (iLen == 2) {
-                if (areBracketsMathces(str[iLeft], str[iRight])) {
-                    change[iLeft][iRight] = 0;
+                if (areBracketsMatches(str[iLeft], str[iRight])) {
+                    minChanges[iLeft][iRight] = 0;
                 } else {
-                    change[iLeft][iRight] = 2;
+                    minChanges[iLeft][iRight] = 2;
                 }
             } else {
-                if (areBracketsMathces(str[iLeft], str[iRight])) {
-                    change[iLeft][iRight] = std::min(change[iLeft][iRight],
-                                                     change[iLeft + 1][iRight - 1]);
+                if (areBracketsMatches(str[iLeft], str[iRight])) {
+                    minChanges[iLeft][iRight] = std::min(minChanges[iLeft][iRight],
+                                                         minChanges[iLeft + 1][iRight - 1]);
                 }
-                for (int iLeft1 = iLeft + 1; iLeft1 <= iRight; iLeft1++) {
-                    change[iLeft][iRight] = std::min(change[iLeft][iRight],
-                                                     change[iLeft][iLeft1 - 1] + change[iLeft1][iRight]);
+                for (int mid = iLeft + 1; mid <= iRight; mid++) {
+                    minChanges[iLeft][iRight] = std::min(minChanges[iLeft][iRight],
+                                                         minChanges[iLeft][mid - 1] + minChanges[mid][iRight]);
 
                 }
             }
         }
     }
-    printf("%d", change[0][len - 1]);
+    printf("%d", minChanges[0][len - 1]);
     return 0;
 }
