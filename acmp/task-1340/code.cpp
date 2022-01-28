@@ -13,20 +13,20 @@ bool areBracketsMatches(char left, char right) {
 std::string getPairBrackets(char type) {
     if (type == '(' || type == ')') {
         return "()";
-    }
-    if (type == '[' || type == ']') {
+    } else if (type == '[' || type == ']') {
         return "[]";
+    } else {
+        throw 1;
     }
-    throw 1;
 }
 
 int main() {
-    char buf[1 + 100];
+    char buf[1 + 100] = {};
     scanf("%100s", &buf);
-    if (buf == "") {
+    std::string str(buf);
+    if (str.empty()) {
         return 0;
     }
-    std::string str(buf);
     int len = (int) str.length();
     std::vector<std::vector<std::string>> ans(len, std::vector<std::string>(len));
     for (int iLen = 1; iLen <= len; iLen++) {
