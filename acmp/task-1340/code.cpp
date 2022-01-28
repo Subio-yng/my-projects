@@ -7,8 +7,7 @@
 
 bool areBracketsMatches(char left, char right) {
     return left == '(' && right == ')' ||
-        left == '[' && right == ']' ||
-        left == '{' && right == '}';
+        left == '[' && right == ']';
 }
 
 std::string getPairBrackets(char type) {
@@ -18,7 +17,7 @@ std::string getPairBrackets(char type) {
     if (type == '[' || type == ']') {
         return "[]";
     }
-    return "{}";
+    throw 1;
 }
 
 int main() {
@@ -47,7 +46,7 @@ int main() {
                 for (int mid = iLeft + 1; mid <= iRight; mid++) {
                     if (ans[iLeft][iRight].empty() ||
                         ans[iLeft][iRight].length() > (ans[iLeft][mid - 1] + ans[mid][iRight]).length()
-                        ) {
+                    ) {
                         ans[iLeft][iRight] = ans[iLeft][mid - 1] + ans[mid][iRight];
                     }
                 }
