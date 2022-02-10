@@ -5,21 +5,9 @@
 // Time complexity: O(len^4)
 // Space complexity: O(len^3)
 
-struct Compress {
-
-	int cnt;
-
-	std::string s;
-
-	Compress()
-		: cnt(0)
-		, s({}) 
-	{}
-};
-
 std::string getPowStr(int exp, std::string str) {
 	if (exp == 0) {
-		return {};
+		return "";
 	}
 	std::string half = getPowStr(exp / 2, str);
 	if (exp % 2 == 0) {
@@ -34,13 +22,12 @@ int main() {
 	scanf("%s", &buf);
 	std::string str(buf);
 	int len = (int) str.length();
-	std::vector<std::vector<Compress>> minPress(len, std::vector<Compress>(len));
+	std::vector<std::vector<std::string>> minPress(len, std::vector<std::string>(len, ""));
 	for (int iLen = 1; iLen <= len; iLen++) {
 		for (int iLeft = 0; iLeft + iLen <= len; iLeft++) {
 			int iRight = iLeft + iLen - 1;
 			if (iLen == 1) {
-				minPress[iLeft][iRight].s = str[iLeft];
-				minPress[iLeft][iRight].cnt = 1;
+				minPress[iLeft][iRight] = str[iLeft];
 			} else {
 				std::string lastStr = str.substr(iLeft, iLen);
 				std::string curStr;
@@ -48,29 +35,27 @@ int main() {
 					curStr += str[iLeft + lenPeriod - 1];
 					int curCnt = iLen / lenPeriod;
 					if (iLen % lenPeriod == 0 && getPowStr(curCnt, curStr) == lastStr) {
-						minPress[iLeft][iRight].cnt = curCnt;
-						std::string temp = std::to_string(curCnt) + '(' + minPress[iLeft][iLeft + lenPeriod - 1].s + ')';
+						std::string temp = std::to_string(curCnt) + '(' + minPress[iLeft][iLeft + lenPeriod - 1] + ')';
 						if (temp.length() < lastStr.length()) {
-							minPress[iLeft][iRight].s = temp;
+							minPress[iLeft][iRight] = temp;
 						} else {
-							minPress[iLeft][iRight].s = minPress[iLeft][iLeft + lenPeriod - 1].s + 
-														minPress[iLeft + lenPeriod][iRight].s;
+							minPress[iLeft][iRight] = minPress[iLeft][iLeft + lenPeriod - 1] + 
+													  minPress[iLeft + lenPeriod][iRight];
 						}
 						break;
 					}
 				}
 				for (int iMid = iLeft + 1; iMid <= iRight; iMid++) {
-					curStr = minPress[iLeft][iMid - 1].s + minPress[iMid][iRight].s;
-					if (minPress[iLeft][iRight].s.length() == 0 ||
-						curStr.length() < minPress[iLeft][iRight].s.length()
+					curStr = minPress[iLeft][iMid - 1] + minPress[iMid][iRight];
+					if (minPress[iLeft][iRight].length() == 0 ||
+						curStr.length() < minPress[iLeft][iRight].length()
 					) {
-						minPress[iLeft][iRight].s = curStr;
-						minPress[iLeft][iRight].cnt = 1;
+						minPress[iLeft][iRight] = curStr;
 					}
 				}
 			}
 		}
 	}
-	printf("%s", minPress[0][len - 1].s.c_str());
+	printf("%s", minPress[0][len - 1].c_str());
 	return 0;
 }
