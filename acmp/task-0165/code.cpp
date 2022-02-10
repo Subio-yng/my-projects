@@ -4,37 +4,26 @@
 // Time complexity: O(sizeI * sizeJ)
 // Space complexity: O(sizeI * sizeJ)
 
-struct Cell {
-
-    int move;
-
-    int way;
-};
-
 int main() {
     int sizeI, sizeJ;
     scanf("%d %d", &sizeI, &sizeJ);
-    std::vector<std::vector<Cell>> table(sizeI, std::vector<Cell>(sizeJ));
+    std::vector<std::vector<int>> tableWay(sizeI, std::vector<int>(sizeJ, 0));
+    tableWay[0][0] = 1;
     for (int i = 0; i < sizeI; i++) {
         for (int j = 0; j < sizeJ; j++) {
-            scanf("%d", &table[i][j].move);
-            table[i][j].way = 0;
-        }
-    }
-    table[0][0].way = 1;
-    for (int i = 0; i < sizeI; i++) {
-        for (int j = 0; j < sizeJ; j++) {
+            int curMove;
+            scanf("%d", &curMove);
             if (i == sizeI - 1 && j == sizeJ - 1) {
                 break;
             }
-            if (i + table[i][j].move < sizeI) {
-                table[i + table[i][j].move][j].way += table[i][j].way;
+            if (i + curMove < sizeI) {
+                tableWay[i + curMove][j] += tableWay[i][j];
             }
-            if (j + table[i][j].move < sizeJ) {
-                table[i][j + table[i][j].move].way += table[i][j].way;
+            if (j + curMove < sizeJ) {
+                tableWay[i][j + curMove] += tableWay[i][j];
             }
         }
     }
-    printf("%d", table[sizeI - 1][sizeJ - 1].way);
+    printf("%d", tableWay[sizeI - 1][sizeJ - 1]);
     return 0;
 }
