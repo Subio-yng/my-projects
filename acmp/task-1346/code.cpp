@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-// Time complexity: O(len^3 * log(len))
+// Time complexity: O(len^4)
 // Space complexity: O(len^3)
 
 struct Compress {
