@@ -10,9 +10,8 @@ int main() {
     scanf("%s", &buf);
     std::string str(buf);
     std::sort(str.begin(), str.end());
-    printf("%s", str.c_str());
-    while (std::next_permutation(str.begin(), str.end())) {
-        printf("\n%s", str.c_str());
-    }
+    do {
+        printf("%s\n", str.c_str());
+    } while ((std::next_permutation(str.begin(), str.end())));
     return 0;
 }
