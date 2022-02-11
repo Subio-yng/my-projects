@@ -12,6 +12,6 @@ int main() {
     std::sort(str.begin(), str.end());
     do {
         printf("%s\n", str.c_str());
-    } while ((std::next_permutation(str.begin(), str.end())));
+    } while (std::next_permutation(str.begin(), str.end()));
     return 0;
 }
