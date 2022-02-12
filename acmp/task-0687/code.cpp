@@ -6,19 +6,20 @@
 // Time complexity: O(n * m)
 // Space complexity: O(n * m)
 
-std::vector<int> getWay(std::vector<std::vector<int>> &table, int i, int j) {
-    std::vector<int> way(j);
-    while (j != 0) {
-        j--;
-        way[j] = i;
-        int curMin = std::min({table[i - 1][j], table[i][j], table[i + 1][j]});
-        if (table[i - 1][j] == curMin) {
-            i--;
-        } else if (table[i][j] != curMin && table[i + 1][j] == curMin) {
-            i++;
+void printWay(std::vector<std::vector<int>> &table, int i, int j) {
+    j--;
+    if (j != 0) {
+        if (table[i - 1][j] <= table[i][j] &&
+            table[i - 1][j] <= table[i + 1][j]
+        ) {
+            printWay(table, i - 1, j);
+        } else if (table[i][j] <= table[i + 1][j]) {
+            printWay(table, i, j);
+        } else {
+            printWay(table, i + 1, j);
         }
     }
-    return way;
+    printf("%d ", i);
 }
 
 int main() {
@@ -48,10 +49,7 @@ int main() {
             minCostI = i;
         }
     }
-    std::vector<int> way = getWay(table, minCostI, sizeJ);
-    for (int i = 0; i < sizeJ; i++) {
-        printf("%d ", way[i]);
-    }
+    printWay(table, minCostI, sizeJ);
     printf("\n%d", table[minCostI][sizeJ]);
     return 0;
 }
