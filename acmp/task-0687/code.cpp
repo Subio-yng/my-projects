@@ -2,18 +2,15 @@
 #include <vector>
 #include <algorithm>
 #include <climits>
-#include <string>
 
 // Time complexity: O(n * m)
 // Space complexity: O(n * m)
 
-std::string getWay(std::vector<std::vector<int>> table, int i, int j) {
-    std::string way;
+std::vector<int> getWay(std::vector<std::vector<int>> &table, int i, int j) {
+    std::vector<int> way(j);
     while (j != 0) {
-        std::string curNum = std::to_string(i);
-        std::reverse(curNum.rbegin(), curNum.rend());
-        way += ' ' + curNum;
         j--;
+        way[j] = i;
         int curMin = std::min({table[i - 1][j], table[i][j], table[i + 1][j]});
         if (table[i - 1][j] == curMin) {
             i--;
@@ -21,7 +18,7 @@ std::string getWay(std::vector<std::vector<int>> table, int i, int j) {
             i++;
         }
     }
-    return {way.rbegin(), way.rend()};
+    return way;
 }
 
 int main() {
@@ -45,21 +42,16 @@ int main() {
             table[i][j] = std::min({table[i][j - 1], table[i + 1][j - 1], table[i - 1][j - 1]}) + area[i][j];
         }
     }
-    int minCost = INT_MAX;
-    for (int i = 1; i <= sizeI; i++) {
-        minCost = std::min(minCost, table[i][sizeJ]);
-    }
-    std::string bestWay;
-    for (int i = 1; i <= sizeI; i++) {
-        if (minCost == table[i][sizeJ]) {
-            if (bestWay.empty()) {
-                bestWay = getWay(table, i, sizeJ);
-            } else {
-                bestWay = std::min(bestWay, getWay(table, i, sizeJ));
-            }
+    int minCostI = 1;
+    for (int i = 2; i <= sizeI; i++) {
+        if (table[minCostI][sizeJ] > table[i][sizeJ]) {
+            minCostI = i;
         }
     }
-    printf("%s", bestWay.c_str());
-    printf("\n%d", minCost);
+    std::vector<int> way = getWay(table, minCostI, sizeJ);
+    for (int i = 0; i < sizeJ; i++) {
+        printf("%d ", way[i]);
+    }
+    printf("\n%d", table[minCostI][sizeJ]);
     return 0;
 }
