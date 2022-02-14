@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <climits>
 
-// Time complexity: O(sizeI * sizeJ^2)
-// Space complexity: O(sizeI * sizeJ^2)
+// Time complexity: O(sizeI * sizeJ)
+// Space complexity: O(sizeI * sizeJ)
 
 int getIdMax(std::vector<int> a) {
     int max = 0;
@@ -14,6 +14,59 @@ int getIdMax(std::vector<int> a) {
         }
     }
     return max;
+}
+
+int rabbitWay(std::vector<std::vector<int>> &area, int &cntCarrot) {
+    int sumCarrot = 0;
+    int size = (int) area.size();
+    int i = 1;
+    int j = getIdMax(area[i]);
+    while (i < size) {
+        if (area[i][j] > 0) {
+            sumCarrot += area[i][j];
+            area[i][j] = 0;
+            cntCarrot--;
+        }
+        i++;
+        if (i < size) {
+            if (area[i][j + 1] >= area[i][j] &&
+                area[i][j + 1] >= area[i][j - 1]
+            ) {
+                j++;
+            } else if (area[i][j] < area[i][j - 1]) {
+                j--;
+            }
+        }
+    }
+    return sumCarrot;
+}
+
+int hamsterWay(std::vector<std::vector<int>> &area, 
+                 std::vector<std::vector<int>> &plan, 
+                 int &cntCarrot
+) {
+    int sumCarrot = 0;
+    int size = (int) plan.size();
+    int i = size - 1;
+    int j = getIdMax(plan[i]);
+    while (i > 0) {
+        if (area[i][j] > 0) {
+            sumCarrot += area[i][j];
+            area[i][j] = 0;
+            cntCarrot--;
+        }
+        i--;
+        if (i > 0) {
+            if (plan[i][j + 1] >= plan[i][j] &&
+                plan[i][j + 1] >= plan[i][j - 1]
+            ) {
+                j++;
+            } else if (plan[i][j] < plan[i][j - 1]) {
+                j--;
+            }
+        }
+    }
+    return sumCarrot;
 }
 
 int main() {
@@ -35,49 +88,13 @@ int main() {
     }
     int rabCarrot = 0, hamCarrot = 0;
     while (cntCarrot > 0) {
-        int curI = 1;
-        int curJ = getIdMax(area[curI]);
-        while (curI <= sizeI) {
-            if (area[curI][curJ] > 0) {
-                rabCarrot += area[curI][curJ];
-                area[curI][curJ] = 0;
-                cntCarrot--;
-            }
-            curI++;
-            if (curI <= sizeI) {
-                if (area[curI][curJ + 1] >= area[curI][curJ] &&
-                    area[curI][curJ + 1] >= area[curI][curJ - 1]
-                    ) {
-                    curJ++;
-                } else if (area[curI][curJ] < area[curI][curJ - 1]) {
-                    curJ--;
-                }
-            }
-        }
+        rabCarrot += rabbitWay(area, cntCarrot);
         for (int i = 1; i <= sizeI; i++) {
             for (int j = 1; j <= sizeJ; j++) {
                 table[i][j] = area[i][j] + std::max({table[i - 1][j - 1], table[i - 1][j], table[i - 1][j + 1]});
             }
         }
-        curI--;
-        curJ = getIdMax(table[curI]);
-        while (curI >= 1) {
-            if (area[curI][curJ] > 0) {
-                hamCarrot += area[curI][curJ];
-                area[curI][curJ] = 0;
-                cntCarrot--;
-            }
-            curI--;
-            if (curI >= 1) {
-                if (table[curI][curJ + 1] >= table[curI][curJ] &&
-                    table[curI][curJ + 1] >= table[curI][curJ - 1]
-                    ) {
-                    curJ++;
-                } else if (table[curI][curJ] < table[curI][curJ - 1]) {
-                    curJ--;
-                }
-            }
-        }
+        hamCarrot += hamsterWay(area, table, cntCarrot);
     }
     printf("%d %d", rabCarrot, hamCarrot);
     return 0;
