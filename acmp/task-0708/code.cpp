@@ -3,10 +3,10 @@
 #include <algorithm>
 #include <climits>
 
-// Time complexity: O(sizeI * sizeJ)
+// Time complexity: O(sizeI * sizeJ^2)
 // Space complexity: O(sizeI * sizeJ)
 
-int getIdMax(std::vector<int> a) {
+int getIdMax(std::vector<int> &a) {
     int max = 0;
     for (int i = 1; i < (int) a.size(); i++) {
         if (a[i] >= a[max]) {
@@ -16,7 +16,7 @@ int getIdMax(std::vector<int> a) {
     return max;
 }
 
-int rabbitWay(std::vector<std::vector<int>> &area, int &cntCarrot) {
+int getRabbitWay(std::vector<std::vector<int>> &area, int &cntCarrot) {
     int sumCarrot = 0;
     int size = (int) area.size();
     int i = 1;
@@ -41,7 +41,7 @@ int rabbitWay(std::vector<std::vector<int>> &area, int &cntCarrot) {
     return sumCarrot;
 }
 
-int hamsterWay(std::vector<std::vector<int>> &area, 
+int getHamsterWay(std::vector<std::vector<int>> &area, 
                  std::vector<std::vector<int>> &plan, 
                  int &cntCarrot
 ) {
@@ -88,13 +88,13 @@ int main() {
     }
     int rabCarrot = 0, hamCarrot = 0;
     while (cntCarrot > 0) {
-        rabCarrot += rabbitWay(area, cntCarrot);
+        rabCarrot += getRabbitWay(area, cntCarrot);
         for (int i = 1; i <= sizeI; i++) {
             for (int j = 1; j <= sizeJ; j++) {
                 table[i][j] = area[i][j] + std::max({table[i - 1][j - 1], table[i - 1][j], table[i - 1][j + 1]});
             }
         }
-        hamCarrot += hamsterWay(area, table, cntCarrot);
+        hamCarrot += getHamsterWay(area, table, cntCarrot);
     }
     printf("%d %d", rabCarrot, hamCarrot);
     return 0;
