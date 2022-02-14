@@ -42,8 +42,8 @@ int getRabbitWay(std::vector<std::vector<int>> &area, int &cntCarrot) {
 }
 
 int getHamsterWay(std::vector<std::vector<int>> &area, 
-                 std::vector<std::vector<int>> &plan, 
-                 int &cntCarrot
+                  std::vector<std::vector<int>> &plan, 
+                  int &cntCarrot
 ) {
     int sumCarrot = 0;
     int size = (int) plan.size();
