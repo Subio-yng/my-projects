@@ -7,32 +7,45 @@
 int main() {
     int sizeI, sizeJ, mod;
     scanf("%d %d %d", &sizeI, &sizeJ, &mod);
-    std::vector<long long> prevPrevList(sizeJ);
-    std::vector<long long> prevList(sizeJ);
-    std::vector<long long> curList(sizeJ);
+    std::vector<long long> prevPrev(sizeJ);
+    std::vector<long long> prev(sizeJ, 0);
+    std::vector<long long> cur(sizeJ);
     for (int j = 0; j < sizeJ; j++) {
-        scanf("%lld", &prevList[j]);
+        scanf("%d", &cur[j]);
     }
-    curList[0] = (prevList[0] + prevList[1]) % mod;
-    for (int j = 1; j < sizeJ - 1; j++) {
-        curList[j] = (prevList[j - 1] + prevList[j] + prevList[j + 1]) % mod;
-    }
-    curList[sizeJ - 1] = (prevList[sizeJ - 1] + prevList[sizeJ - 2]) % mod;
-    for (int i = 2; i < sizeI; i++) {
-        prevPrevList = prevList;
-        prevList = curList;
-        curList[0] = (prevList[0] + 2 * prevList[1]) % mod;
-        for (int j = 1; j < sizeJ - 1; j++) {
-            long long cur = 2 * prevList[j - 1] + prevList[j] + 2 * prevList[j + 1] - prevPrevList[j];
-            if (i > 2) {
-                cur -= prevPrevList[j];
+    for (int i = 1; i < sizeI; i++) {
+        prevPrev.swap(prev);
+        prev.swap(cur);
+        for (int j = 0; j < sizeJ; j++) {
+            if (i == 1) {
+                if (j == 0) {
+                    cur[j] = (prev[j] + prev[j + 1]) % mod;
+                } else if (j + 1 == sizeJ) {
+                    cur[j] = (prev[j] + prev[j - 1]) % mod;
+                } else {
+                    cur[j] = (prev[j - 1] + prev[j] + prev[j + 1]) % mod;
+                }
+            } else if (i == 2) {
+                if (j == 0) {
+                    cur[j] = (prev[j] + 2 * prev[j + 1]) % mod;
+                } else if (j + 1 == sizeJ) {
+                    cur[j] = (prev[j] + 2 * prev[j - 1]) % mod;
+                } else {
+                    cur[j] = (2 * (prev[j - 1] + prev[j + 1]) - prevPrev[j] + prev[j]) % mod;
+                }
+            } else {
+                if (j == 0) {
+                    cur[j] = (prev[j] + 2 * prev[j + 1]) % mod;
+                } else if (j + 1 == sizeJ) {
+                    cur[j] = (prev[j] + 2 * prev[j - 1]) % mod;
+                } else {
+                    cur[j] = (2 * (prev[j - 1] + prev[j + 1] - prevPrev[j]) + prev[j]) % mod;
+                }
             }
-            curList[j] = (cur + 2 * mod) % mod;
         }
-        curList[sizeJ - 1] = (prevList[sizeJ - 1] + 2 * prevList[sizeJ - 2]) % mod;
     }
     for (int j = 0; j < sizeJ; j++) {
-        printf("%lld ", (curList[j] + mod) % mod);
+        printf("%lld ", (cur[j] + mod) % mod);
     }
     return 0;
 }
