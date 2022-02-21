@@ -14,15 +14,13 @@ int main() {
     }
     std::sort(list.begin(), list.end());
     int count = 0;
-    int i = 0;
-    int j = n - 1;
-    while (i <= j) {
-        if (i != j && list[i] + list[j] <= capacity) {
-            i++;
-            j--;
-        } else {
-            j--;
+    int left = 0;
+    int right = n - 1;
+    while (left <= right) {
+        if (list[left] + list[right] <= capacity) {
+            left++;
         }
+        right--;
         count++;
     }
     printf("%d", count);
