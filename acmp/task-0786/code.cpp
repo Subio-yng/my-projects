@@ -7,8 +7,8 @@ int main() {
     int n;
     scanf("%d", &n);
     int prevLose = 1;
-    while (prevLose <= n / 2) {
-        prevLose *= 2;
+    while (prevLose << 1 <= n) {
+        prevLose <<= 1;
     }
     printf("%d", n - prevLose);
     return 0;
