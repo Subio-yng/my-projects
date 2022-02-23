@@ -3,42 +3,35 @@
   
 // Time complexity: O(sqrt(n) + sqrt(m))
 // Space complexity: O(1)
-  
-bool isPrime(int n) {
-    for (int i = 2; i <= n / i; i++) {
-        if (n % i == 0) {
-            return false;
+
+int gcd(int a, int b) {
+    while (a > 0 && b > 0) {
+        if (a > b) {
+            a %= b;
+        } else {
+            b %= a;
         }
     }
-    return n >= 1;
+    return a + b;
+}
+
+int countDivisors(int n) {
+    int count = 0;
+    for (int i = 2; i <= n / i; i++) {
+        while (n % i == 0) {
+            n /= i;
+            count++;
+        }
+    }
+    if (n != 1) {
+        count++;
+    }
+    return count;
 }
   
 int main() {
     int n, m;
     scanf("%d %d", &n, &m);
-    int count = 0, div = 2;
-    while (!isPrime(n) || !isPrime(m)) {
-        if (isPrime(div)) {
-            int tempCountN = 0;
-            while (n % div == 0) {
-                n /= div;
-                tempCountN++;
-            }
-            int tempCountM = 0;
-            while (m % div == 0) {
-                m /= div;
-                tempCountM++;
-            }
-            count += abs(tempCountN - tempCountM);
-        }
-        div++;
-    }
-    if (n != m) {
-        count++;
-        if (n != 1 && m != 1) {
-            count++;
-        }
-    }
-    printf("%d", count);
+    printf("%d", countDivisors(n / gcd(n, m)) + countDivisors(m / gcd(n, m)));
     return 0;
 }
