@@ -8,13 +8,18 @@ int main() {
     const int MOD = 1000000;
     int n;
     scanf("%d", &n);
-    std::vector<int> ways(n + 12, 0);
-    ways[10] = 2;
-    ways[11] = 2;
-    ways[12] = 2;
-    for (int cur = 20; cur <= n; cur++) {
-        ways[cur] = (ways[cur - 10] + ways[cur - 11] + ways[cur - 12]) % MOD;
+    std::vector<int> ways(n + 1, 0);
+    ways[0] = 1;
+    for (int cur = 10; cur <= n; cur++) {
+        ways[cur] = ways[cur - 10];
+        if (cur > 10) {
+            ways[cur] += ways[cur - 11];
+        } 
+        if (cur > 11) {
+            ways[cur] += ways[cur - 12];
+        }
+        ways[cur] %= MOD;
     }
-    printf("%d", ways[n]);
+    printf("%d", (ways[n] * 2) % MOD);
     return 0;
 }
