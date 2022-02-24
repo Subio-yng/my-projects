@@ -17,7 +17,7 @@ int main() {
         printf("Impossible");
     } else if (size == 2) {
         if (list.begin()->second == 4 || 
-            list.begin()->second == 1
+            list.rbegin()->second == 4
         ) {
             printf("Four of a Kind");
         } else {
@@ -25,7 +25,7 @@ int main() {
         }
     } else if (size == 3) {
         if (list.begin()->second == 2 ||
-            list.upper_bound(list.begin()->first)->second == 2
+            list.rbegin()->second == 2
         ) {
             printf("Two Pairs");
         } else {
@@ -34,13 +34,7 @@ int main() {
     } else if (size == 4) {
         printf("One Pair");
     } else {
-        int count = 0;
-        for (auto now : list) {
-            if (now.first == list.begin()->first + count) {
-                count++;
-            }
-        }
-        if (count == N) {
+        if (list.rbegin()->first - list.begin()->first == N - 1) {
             printf("Straight");
         } else {
             printf("Nothing");
