@@ -12,44 +12,39 @@ int main() {
         scanf("%d", &card);
         list[card]++;
     }
-    bool pair = false;
-    bool three = false;
-    int count = 1;
-    int prev = list.begin()->first;
-    for (auto now : list) {
-        if (now.second == 5) {
-            printf("Impossible");
-            return 0;
-        }
-        if (now.second == 4) {
+    int size = (int) list.size();
+    if (size == 1) {
+        printf("Impossible");
+    } else if (size == 2) {
+        if (list.begin()->second == 4 || 
+            list.begin()->second == 1
+        ) {
             printf("Four of a Kind");
-            return 0;
+        } else {
+            printf("Full House");
         }
-        if (now.second == 3) {
-            three = true;
+    } else if (size == 3) {
+        if (list.begin()->second == 2 ||
+            list.upper_bound(list.begin()->first)->second == 2
+        ) {
+            printf("Two Pairs");
+        } else {
+            printf("Three of a Kind");
         }
-        if (now.second == 2) {
-            if (pair) {
-                printf("Two Pairs");
-                return 0;
-            }
-            pair = true;
-        }
-        if (now.first - 1 == prev) {
-            count++;
-        }
-        prev = now.first;
-    }
-    if (three && pair) {
-        printf("Full House");
-    } else if (three) {
-        printf("Three of a Kind");
-    } else if (pair) {
+    } else if (size == 4) {
         printf("One Pair");
-    } else if (count == N) {
-        printf("Straight");
     } else {
-        printf("Nothing");
+        int count = 0;
+        for (auto now : list) {
+            if (now.first == list.begin()->first + count) {
+                count++;
+            }
+        }
+        if (count == N) {
+            printf("Straight");
+        } else {
+            printf("Nothing");
+        }
     }
     return 0;
 }
