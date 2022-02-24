@@ -3,7 +3,7 @@
 // Time complexity: O(sqrt(n) + sqrt(m))
 // Space complexity: O(1)
  
-int gcd(int a, int b) {
+int getGCD(int a, int b) {
     while (b > 0) {
         int tmp = a % b;
         a = b;
@@ -32,7 +32,7 @@ int countDivisors(int n) {
 int main() {
     int n, m;
     scanf("%d %d", &n, &m);
-    int temp = gcd(n, m);
-    printf("%d", countDivisors(n / temp) + countDivisors(m / temp));
+    int gcd = getGCD(n, m);
+    printf("%d", countDivisors(n / gcd) + countDivisors(m / gcd));
     return 0;
 }
