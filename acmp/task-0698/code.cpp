@@ -53,7 +53,7 @@ int main() {
         }
         if (id == cards[cur.suit].end()) {
             ans = false;
-            continue;
+            break;
         }
         cards[cur.suit].erase(id);
     }
