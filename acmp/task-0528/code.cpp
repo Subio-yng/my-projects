@@ -6,10 +6,6 @@
 int main() {
     long long n, lvl;
     scanf("%lld %lld", &n, &lvl);
-    long long rooms = (n + (n - 2) * lvl) / 2 * lvl;
-    if ((n + (n - 2) * lvl) % 2 == 1) {
-        rooms += lvl / 2;
-    }
-    printf("%lld", 1 + rooms);
+    printf("%lld", 1 + lvl + (n - 2) * (lvl + 1) * lvl / 2);
     return 0;
 }
