@@ -8,12 +8,12 @@
 int main() {
     int n;
     scanf("%d", &n);
-    std::unordered_set<double> function;
+    std::unordered_set<double> angles;
     for (int i = 0; i < n; i++) {
         double x, y;
         scanf("%lf %lf", &x, &y);
-        function.insert(std::atan2(x, y));
+        angles.insert(std::atan2(x, y));
     }
-    printf("%d", (int) function.size());
+    printf("%d", (int) angles.size());
     return 0;
 }
