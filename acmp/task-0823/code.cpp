@@ -1,56 +1,50 @@
 ﻿#include <stdio.h>
 #include <vector>
-#include <map>
- 
-// Time complexity: O(n * log(n))
+#include <algorithm>
+
+// Time complexity: O(n + maxY)
 // Space complexity: O(n)
-
-struct Edge {
-
-    int left;
-
-    int right;
-};
 
 int main() {
     int n;
     scanf("%d", &n);
-    std::map<int, Edge> list;
-    for (int coord = 0; coord < n; coord++) {
+    int maxY = 0;
+    std::vector<int> leftX(51, 0);
+    leftX[0] = 1;
+    std::vector<int> rightX(51, 0);
+    rightX[0] = 1;
+    for (int i = 0; i < n; i++) {
         int x, y;
         scanf("%d %d", &x, &y);
-        if (list[y].left == 0) {
-            list[y].left = x;
+        maxY = std::max(maxY, y);
+        rightX[y] = std::max(x, rightX[y]);
+        if (x < leftX[y] || leftX[y] == 0) {
+            leftX[y] = x;
         }
-        list[y].right = std::max(list[y].right, x);
-        list[y].left = std::min(list[y].left, x);
     }
-    std::vector<Edge> minWay((int) list.size());
-    minWay[0].right = list.begin()->first + list.begin()->second.right - 2;
-    minWay[0].left = minWay[0].right + list.begin()->second.right - list.begin()->second.left;
-    auto prevLvl = list.begin();
-    auto curLvl = list.upper_bound(prevLvl->first);
-    for (int i = 1; curLvl != list.end(); i++, curLvl++) {
-        minWay[i].right = curLvl->first - prevLvl->first;
-        minWay[i].left = curLvl->first - prevLvl->first;
-        if (curLvl->second.left >= prevLvl->second.right) {
-            minWay[i].right += std::min(minWay[i - 1].right + curLvl->second.right - prevLvl->second.right,
-                                        minWay[i - 1].left + curLvl->second.right - prevLvl->second.left);
-            minWay[i].left = minWay[i].right + curLvl->second.right - curLvl->second.left;
-        } else if (curLvl->second.right <= prevLvl->second.left) {
-            minWay[i].left += std::min(minWay[i - 1].left + prevLvl->second.left - curLvl->second.left,
-                                       minWay[i - 1].right + prevLvl->second.right - curLvl->second.left);
-            minWay[i].right = minWay[i].left + curLvl->second.right - curLvl->second.left;
+    std::vector<int> distLeft(maxY + 1);
+    distLeft[0] = -1;
+    std::vector<int> distRight(maxY + 1);
+    distRight[0] = -1;
+    for (int y = 1; y <= maxY; y++) {
+        if (leftX[y] > 0) {
+            distLeft[y] = rightX[y] - leftX[y] + std::min(
+                distLeft[y - 1] + abs(rightX[y] - leftX[y - 1]),
+                distRight[y - 1] + abs(rightX[y] - rightX[y - 1])
+            );
+            distRight[y] = rightX[y] - leftX[y] + std::min(
+                distLeft[y - 1] + abs(leftX[y] - leftX[y - 1]),
+                distRight[y - 1] + abs(leftX[y] - rightX[y - 1])
+            );
         } else {
-            minWay[i].right += curLvl->second.right - curLvl->second.left +
-                               std::min(minWay[i - 1].left + abs(prevLvl->second.left - curLvl->second.left),
-                                        minWay[i - 1].right + prevLvl->second.right - curLvl->second.left);
-            minWay[i].left += curLvl->second.right - curLvl->second.left +
-                              std::min(minWay[i - 1].right + abs(curLvl->second.right - prevLvl->second.right),
-                                       minWay[i - 1].left + curLvl->second.right - prevLvl->second.left);
+            leftX[y] = leftX[y - 1];
+            rightX[y] = rightX[y - 1];
+            distLeft[y] = distLeft[y - 1];
+            distRight[y] = distRight[y - 1];
         }
-        prevLvl = curLvl;
+        distLeft[y]++;
+        distRight[y]++;
     }
-    printf("%d", std::min(minWay.back().left, minWay.back().right));
+    printf("%d", std::min(distRight[maxY], distLeft[maxY]));
     return 0;
 }
