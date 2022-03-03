@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <string>
 
-// Time complexity: O(n)
+// Time complexity: O(n + inputSize)
 // Space complexity: O(1)
  
 struct Rule {
