@@ -1,24 +1,25 @@
 ﻿#include <stdio.h>
-  
+
 // Time complexity: O(1)
 // Space complexity: O(1)
-  
+
 int main() {
+    const int LIMIT = 12;
     int n;
     scanf("%d", &n);
-    int pair = n % 12;
-    int bunch = n / 12 % 12;
-    int box = n / 144;
-    if (bunch == 11 && pair > 1) {
+    int pair = n % LIMIT;
+    int bunch = n / LIMIT % LIMIT;
+    int box = n / (LIMIT * LIMIT);
+    if (bunch == LIMIT - 1 && pair > 1) {
         bunch = 0;
         pair = 0;
         box++;
     }
-    if (pair > 9) {
+    if (pair >= LIMIT - 2) {
         pair = 0;
         bunch++;
     }
-    if (bunch > 11) {
+    if (bunch >= LIMIT) {
         bunch = 0;
         box++;
     }
