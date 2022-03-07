@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <vector>
 
-// Time complexity: O(n!)
+// Time complexity: O(n! * n)
 // Space complexity: O(n)
 
 int main() {
