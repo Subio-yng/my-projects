@@ -4,7 +4,7 @@
 // Time complexity: O(n^2)
 // Space complexity: O(n^2)
  
-struct Graph {
+struct Edge {
  
     int from;
  
@@ -14,19 +14,19 @@ struct Graph {
 int main() {
     int nV;
     scanf("%d", &nV);
-    std::vector<Graph> list;
+    std::vector<Edge> edges;
     for (int i = 1; i <= nV; i++) {
         for (int j = 1; j <= nV; j++) {
             char val;
             scanf(" %c", &val);
             if (val == '1') {
-                list.push_back({i, j});
+                edges.push_back({i, j});
             }
         }
     }
-    printf("%d %d", nV, (int) list.size());
-    for (int i = 0; i < (int) list.size(); i++) {
-        printf("\n%d %d", list[i].from, list[i].to);
+    printf("%d %d", nV, (int) edges.size());
+    for (Edge &e : edges) {
+        printf("\n%d %d", e.from, e.to);
     }
     return 0;
 }
