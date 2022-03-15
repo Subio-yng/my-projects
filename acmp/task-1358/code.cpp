@@ -7,15 +7,15 @@
 int main() {
     int nV, nE;
     scanf("%d %d", &nV, &nE);
-    std::vector<std::vector<char>> edges(nV + 1, std::vector<char>(nV + 1, '0'));
+    std::vector<std::vector<bool>> edges(nV, std::vector<bool>(nV, false));
     for (int i = 0; i < nE; i++) {
         int from, to;
         scanf("%d %d", &from, &to);
-        edges[from][to] = '1';
+        edges[from - 1][to - 1] = true;
     }
-    for (int i = 1; i <= nV; i++) {
-        for (int j = i + 1; j <= nV; j++) {
-            if (edges[i][j] == '0') {
+    for (int i = 0; i < nV; i++) {
+        for (int j = i + 1; j < nV; j++) {
+            if (!edges[i][j]) {
                 printf("NO");
                 return 0;
             }
