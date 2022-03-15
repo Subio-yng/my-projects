@@ -9,23 +9,24 @@ void print(std::vector<int> edge) {
     for (int &e : edge) {
         printf(" %d", e);
     }
+    printf("\n");
 }
  
 int main() {
     int nV;
     scanf("%d", &nV);
-    std::vector<std::vector<char>> edges(nV + 1, std::vector<char>(nV + 1));
-    for (int i = 1; i <= nV; i++) {
-        for (int j = 1; j <= nV; j++) {
+    std::vector<std::vector<char>> edges(nV, std::vector<char>(nV));
+    for (int i = 0; i < nV; i++) {
+        for (int j = 0; j < nV; j++) {
             scanf(" %c", &edges[i][j]);
         }
     }
     std::vector<int> source;
-    std::vector<int> stock;
-    for (int i = 1; i <= nV; i++) {
+    std::vector<int> sink;
+    for (int i = 0; i < nV; i++) {
         bool isSource = true;
         bool isStock = true;
-        for (int j = 1; j <= nV; j++) {
+        for (int j = 0; j < nV; j++) {
             if (edges[j][i] == '1') {
                 isSource = false;
             }
@@ -34,14 +35,13 @@ int main() {
             }
         }
         if (isSource) {
-            source.push_back(i);
+            source.push_back(i + 1);
         }
         if (isStock) {
-            stock.push_back(i);
+            sink.push_back(i + 1);
         }
     }
     print(source);
-    printf("\n");
-    print(stock);
+    print(sink);
     return 0;
 }
