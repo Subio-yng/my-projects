@@ -4,12 +4,12 @@
 // Time complexity: O(nV^2)
 // Space complexity: O(nV^2)
 
-void DFSway(std::vector<std::vector<bool>> &a, int v, int &count, std::vector<bool> &visited) {
-    for (int i = 0; i < (int) a.size(); i++) {
-        if (a[v][i] && visited[i]) {
-            visited[i] = false;
+void dfs(int curV, int &count, std::vector<bool> &visited, const std::vector<std::vector<bool>> &edge) {
+    for (int i = 0; i < (int) edge.size(); i++) {
+        if (edge[curV][i] && !visited[i]) {
+            visited[i] = true;
             count++;
-            DFSway(a, i, count, visited);
+            dfs(i, count, visited, edge);
         }
     }
 }
@@ -28,10 +28,10 @@ int main() {
             }
         }
     }
-    std::vector<bool> visited(nV, true);
-    visited[v0] = false;
+    std::vector<bool> visited(nV, false);
+    visited[v0] = true;
     int count = 0;
-    DFSway(edges, v0, count, visited);
+    dfs(v0, count, visited, edges);
     printf("%d", count);
     return 0;
 }
