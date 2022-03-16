@@ -5,9 +5,9 @@
 // Space complexity: O(nV^2)
 
 void dfs(int curV, int &count, std::vector<bool> &visited, const std::vector<std::vector<bool>> &edges) {
+    visited[curV] = true;
     for (int nextV = 0; nextV < (int) edges.size(); nextV++) {
         if (edges[curV][nextV] && !visited[nextV]) {
-            visited[nextV] = true;
             count++;
             dfs(nextV, count, visited, edges);
         }
@@ -29,7 +29,6 @@ int main() {
         }
     }
     std::vector<bool> visited(nV, false);
-    visited[v0] = true;
     int count = 0;
     dfs(v0, count, visited, edges);
     printf("%d", count);
