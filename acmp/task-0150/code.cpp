@@ -4,12 +4,12 @@
 // Time complexity: O(nV^2)
 // Space complexity: O(nV^2)
 
-void dfs(int curV, int &count, std::vector<bool> &visited, const std::vector<std::vector<bool>> &edge) {
-    for (int i = 0; i < (int) edge.size(); i++) {
-        if (edge[curV][i] && !visited[i]) {
-            visited[i] = true;
+void dfs(int curV, int &count, std::vector<bool> &visited, const std::vector<std::vector<bool>> &edges) {
+    for (int nextV = 0; nextV < (int) edges.size(); nextV++) {
+        if (edges[curV][nextV] && !visited[nextV]) {
+            visited[nextV] = true;
             count++;
-            dfs(i, count, visited, edge);
+            dfs(nextV, count, visited, edges);
         }
     }
 }
