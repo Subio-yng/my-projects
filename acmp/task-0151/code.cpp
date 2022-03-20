@@ -1,54 +1,56 @@
 #include <stdio.h>
 #include <vector>
 #include <map>
-#include <set>
 
-// Time complexity: O(nE * log(nE))
-// Space complexity: O(nE)
+// Time complexity: O(nV + nE)
+// Space complexity: O(nV + nE)
 
 enum Part {
     UNMARKED, LEFT, RIGHT
 };
 
-void dfs(int curV, Part curColor, bool &check, std::vector<Part> &colors, std::map<int, std::set<int>> &edges) {
-    for (int e : edges[curV]) {
-        if (colors[e] == curColor) {
-            check = false;
+Part getOppositePart(Part cur) {
+    if (cur == Part::LEFT) {
+        return Part::RIGHT;
+    }
+    return Part::LEFT;
+}
+
+bool dfs(int curV, std::vector<Part> &colors, std::map<int, std::vector<int>> &edges) {
+    if (colors[curV] == Part::UNMARKED) {
+        colors[curV] = Part::LEFT;
+    }
+    bool type = true;
+    for (int &v : edges[curV]) {
+        if (colors[v] == colors[curV]) {
+            type = false;
             break;
         }
-        if (colors[e] == Part::UNMARKED) {
-            if (curColor == Part::LEFT) {
-                colors[e] = Part::RIGHT;
-            } else {
-                colors[e] = Part::LEFT;
-            }
-            dfs(e, colors[e], check, colors, edges);
+        if (colors[v] == Part::UNMARKED) {
+            colors[v] = getOppositePart(colors[curV]);
+            dfs(v, colors, edges);
         }
     }
+    return type;
 }
 
 int main() {
     int nV, nE;
     scanf("%d %d", &nV, &nE);
-    std::map<int, std::set<int>> edges;
+    std::map<int, std::vector<int>> edges;
     for (int i = 0; i < nE; i++) {
         int from, to;
         scanf("%d %d", &from, &to);
-        edges[from - 1].insert(to - 1);
-        edges[to - 1].insert(from - 1);
+        edges[from - 1].push_back(to - 1);
+        edges[to - 1].push_back(from - 1);
     }
-    bool ans = true;
     std::vector<Part> colors(nV, Part::UNMARKED);
     for (int i = 0; i < nV; i++) {
-        if (colors[i] == Part::UNMARKED) {
-            colors[i] = Part::LEFT;
+        if (!dfs(i, colors, edges)) {
+            printf("NO");
+            return 0;
         }
-        dfs(i, colors[i], ans, colors, edges);
     }
-    if (ans) {
-        printf("YES");
-    } else {
-        printf("NO");
-    }
+    printf("YES");
     return 0;
 }
