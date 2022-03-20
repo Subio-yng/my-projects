@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <vector>
-#include <map>
 
 // Time complexity: O(nV + nE)
 // Space complexity: O(nV + nE)
@@ -12,18 +11,21 @@ enum Part {
 Part getOppositePart(Part cur) {
     if (cur == Part::LEFT) {
         return Part::RIGHT;
+    } else if (cur == Part::RIGHT) {
+        return Part::LEFT;
+    } else {
+        throw 1;
     }
-    return Part::LEFT;
 }
 
-bool dfs(int curV, std::vector<Part> &colors, std::map<int, std::vector<int>> &edges) {
+bool dfs(int curV, std::vector<Part> &colors, const std::vector<std::vector<int>> &edges) {
     if (colors[curV] == Part::UNMARKED) {
         colors[curV] = Part::LEFT;
     }
-    bool type = true;
-    for (int &v : edges[curV]) {
+    bool isBipartite = true;
+    for (int v : edges[curV]) {
         if (colors[v] == colors[curV]) {
-            type = false;
+            isBipartite = false;
             break;
         }
         if (colors[v] == Part::UNMARKED) {
@@ -31,13 +33,13 @@ bool dfs(int curV, std::vector<Part> &colors, std::map<int, std::vector<int>> &e
             dfs(v, colors, edges);
         }
     }
-    return type;
+    return isBipartite;
 }
 
 int main() {
     int nV, nE;
     scanf("%d %d", &nV, &nE);
-    std::map<int, std::vector<int>> edges;
+    std::vector<std::vector<int>> edges(nV);
     for (int i = 0; i < nE; i++) {
         int from, to;
         scanf("%d %d", &from, &to);
