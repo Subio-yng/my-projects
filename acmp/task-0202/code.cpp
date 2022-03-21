@@ -2,8 +2,8 @@
 #include <vector>
 #include <string>
  
-// Time complexity: O(len(str))
-// Space complexity: O(buf)
+// Time complexity: O(len1 + len2)
+// Space complexity: O(len1 + len2)
  
 std::vector<int> getPrefixFunction(std::string sample) {
     std::vector<int> p((int) sample.size(), 0);
@@ -26,17 +26,11 @@ int main() {
     std::string str1(buf);
     scanf("%s", &buf);
     std::string str2(buf);
-    std::vector<int> pStr2 = getPrefixFunction(str2);
-    int j = 0;
-    for (int i = 0; i < (int) str1.length(); i++) {
-        if (str1[i] == str2[j]) {
-            j++;
-            if (j == (int) str2.length()) {
-                printf("%d ", i - j + 1);
-            }
-        } else if (j != 0) {
-            j = pStr2[j - 1];
-            i--;
+    int len2 = (int) str2.length();
+    std::vector<int> prefixStr = getPrefixFunction(str2 + '$' + str1);
+    for (int i = len2; i < (int) prefixStr.size(); i++) {
+        if (prefixStr[i] == len2) {
+            printf("%d ", i - len2 * 2);
         }
     }
     return 0;
