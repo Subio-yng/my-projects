@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <vector>
- 
+   
 // Time complexity: O(nV + nE)
 // Space complexity: O(nV + nE)
- 
+   
 void dfs(int curV,
          std::vector<int> &list,
          std::vector<bool> &visited,
@@ -11,14 +11,13 @@ void dfs(int curV,
 ) {
     visited[curV] = true;
     list.push_back(curV);
-    for (int v : edges[curV]) {
-        if (visited[v]) {
-            continue;
+    for (int nextV : edges[curV]) {
+        if (!visited[nextV]) {
+            dfs(nextV, list, visited, edges);
         }
-        dfs(v, list, visited, edges);
     }
 }
- 
+   
 int main() {
     int nV, nE;
     scanf("%d %d", &nV, &nE);
@@ -30,25 +29,26 @@ int main() {
         edges[to - 1].push_back(from - 1);
     }
     std::vector<bool> visited(nV, false);
-    std::vector<int> list;
-    int count = 0;
+    std::vector<int> component;
+    int countComponents = 0;
     for (int i = 0; i < nV; i++) {
         if (!visited[i]) {
-            dfs(i, list, visited, edges);
-            count++;
+            dfs(i, component, visited, edges);
+            countComponents++;
         }
-        list.clear();
+        component.clear();
     }
-    printf("%d", count);
+    printf("%d\n", countComponents);
     visited = std::vector<bool>(nV, false);
     for (int i = 0; i < nV; i++) {
         if (!visited[i]) {
-            dfs(i, list, visited, edges);
-            printf("\n%d\n", (int) list.size());
-            for (int j = 0; j < (int) list.size(); j++) {
-                printf("%d ", list[j] + 1);
+            dfs(i, component, visited, edges);
+            printf("%d\n", (int) component.size());
+            for (int j = 0; j < (int) component.size(); j++) {
+                printf("%d ", component[j] + 1);
             }
-            list.clear();
+            component.clear();
+            printf("\n");
         }
     }
     return 0;
