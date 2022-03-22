@@ -4,19 +4,19 @@
 // Time complexity: O(sizeI * sizeJ)
 // Space complexity: O(sizeI * sizeJ)
 
-void dfs(int curI, int curJ, std::vector<std::vector<bool>> &state) {
+void dfs(int curI, int curJ, int sizeI, int sizeJ, std::vector<std::vector<bool>> &state) {
     state[curI][curJ] = false;
-    if (curJ + 1 < (int) state[curI].size() && state[curI][curJ + 1]) {
-        dfs(curI, curJ + 1, state);
+    if (curJ + 1 < sizeJ && state[curI][curJ + 1]) {
+        dfs(curI, curJ + 1, sizeI, sizeJ, state);
     }
-    if (curI + 1 < (int) state.size() && state[curI + 1][curJ]) {
-        dfs(curI + 1, curJ, state);
+    if (curI + 1 < sizeI && state[curI + 1][curJ]) {
+        dfs(curI + 1, curJ, sizeI, sizeJ, state);
     }
-    if (curJ - 1 >= 0 && state[curI][curJ - 1]) {
-        dfs(curI, curJ - 1, state);
+    if (0 <= curJ - 1 && state[curI][curJ - 1]) {
+        dfs(curI, curJ - 1, sizeI, sizeJ, state);
     }
-    if (curI - 1 >= 0 && state[curI - 1][curJ]) {
-        dfs(curI - 1, curJ, state);
+    if (0 <= curI - 1 && state[curI - 1][curJ]) {
+        dfs(curI - 1, curJ, sizeI, sizeJ, state);
     }
 }
 
@@ -38,7 +38,7 @@ int main() {
         for (int j = 0; j < sizeJ; j++) {
             if (state[i][j]) {
                 countComponents++;
-                dfs(i, j, state);
+                dfs(i, j, sizeI, sizeJ, state);
             }
         }
     }
