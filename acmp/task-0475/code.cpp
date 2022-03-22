@@ -14,7 +14,7 @@ int main() {
     std::sort(list.begin(), list.end());
     int diff = list[1] - list[0];
     for (int i = 2; i < (int) list.size(); i++) {
-        if (list[i] - list[i - 1] != dif) {
+        if (list[i] - list[i - 1] != diff) {
             printf("No");
             return 0;
         }
