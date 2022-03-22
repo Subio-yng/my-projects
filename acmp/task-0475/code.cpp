@@ -12,7 +12,7 @@ int main() {
         list.push_back(val);
     }
     std::sort(list.begin(), list.end());
-    int dif = list[1] - list[0];
+    int diff = list[1] - list[0];
     for (int i = 2; i < (int) list.size(); i++) {
         if (list[i] - list[i - 1] != dif) {
             printf("No");
