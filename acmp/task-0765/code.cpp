@@ -6,7 +6,7 @@
 
 enum Part {
     UNCOLORED, WHITE, BLACK
-};
+}; 
 
 void dfs(int curI,
          int curJ,
