@@ -4,7 +4,7 @@
 // Time complexity: O(n^4)
 // Space complexity: O(n^2)
 
-enum Part {
+enum Color {
     UNCOLORED, WHITE, BLACK
 }; 
 
@@ -14,9 +14,9 @@ void dfs(int curI,
          int &countDame,
          std::vector<std::vector<bool>> &visited,
          std::vector<std::vector<bool>> &visitedUncolored,
-         const std::vector<std::vector<Part>> &state
+         const std::vector<std::vector<Color>> &state
 ) {
-    if (state[curI][curJ] == Part::UNCOLORED) {
+    if (state[curI][curJ] == Color::UNCOLORED) {
         if (!visitedUncolored[curI][curJ]) {
             countDame++;
             visitedUncolored[curI][curJ] = true;
@@ -41,7 +41,7 @@ void dfs(int curI,
 int main() {
     int n;
     scanf("%d", &n);
-    std::vector<std::vector<Part>> state(n, std::vector<Part>(n, Part::UNCOLORED));
+    std::vector<std::vector<Color>> state(n, std::vector<Color>(n, Color::UNCOLORED));
     std::vector<std::vector<bool>> visited(n, std::vector<bool>(n, false));
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -49,10 +49,10 @@ int main() {
             scanf(" %c", &color);
             if (color == 'W') {
                 visited[i][j] = true;
-                state[i][j] = Part::WHITE;
+                state[i][j] = Color::WHITE;
             }
             if (color == 'B') {
-                state[i][j] = Part::BLACK;
+                state[i][j] = Color::BLACK;
             }
         }
     }
@@ -60,7 +60,7 @@ int main() {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             std::vector<std::vector<bool>> visitedUncolored(n, std::vector<bool>(n, false));
-            if (state[i][j] == Part::BLACK && !visited[i][j]) {
+            if (state[i][j] == Color::BLACK && !visited[i][j]) {
                 int countDame = 0;
                 dfs(i, j, n, countDame, visited, visitedUncolored, state);
                 if (countDame == 1) {
