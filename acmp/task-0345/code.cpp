@@ -2,14 +2,14 @@
 #include <string>
 #include <vector>
 #include <map>
- 
-// Time complexity: O(nV^2)
+  
+// Time complexity: O(nV^3)
 // Space complexity: O(nV^2)
-
+ 
 enum State {
     NEW, IN_PROCESS, VISITED
 };
-
+ 
 bool dfs(std::string &curV,
          std::string &startV,
          std::map<std::string, State> &stateV,
@@ -17,9 +17,6 @@ bool dfs(std::string &curV,
 ) {
     if (curV == startV && stateV[curV] == State::IN_PROCESS) {
         return true;
-    }
-    if (stateV[curV] == State::VISITED) {
-        return false;
     }
     bool isRecursion = false;
     stateV[curV] = State::IN_PROCESS;
@@ -35,28 +32,28 @@ bool dfs(std::string &curV,
     stateV[curV] = State::VISITED;
     return isRecursion;
 }
- 
+  
 int main() {
     int nV;
     scanf("%d", &nV);
-    std::vector<std::string> list(nV);
+    std::vector<std::string> listV(nV);
     std::map<std::string, std::vector<std::string>> edges;
     std::map<std::string, State> stateV;
     for (int i = 0; i < nV; i++) {
         char buf[1 + 100];
         scanf(" %s", &buf);
         stateV[buf] = State::NEW;
-        list[i] = buf;
+        listV[i] = buf;
         int nE;
         scanf("%d", &nE);
         for (int j = 0; j < nE; j++) {
             scanf(" %s", &buf);
-            edges[list[i]].push_back(buf);
+            edges[listV[i]].push_back(buf);
         }
         scanf(" *****");
     }
     for (int i = 0; i < nV; i++) {
-        if (dfs(list[i], list[i], stateV, edges)) {
+        if (dfs(listV[i], listV[i], stateV, edges)) {
             printf("YES\n");
         } else {
             printf("NO\n");
