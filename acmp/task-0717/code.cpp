@@ -4,14 +4,21 @@
 // Time complexity: O(nV + nE)
 // Space complexity: O(nV + nE)
 
-void dfs(int curV, std::vector<int> &listV, std::vector<bool> &visited, const std::vector<std::vector<int>> &edges) {
+long long dfs(int curV,
+              const std::vector<int> &secV,
+              std::vector<int> &orderV,
+              std::vector<bool> &visited,
+              const std::vector<std::vector<int>> &edges
+) {
+    long long curCost = secV[curV];
     visited[curV] = true;
     for (int nextV : edges[curV]) {
         if (!visited[nextV]) {
-            dfs(nextV, listV, visited, edges);
+            curCost += dfs(nextV, secV, orderV, visited, edges);
         }
     }
-    listV.push_back(curV);
+    orderV.push_back(curV);
+    return curCost;
 }
 
 int main() {
@@ -25,22 +32,18 @@ int main() {
     for (int from = 0; from < nV; from++) {
         int nE;
         scanf("%d", &nE);
-        for (int j = 0; j < nE; j++) {
+        for (int i = 0; i < nE; i++) {
             int to;
             scanf("%d", &to);
             edges[from].push_back(to - 1);
         }
     }
     std::vector<bool> visited(nV, false);
-    std::vector<int> listV;
-    dfs(0, listV, visited, edges);
-    long long cost = 0;
-    for (int i = 0; i < (int) listV.size(); i++) {
-        cost += secV[listV[i]];
-    }
-    printf("%lld %d\n", cost, (int) listV.size());
-    for (int i = 0; i < (int) listV.size(); i++) {
-        printf("%d ", listV[i] + 1);
+    std::vector<int> orderV;
+    printf("%lld ", dfs(0, secV, orderV, visited, edges));
+    printf("%d\n", orderV.size());
+    for (int v : orderV) {
+        printf("%d ", v + 1);
     }
     return 0;
 }
