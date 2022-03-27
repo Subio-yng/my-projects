@@ -1,54 +1,54 @@
 #include <stdio.h>
 #include <vector>
 #include <algorithm>
-
+ 
 // Time complexity: O(nV + nE)
 // Space complexity: O(nV + nE)
-
-struct Cell {
-
-    int val;
-
+ 
+struct Theorem {
+ 
+    int amount;
+ 
     int id;
 };
-
-int dfs(int curV, std::vector<bool> &visited, std::vector<std::vector<int>> &edges) {
+ 
+int getCountTheorems(int curV, std::vector<bool> &visited, std::vector<std::vector<int>> &edges) {
     visited[curV] = true;
     int count = 1;
-    std::vector<Cell> orderV;
+    std::vector<Theorem> orderV;
     for (int nextV : edges[curV]) {
         if (!visited[nextV]) {
-            int nextDfs = dfs(nextV, visited, edges);
+            int nextDfs = getCountTheorems(nextV, visited, edges);
             orderV.push_back({nextDfs, nextV});
             count += nextDfs;
         }
     }
-    std::sort(orderV.begin(), orderV.end(), [](const Cell &left, const Cell &right) {
-        return left.val < right.val;
+    std::sort(orderV.begin(), orderV.end(), [](const Theorem &left, const Theorem &right) {
+        return left.amount < right.amount;
     });
     while ((int) orderV.size() > ((int) edges[curV].size() + 1) / 2) {
-        count -= orderV.back().val;
+        count -= orderV.back().amount;
         orderV.pop_back();
     }
     std::vector<int> listV;
-    for (Cell v : orderV) {
+    for (Theorem v : orderV) {
         listV.push_back(v.id);
     }
     edges[curV] = listV;
     visited[curV] = false;
     return count;
 }
-
-void dfsPrint(int curV, std::vector<bool> &visited, const std::vector<std::vector<int>> &edges) {
+ 
+void printOrder(int curV, std::vector<bool> &visited, const std::vector<std::vector<int>> &edges) {
     visited[curV] = true;
     for (int nextV : edges[curV]) {
         if (!visited[nextV]) {
-            dfsPrint(nextV, visited, edges);
+            printOrder(nextV, visited, edges);
         }
     }
     printf("%d\n", curV + 1);
 }
-
+ 
 int main() {
     int nV;
     scanf("%d", &nV);
@@ -62,7 +62,7 @@ int main() {
         }
     }
     std::vector<bool> visited(nV, false);
-    printf("%d\n", dfs(0, visited, edges));
-    dfsPrint(0, visited, edges);
+    printf("%d\n", getCountTheorems(0, visited, edges));
+    printOrder(0, visited, edges);
     return 0;
 }
