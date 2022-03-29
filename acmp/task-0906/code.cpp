@@ -4,7 +4,7 @@
 // Time complexity: O(1)
 // Space complexity: O(1)
 
-struct Cell {
+struct State {
 
 	int a;
 
@@ -12,32 +12,20 @@ struct Cell {
 
 	int c;
 
-	 bool operator <(const Cell &right) const {
-		if (this->a == right.a) {
-			if (this->b == right.b) {
-				return this->c < right.c;
+	bool operator <(const State &right) const {
+		if (a == right.a) {
+			if (b == right.b) {
+				return c < right.c;
 			}
-			return this->b < right.b;
+			return b < right.b;
 		}
-		return this->a < right.a;
-	}
-
-	bool operator !=(const Cell &right) const {
-		if (this->a == right.a) {
-			if (this->b == right.b) {
-				return this->c != right.c;
-			}
-			return true;
-		}
-		return true;
+		return a < right.a;
 	}
 };
 
-int function(int a, int b, int c, std::map<Cell, int> &memory) {
-	Cell cur = {a, b, c};
-	if (memory.lower_bound(cur) == memory.end() || 
-		memory.lower_bound(cur)->first.operator!=(cur)
-	) {
+int function(int a, int b, int c, std::map<State, int> &memory) {
+	State cur = {a, b, c};
+	if (memory.find(cur) == memory.end()) {
 		if (a <= 0 || b <= 0 || c <= 0) {
 			memory[cur] = 1;
 		} else if (a > 20 || b > 20 || c > 20) {
@@ -59,7 +47,7 @@ int function(int a, int b, int c, std::map<Cell, int> &memory) {
 int main() {
 	int a, b, c;
 	scanf("%d %d %d", &a, &b, &c);
-	std::map<Cell, int> memory;
+	std::map<State, int> memory;
 	printf("%d", function(a, b, c, memory));
 	return 0;
 }
