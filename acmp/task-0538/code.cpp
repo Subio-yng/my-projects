@@ -31,9 +31,9 @@ struct Coord {
 		return {x, y};
 	}
 
-	int getDistance(const Coord &right) {
-		int dx = x - right.x;
-		int dy = y - right.y;
+	int getDistanceTo(const Coord &c) {
+		int dx = x - c.x;
+		int dy = y - c.y;
 		return dx * dx + dy * dy;
 	}
 };
@@ -69,7 +69,7 @@ int main() {
 		std::vector<std::vector<int>> edges(nV);
 		for (int v1 = 0; v1 < nV; v1++) {
 			for (int v2 = v1 + 1; v2 < nV; v2++) {
-				if (listV[v1].getDistance(listV[v2]) < midDist) {
+				if (listV[v1].getDistanceTo(listV[v2]) < midDist) {
 					edges[v1].push_back(v2);
 					edges[v2].push_back(v1);
 				}
