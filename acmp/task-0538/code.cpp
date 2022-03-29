@@ -32,8 +32,9 @@ struct Coord {
 	}
 
 	int getDistance(const Coord &right) {
-		return (x - right.x) * (x - right.x) + 
-			   (y - right.y) * (y - right.y);
+		int dx = x - right.x;
+		int dy = y - right.y;
+		return dx * dx + dy * dy;
 	}
 };
 
@@ -66,11 +67,11 @@ int main() {
 	while (leftDist + 1 < rightDist) {
 		int midDist = leftDist + ((rightDist - leftDist) / 2);
 		std::vector<std::vector<int>> edges(nV);
-		for (int i = 0; i < nV; i++) {
-			for (int j = i + 1; j < nV; j++) {
-				if (listV[i].getDistance(listV[j]) < midDist) {
-					edges[i].push_back(j);
-					edges[j].push_back(i);
+		for (int v1 = 0; v1 < nV; v1++) {
+			for (int v2 = v1 + 1; v2 < nV; v2++) {
+				if (listV[v1].getDistance(listV[v2]) < midDist) {
+					edges[v1].push_back(v2);
+					edges[v2].push_back(v1);
 				}
 			}
 		}
