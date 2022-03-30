@@ -1,12 +1,14 @@
 #include <stdio.h>
 
+// Time complexity: O(log(range))
 // Space complexity: O(1)
 
 int main() {
-	int leftX = -1'000'000'001;
-	int rightX = 1'000'000'001;
-	int leftY = -1'000'000'001;
-	int rightY = 1'000'000'001;
+	const int INF = 1'000'000'000 + 1;
+	int leftX = -INF;
+	int rightX = INF;
+	int leftY = -INF;
+	int rightY = INF;
 	int x, y;
 	do {
 		int midX = (leftX + rightX) / 2;
