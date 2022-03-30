@@ -4,11 +4,11 @@
 // Space complexity: O(1)
 
 int main() {
-	const int INF = 1'000'000'000 + 1;
-	int leftX = -INF;
-	int rightX = INF;
-	int leftY = -INF;
-	int rightY = INF;
+	const int MAX_COORD = 1'000'000'000 + 1;
+	int leftX = -MAX_COORD;
+	int rightX = MAX_COORD;
+	int leftY = -MAX_COORD;
+	int rightY = MAX_COORD;
 	int x, y;
 	do {
 		int midX = (leftX + rightX) / 2;
