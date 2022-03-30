@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <algorithm>
   
-// Time complexity: O(min(lenArea, widthArea))
+// Time complexity: O(log(min(lenArea, widthArea)))
 // Space complexity: O(1)
 
 bool canPlace(long long wArea,
