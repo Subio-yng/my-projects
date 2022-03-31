@@ -5,7 +5,7 @@
 // Time complexity: O(len)
 // Space complexity: O(len)
 
-int function(const std::string &str) {
+int getAnswer(const std::string &str) {
 	if ('0' <= str.front() && str.front() <= '9') {
 		return str.front() - '0';
 	}
@@ -27,16 +27,16 @@ int function(const std::string &str) {
 	std::string first = str.substr(2, pointId - 2);
 	std::string second = str.substr(pointId + 1, len - pointId - 1);
 	if (str.front() == 'M') {
-		return std::max(function(first), function(second));
+		return std::max(getAnswer(first), getAnswer(second));
 	}
 	if (str.front() == 'm') {
-		return std::min(function(first), function(second));
+		return std::min(getAnswer(first), getAnswer(second));
 	}
 }
 
 int main() {
 	char buf[1 + 1000];
 	scanf("%s", &buf);
-	printf("%d", function(buf));
+	printf("%d", getAnswer(buf));
 	return 0;
 }
