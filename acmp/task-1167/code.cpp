@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <string>
 
-// Time complexity: O(len)
+// Time complexity: O(len^2)
 // Space complexity: O(len)
 
 int getAnswer(const std::string &str) {
