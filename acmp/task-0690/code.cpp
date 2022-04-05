@@ -2,7 +2,6 @@
 #include <vector>
 #include <random>
 
-// Time complexity: O(sizeI * sizeJ)
 // Space complexity: O(sizeI * sizeJ)
 
 struct Coord {
@@ -12,10 +11,7 @@ struct Coord {
     int j;
 };
 
-std::vector<Coord> MOVE = {{-2, -1}, {-2, 1},
-                           {-1, -2}, {-1, 2},
-                           {1, -2}, {1, 2},
-                           {2, -1}, {2, 1}};
+std::vector<Coord> MOVE = {{-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}};
 
 void dfs(int curI,
          int curJ,
@@ -23,7 +19,7 @@ void dfs(int curI,
          int sizeJ,
          int move, 
          bool &foundWay,
-         std::vector<std::vector<short int>> &state, 
+         std::vector<std::vector<short>> &state, 
          std::vector<std::vector<int>> &way
 ) {
     way[curI][curJ] = move;
@@ -56,7 +52,7 @@ int main() {
     scanf("%d %d", &sizeI, &sizeJ);
     int curI = 0;
     int curJ = 0;
-    std::vector<std::vector<short int>> state(sizeI, std::vector<short int>(sizeJ, 0));
+    std::vector<std::vector<short>> state(sizeI, std::vector<short>(sizeJ, 0));
     for (int i = 0; i < sizeI; i++) {
         for (int j = 0; j < sizeJ; j++) {
             char val;
@@ -75,18 +71,14 @@ int main() {
         }
     }
     std::vector<std::vector<int>> way(sizeI, std::vector<int>(sizeJ, 0));
-    std::vector<std::vector<short int>> curState = state;
+    std::vector<std::vector<short>> curState = state;
     bool foundWay = false;
+    std::random_device rd;
+    std::mt19937 gen(rd());
     while (!foundWay) {
-        std::random_device rd;
-        std::mt19937 g(rd());
-        std::shuffle(MOVE.begin(), MOVE.end(), g);
-        for (int i = 0; i < sizeI; i++) {
-            for (int j = 0; j < sizeJ; j++) {
-                way[i][j] = 0;
-                curState[i][j] = state[i][j];
-            }
-        }
+        std::shuffle(MOVE.begin(), MOVE.end(), gen);
+        way.assign(sizeI, std::vector<int>(sizeJ, 0));
+        curState = state;
         dfs(curI, curJ, sizeI, sizeJ, 1, foundWay, curState, way);
     }
     int countMove = sizeI * sizeJ;
