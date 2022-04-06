@@ -5,30 +5,34 @@
 // Time complexity: O(nV^2)
 // Space complexity: O(nV^2)
 
-void bfs(int curV,
+void bfs(int startV,
 		 int endV,
 		 std::vector<int> &dist,
 		 std::queue<int> &inProcess,
 		 std::vector<bool> &visited, 
 		 const std::vector<std::vector<bool>> &edges
 ) {
-	dist[curV] = 0;
-	inProcess.push(curV);
-	visited[curV] = true;
+	dist[startV] = 0;
+	inProcess.push(startV);
+	visited[startV] = true;
 	while (!inProcess.empty()) {
-		int nextV = inProcess.front();
+		int curV = inProcess.front();
 		inProcess.pop();
-		for (int v = 0; v < (int) edges[nextV].size(); v++) {
-			if (edges[nextV][v] && !visited[v]) {
-				dist[v] = dist[nextV] + 1;
-				inProcess.push(v);
-				visited[v] = true;
+		if (curV == endV) {
+			return;
+		}
+		for (int nextV = 0; nextV < (int) edges[curV].size(); nextV++) {
+			if (edges[curV][nextV] && !visited[nextV]) {
+				dist[nextV] = dist[curV] + 1;
+				inProcess.push(nextV);
+				visited[nextV] = true;
 			}
 		}
 	}
 }
 
 int main() {
+	const int UNDEF = -1;
 	int nV;
 	scanf("%d", &nV);
 	std::vector<std::vector<bool>> edges(nV, std::vector<bool>(nV, false));
@@ -43,10 +47,12 @@ int main() {
 	}
 	int startV, endV;
 	scanf("%d %d", &startV, &endV);
+	startV--;
+	endV--;
 	std::vector<bool> visited(nV, false);
 	std::queue<int> inProcess;
-	std::vector<int> dist(nV, -1);
-	bfs(startV - 1, endV - 1, dist, inProcess, visited, edges);
-	printf("%d", dist[endV - 1]);
+	std::vector<int> dist(nV, UNDEF);
+	bfs(startV, endV, dist, inProcess, visited, edges);
+	printf("%d", dist[endV]);
 	return 0;
 }
