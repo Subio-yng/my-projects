@@ -19,6 +19,7 @@ void bfs(int sizeI,
 ) {
 	while (!inProcess.empty()) {
 		Coord cur = inProcess.front();
+		field[cur.i][cur.j] = false;
 		inProcess.pop();
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
@@ -31,8 +32,8 @@ void bfs(int sizeI,
 					0 <= newJ && newJ < sizeJ &&
 					field[newI][newJ]
 				) {
-					field[newI][newJ] = false;
 					inProcess.push({newI, newJ});
+					field[newI][newJ] = false;
 				}
 			}
 		}
@@ -58,7 +59,6 @@ int main() {
 		for (int j = 0; j < sizeJ; j++) {
 			if (field[i][j]) {
 				inProcess.push({i, j});
-				field[i][j] = false;
 				bfs(sizeI, sizeJ, inProcess, field);
 				count++;
 			}
