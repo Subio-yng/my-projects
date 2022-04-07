@@ -18,21 +18,21 @@ void bfs(int sizeI, int sizeJ, std::queue<Coord> &inProcess, std::vector<std::ve
 	while (!inProcess.empty()) {
 		Coord cur = inProcess.front();
 		inProcess.pop();
-		if (cur.i + 1 < sizeI && dist[cur.i + 1][cur.j] == UNDEF) {
-			dist[cur.i + 1][cur.j] = dist[cur.i][cur.j] + 1;
-			inProcess.push({cur.i + 1, cur.j});
-		}
-		if (0 <= cur.i - 1 && dist[cur.i - 1][cur.j] == UNDEF) {
-			dist[cur.i - 1][cur.j] = dist[cur.i][cur.j] + 1;
-			inProcess.push({cur.i - 1, cur.j});
-		}
-		if (cur.j + 1 < sizeJ && dist[cur.i][cur.j + 1] == UNDEF) {
-			dist[cur.i][cur.j + 1] = dist[cur.i][cur.j] + 1;
-			inProcess.push({cur.i, cur.j + 1});
-		}
-		if (0 <= cur.j - 1 && dist[cur.i][cur.j - 1] == UNDEF) {
-			dist[cur.i][cur.j - 1] = dist[cur.i][cur.j] + 1;
-			inProcess.push({cur.i, cur.j - 1});
+		for (int moveI = -1; moveI <= 1; moveI++) {
+			for (int moveJ = -1; moveJ <= 1; moveJ++) {
+				if (moveI * moveI + moveJ * moveJ != 1) {
+					continue;
+				}
+				int newI = cur.i + moveI;
+				int newJ = cur.j + moveJ;
+				if (0 <= newI && newI < sizeI && 
+					0 <= newJ && newJ < sizeJ &&
+					dist[newI][newJ] == UNDEF
+				) {
+					dist[newI][newJ] = dist[cur.i][cur.j] + 1;
+					inProcess.push({newI, newJ});
+				}
+			}
 		}
 	}
 }
