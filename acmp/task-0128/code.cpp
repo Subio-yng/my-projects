@@ -18,8 +18,6 @@ struct Coord {
 	}
 };
 
-std::vector<Coord> MOVE = {{-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}};
-
 void bfs(Coord startV,
 		 Coord endV,
 		 int size,
@@ -36,16 +34,21 @@ void bfs(Coord startV,
 		if (curV.i == endV.i && curV.j == endV.j) {
 			return;
 		}
-		for (int m = 0; m < 8; m++) {
-			int newI = curV.i + MOVE[m].i;
-			int newJ = curV.j + MOVE[m].j;
-			if (0 <= newI && newI < size &&
-				0 <= newJ && newJ < size &&
-				!visited[newI][newJ]
-			) {
-				visited[newI][newJ] = true;
-				dist[newI][newJ] = dist[curV.i][curV.j] + 1;
-				inProcess.push({newI, newJ});
+		for (int moveI = -2; moveI <= 2; moveI++) {
+			for (int moveJ = -2; moveJ <= 2; moveJ++) {
+				if (moveI * moveI + moveJ * moveJ != 5) {
+					continue;
+				}
+				int newI = curV.i + moveI;
+				int newJ = curV.j + moveJ;
+				if (0 <= newI && newI < size &&
+					0 <= newJ && newJ < size &&
+					!visited[newI][newJ]
+				) {
+					visited[newI][newJ] = true;
+					dist[newI][newJ] = dist[curV.i][curV.j] + 1;
+					inProcess.push({newI, newJ});
+				}
 			}
 		}
 	}
