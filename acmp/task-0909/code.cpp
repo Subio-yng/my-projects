@@ -5,7 +5,7 @@
 // Time complexity: O(sizeI * sizeJ)
 // Space complexity: O(sizeI * sizeJ)
 
-enum Part {
+enum ShipState {
 	UNMARKED, WHOLE, DESTROYED
 };
 
@@ -21,10 +21,11 @@ void bfs(int sizeI,
 		 bool &isWhole,
 		 bool &isDestroyed,
 		 std::queue<Coord> &inProcess,
-		 std::vector<std::vector<Part>> &field
+		 std::vector<std::vector<ShipState>> &field
 ) {
 	while (!inProcess.empty()) {
 		Coord cur = inProcess.front();
+		field[cur.i][cur.j] = ShipState::UNMARKED;
 		inProcess.pop();
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
@@ -35,16 +36,16 @@ void bfs(int sizeI,
 				int newJ = cur.j + j;
 				if (0 <= newI && newI < sizeI && 
 					0 <= newJ && newJ < sizeJ && 
-					field[newI][newJ] != Part::UNMARKED
+					field[newI][newJ] != ShipState::UNMARKED
 				) {
-					if (field[newI][newJ] == Part::WHOLE) {
+					if (field[newI][newJ] == ShipState::WHOLE) {
 						isWhole = true;
 					}
-					if (field[newI][newJ] == Part::DESTROYED) {
+					if (field[newI][newJ] == ShipState::DESTROYED) {
 						isDestroyed = true;
 					}
 					inProcess.push({newI, newJ});
-					field[newI][newJ] = Part::UNMARKED;
+					field[newI][newJ] = ShipState::UNMARKED;
 				}
 			}
 		}
@@ -54,16 +55,16 @@ void bfs(int sizeI,
 int main() {
 	int sizeI, sizeJ;
 	scanf("%d %d", &sizeI, &sizeJ);
-	std::vector<std::vector<Part>> field(sizeI, std::vector<Part>(sizeJ, Part::UNMARKED));
+	std::vector<std::vector<ShipState>> field(sizeI, std::vector<ShipState>(sizeJ, ShipState::UNMARKED));
 	for (int i = 0; i < sizeI; i++) {
 		for (int j = 0; j < sizeJ; j++) {
 			char val;
 			scanf(" %c", &val);
 			if (val == 'S') {
-				field[i][j] = Part::WHOLE;
+				field[i][j] = ShipState::WHOLE;
 			}
 			if (val == 'X') {
-				field[i][j] = Part::DESTROYED;
+				field[i][j] = ShipState::DESTROYED;
 			}
 		}
 	}
@@ -73,10 +74,9 @@ int main() {
 	int countDestroyed = 0;
 	for (int i = 0; i < sizeI; i++) {
 		for (int j = 0; j < sizeJ; j++) {
-			if (field[i][j] != Part::UNMARKED) {
-				bool isWhole = field[i][j] == Part::WHOLE;
-				bool isDestroyed = field[i][j] == Part::DESTROYED;
-				field[i][j] = Part::UNMARKED;
+			if (field[i][j] != ShipState::UNMARKED) {
+				bool isWhole = field[i][j] == ShipState::WHOLE;
+				bool isDestroyed = field[i][j] == ShipState::DESTROYED;
 				inProcess.push({i, j});
 				bfs(sizeI, sizeJ, isWhole, isDestroyed, inProcess, field);
 				if (isWhole && !isDestroyed) {
