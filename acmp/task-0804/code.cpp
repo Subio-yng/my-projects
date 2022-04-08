@@ -34,9 +34,9 @@ void bfs(Coord start,
 				int newI = cur.i + iMove;
 				int newJ = cur.j + jMove;
 				if (0 <= newI && newI < sizeI &&
-					0 <= newJ && newJ < sizeJ &&
-					field[newI][newJ] &&
-					dist[newI][newJ] == UNDEF
+				    0 <= newJ && newJ < sizeJ &&
+				    field[newI][newJ] &&
+				    dist[newI][newJ] == UNDEF
 				) {
 					dist[newI][newJ] = dist[cur.i][cur.j] + 1;
 					inProcess.push({newI, newJ});
@@ -70,7 +70,7 @@ int main() {
 	bfs(tiger, sizeI, sizeJ, field, distTiger);
 	printf("%d\n", distSlave[sizeI - 2][sizeJ - 2]);
 	if (distTiger[sizeI - 2][sizeJ - 2] == UNDEF ||
-		distSlave[sizeI - 2][sizeJ - 2] < distTiger[sizeI - 2][sizeJ - 2]
+	    distSlave[sizeI - 2][sizeJ - 2] < distTiger[sizeI - 2][sizeJ - 2]
 	) {
 		printf("Yes");
 	} else {
