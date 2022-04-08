@@ -15,14 +15,14 @@ struct Coord {
 const int UNDEF = -1;
 
 void bfs(Coord start,
-		 int sizeI,
+         int sizeI,
          int sizeJ,
-		 std::vector<std::vector<bool>> &field,
+         const std::vector<std::vector<bool>> &field,
          std::vector<std::vector<int>> &dist
 ) {
-	std::queue<Coord> inProcess;
-	inProcess.push(start);
-	dist[start.i][start.j] = 0;
+    std::queue<Coord> inProcess;
+    inProcess.push(start);
+    dist[start.i][start.j] = 0;
     while (!inProcess.empty()) {
         Coord cur = inProcess.front();
         inProcess.pop();
@@ -50,6 +50,7 @@ int main() {
 	scanf("%d %d", &sizeI, &sizeJ);
 	std::vector<std::vector<bool>> field(sizeI, std::vector<bool>(sizeJ, false));
 	Coord tiger;
+	Coord slave = {1, 1};
 	for (int i = 0; i < sizeI; i++) {
 		for (int j = 0; j < sizeJ; j++) {
 			char val;
@@ -63,12 +64,12 @@ int main() {
 		}
 	}
 	std::vector<std::vector<int>> distSlave(sizeI, std::vector<int>(sizeJ, UNDEF));
-	bfs({1, 1}, sizeI, sizeJ, field, distSlave);
+	bfs(slave, sizeI, sizeJ, field, distSlave);
 	std::vector<std::vector<int>> distTiger(sizeI, std::vector<int>(sizeJ, UNDEF));
 	bfs(tiger, sizeI, sizeJ, field, distTiger);
 	printf("%d\n", distSlave[sizeI - 2][sizeJ - 2]);
-	if (distSlave[sizeI - 2][sizeJ - 2] < distTiger[sizeI - 2][sizeJ - 2] ||
-		distTiger[sizeI - 2][sizeJ - 2] == UNDEF
+	if (distTiger[sizeI - 2][sizeJ - 2] == UNDEF ||
+		distSlave[sizeI - 2][sizeJ - 2] < distTiger[sizeI - 2][sizeJ - 2]
 	) {
 		printf("Yes");
 	} else {
