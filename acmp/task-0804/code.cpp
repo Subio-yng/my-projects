@@ -45,35 +45,36 @@ void bfs(Coord start,
         }
     }
 }
+
 int main() {
-	int sizeI, sizeJ;
-	scanf("%d %d", &sizeI, &sizeJ);
-	std::vector<std::vector<bool>> field(sizeI, std::vector<bool>(sizeJ, false));
-	Coord tiger;
-	Coord slave = {1, 1};
-	for (int i = 0; i < sizeI; i++) {
-		for (int j = 0; j < sizeJ; j++) {
-			char val;
-			scanf(" %c", &val);
-			if (val != '#') {
-				field[i][j] = true;
-			}
-			if (val == 'T') {
-				tiger = {i, j};
-			}
-		}
-	}
-	std::vector<std::vector<int>> distSlave(sizeI, std::vector<int>(sizeJ, UNDEF));
-	bfs(slave, sizeI, sizeJ, field, distSlave);
-	std::vector<std::vector<int>> distTiger(sizeI, std::vector<int>(sizeJ, UNDEF));
-	bfs(tiger, sizeI, sizeJ, field, distTiger);
-	printf("%d\n", distSlave[sizeI - 2][sizeJ - 2]);
-	if (distTiger[sizeI - 2][sizeJ - 2] == UNDEF ||
+    int sizeI, sizeJ;
+    scanf("%d %d", &sizeI, &sizeJ);
+    std::vector<std::vector<bool>> field(sizeI, std::vector<bool>(sizeJ, false));
+    Coord tiger;
+    Coord slave = {1, 1};
+    for (int i = 0; i < sizeI; i++) {
+        for (int j = 0; j < sizeJ; j++) {
+            char val;
+            scanf(" %c", &val);
+            if (val != '#') {
+                field[i][j] = true;
+            }
+            if (val == 'T') {
+                tiger = {i, j};
+            }
+        }
+    }
+    std::vector<std::vector<int>> distSlave(sizeI, std::vector<int>(sizeJ, UNDEF));
+    bfs(slave, sizeI, sizeJ, field, distSlave);
+    std::vector<std::vector<int>> distTiger(sizeI, std::vector<int>(sizeJ, UNDEF));
+    bfs(tiger, sizeI, sizeJ, field, distTiger);
+    printf("%d\n", distSlave[sizeI - 2][sizeJ - 2]);
+    if (distTiger[sizeI - 2][sizeJ - 2] == UNDEF ||
         distSlave[sizeI - 2][sizeJ - 2] < distTiger[sizeI - 2][sizeJ - 2]
-	) {
+    ) {
         printf("Yes");
-	} else {
+    } else {
         printf("No");
-	}
-	return 0;
+    }
+    return 0;
 }
