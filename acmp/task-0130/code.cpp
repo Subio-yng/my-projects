@@ -63,7 +63,7 @@ int main() {
 	if (dist[endV.i][endV.j] % 2 == 0) {
 		printf("%d", dist[endV.i][endV.j] / 2);
 	} else {
-		printf("-1");
+		printf("%d", UNDEF);
 	}
 	return 0;
 }
