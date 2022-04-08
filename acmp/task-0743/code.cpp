@@ -9,7 +9,7 @@ const int UNDEF = -1;
 
 void bfs(const std::string &startV,
 		const std::string &endV,
-	    std::unordered_map<std::string, int> &dist,
+		std::unordered_map<std::string, int> &dist,
 		std::unordered_map<std::string, std::vector<std::string>> &edges
 ) {
 	std::queue<std::string> inProcess;
