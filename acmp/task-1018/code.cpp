@@ -32,6 +32,9 @@ int bfs(Coord start,
 	dist[start.i][start.j] = 0;
 	while (!inProcess.empty()) {
 		Coord cur = inProcess.front();
+		if (cur.i == 0 || cur.j == 0 || cur.i == sizeI - 1 || cur.j == sizeJ - 1) {
+			return dist[cur.i][cur.j] + 1;
+		}
 		inProcess.pop();
 		for (int iMove = -1; iMove <= 1; iMove++) {
 			for (int jMove = -1; jMove <= 1; jMove++) {
@@ -44,19 +47,17 @@ int bfs(Coord start,
 				int newI = cur.i + iMove;
 				int newJ = cur.j + jMove;
 				if (0 <= newI && newI < sizeI &&
-					0 <= newJ && newJ < sizeJ
+					0 <= newJ && newJ < sizeJ &&
+					field[newI][newJ] && 
+					dist[newI][newJ] == -1
 				) {
-					if (field[newI][newJ] && dist[newI][newJ] == -1) {
-						dist[newI][newJ] = dist[cur.i][cur.j] + 1;
-						inProcess.push({newI, newJ});
-					}
-				} else if (minDistToExit == -1 || minDistToExit > dist[cur.i][cur.j] + 1) {
-					minDistToExit = dist[cur.i][cur.j] + 1;
+					dist[newI][newJ] = dist[cur.i][cur.j] + 1;
+					inProcess.push({newI, newJ});
 				}
 			}
 		}
 	}
-	return minDistToExit;
+	return -1;
 }
 
 int main() {
