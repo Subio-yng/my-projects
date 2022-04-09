@@ -26,7 +26,6 @@ int bfs(Coord start,
 		std::vector<std::vector<int>> &dist, 
 		const std::vector<std::vector<bool>> &field
 ) {
-	int minDistToExit = -1;
 	std::queue<Coord> inProcess;
 	inProcess.push(start);
 	dist[start.i][start.j] = 0;
@@ -49,7 +48,7 @@ int bfs(Coord start,
 				if (0 <= newI && newI < sizeI &&
 					0 <= newJ && newJ < sizeJ &&
 					field[newI][newJ] && 
-					dist[newI][newJ] == -1
+					dist[newI][newJ] == UNDEF
 				) {
 					dist[newI][newJ] = dist[cur.i][cur.j] + 1;
 					inProcess.push({newI, newJ});
@@ -57,7 +56,7 @@ int bfs(Coord start,
 			}
 		}
 	}
-	return -1;
+	return UNDEF;
 }
 
 int main() {
