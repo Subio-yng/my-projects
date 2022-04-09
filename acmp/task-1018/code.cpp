@@ -75,7 +75,7 @@ int main() {
 	}
 	std::vector<std::vector<int>> dist(sizeI, std::vector<int>(sizeJ, UNDEF));
 	int minDist = bfs(start, sizeI, sizeJ, dist, field);
-	if (minDist == -1) {
+	if (minDist == UNDEF) {
 		printf("No solution");
 	} else {
 		printf("%d", minDist);
