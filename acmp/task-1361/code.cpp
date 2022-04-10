@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string>
 #include <vector>
 #include <queue>
 #include <map>
@@ -7,74 +6,43 @@
 // Time complexity: O(1)
 // Space complexity: O(1)
 
-std::string getShift(const std::string &str, int len) {
-	std::string newStr;
-	for (int i = 0; i < len; i++) {
-		newStr += str[(len + i - 1) % len];
-	}
-	return newStr;
-}
+const int LENGTH = 1000;
 
-void bfs(const std::string &start,
-		 const std::string &end,
-		 int len
-) {
-	std::map<std::string, std::vector<std::string>> way;
-	std::queue<std::string> inProcess;
+void bfs(int start, int end) {
+	std::map<int, std::vector<int>> way;
+	std::queue<int> inProcess;
 	inProcess.push(start);
 	while (!inProcess.empty()) {
-		auto cur = inProcess.front();
-		way[cur].push_back(cur);
+		int cur = inProcess.front();
 		inProcess.pop();
-		if (cur == end) {
-			break;
+		way[cur].push_back(cur);
+		if (cur / LENGTH < 9 && way[cur + LENGTH].empty()) {
+			way[cur + LENGTH] = way[cur];
+			inProcess.push(cur + LENGTH);
 		}
-		std::string next = cur;
-		if (next[0] < '9') {
-			next[0]++;
-			if (way[next].empty()) {
-				way[next] = way[cur];
-				inProcess.push(next);
-			}
-			next[0]--;
+		if (cur % 10 > 1 && way[cur - 1].empty()) {
+			way[cur - 1] = way[cur];
+			inProcess.push(cur - 1);
 		}
-		if (next[len - 1] > '1') {
-			next[len - 1]--;
-			if (way[next].empty()) {
-				way[next] = way[cur];
-				inProcess.push(next);
-			}
-			next[len - 1]++;
+		int rightShift = cur % 10 * LENGTH + cur / 10;
+		if (way[rightShift].empty()) {
+			way[rightShift] = way[cur];
+			inProcess.push(rightShift);
 		}
-		next = getShift(next, len);
-		if (way[next].empty()) {
-			way[next] = way[cur];
-			inProcess.push(next);
-		}
-		next = cur;
-		std::reverse(next.begin(), next.end());
-		next = getShift(next, len);
-		std::reverse(next.begin(), next.end());
-		if (way[next].empty()) {
-			way[next] = way[cur];
-			inProcess.push(next);
+		int leftShift = cur % LENGTH * 10 + cur / LENGTH;
+		if (way[leftShift].empty()) {
+			way[leftShift] = way[cur];
+			inProcess.push(leftShift);
 		}
 	}
 	for (auto next : way[end]) {
-		printf("%s\n", next.c_str());
+		printf("%d\n", next);
 	}
 }
 
 int main() {
-	const int LENGTH = 4;
-	std::string start(LENGTH, ' ');
-	for (int i = 0; i < LENGTH; i++) {
-		scanf(" %c", &start[i]);
-	}
-	std::string end(LENGTH, ' ');
-	for (int i = 0; i < LENGTH; i++) {
-		scanf(" %c", &end[i]);
-	}
-	bfs(start, end, LENGTH);
+	int start, end;
+	scanf("%d %d", &start, &end);
+	bfs(start, end);
 	return 0;
 }
