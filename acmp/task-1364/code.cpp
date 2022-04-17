@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <algorithm>
+#include <vector>
+#include <string>
 #include <queue>
 #include <map>
- 
-// Time complexity: O(1)
-// Space complexity: O(1)
 
 const int COUNT_STATE = 6;
-const int START_POINT = -2;
 const int UNDEF = -1;
 
 struct Pair {
@@ -33,42 +31,36 @@ struct Pair {
         return f < a.f;
     }
 
-    bool isStartPoint() {
-        return f == START_POINT;
-    }
-
     bool isUndef() {
         return f == UNDEF;
     }
 };
 
-void printWay(std::map<Pair, Pair> &from, Pair end, Pair capacity) {
-    if (!from[end].isStartPoint()) {
-        printWay(from, from[end], capacity);
+struct Next {
+
+    Pair n;
+
+    std::string ops;
+};
+
+void printWay(std::map<Pair, Next> &from,
+              Pair end, 
+              Pair capacity
+) {
+    if (end.f != 0 || end.s != 0) {
+        printWay(from, from[end].n, capacity);
     } else {
         return;
     }
-    if (end.f == capacity.f && from[end].s == end.s) {
-        printf(">A\n");
-    } else if (end.s == capacity.s && from[end].f == end.f) {
-        printf(">B\n");
-    } else if (end.f == 0 && from[end].s == end.s) {
-        printf("A>\n");
-    } else if (end.s == 0 && from[end].f == end.f) {
-        printf("B>\n");
-    } else if (end.s == capacity.s || end.f == 0) {
-        printf("A>B\n");
-    } else {
-        printf("B>A\n");
-    }
+    printf("%s\n", from[end].ops.c_str());
 }
 
 void bfs(Pair capacity, int end) {
+    std::vector<Pair> next(COUNT_STATE);
+    std::vector<std::string> ops = {"A>", "B>", ">A", ">B", "A>B", "B>A"};
     std::queue<Pair> inProcess;
     inProcess.push({0, 0});
-    std::map<Pair, Pair> from;
-    from[{0, 0}] = {START_POINT, START_POINT};
-    std::vector<Pair> next(COUNT_STATE);
+    std::map<Pair, Next> from;
     while (!inProcess.empty()) {
         Pair cur = inProcess.front();
         if (cur.f == end || cur.s == end) {
@@ -84,10 +76,10 @@ void bfs(Pair capacity, int end) {
                    std::min(capacity.s, cur.f + cur.s)};
         next[5] = {std::min(capacity.f, cur.f + cur.s), 
                    cur.s - std::min(capacity.f - cur.f, cur.s)};
-        for (Pair n : next) {
-            if (from[n].isUndef()) {
-                from[n] = cur;
-                inProcess.push(n);
+        for (int i = 0; i < COUNT_STATE; i++) {
+            if (from[next[i]].n.isUndef()) {
+                from[next[i]] = {cur, ops[i]};
+                inProcess.push(next[i]);
             }
         }
     }
