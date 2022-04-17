@@ -10,7 +10,7 @@ const int COUNT_STATE = 4;
 const int UNDEF = -1;
 const int START_POINT = 0;
 
-void printWay(std::vector<int> from, int last) {
+void printWay(const std::vector<int> &from, int last) {
     if (from[last] != START_POINT) {
         printWay(from, from[last]);
     }
@@ -30,10 +30,10 @@ void bfs(int start, int end) {
         next[1] = cur - 1;
         next[2] = cur % 10 * SIZE + cur / 10;
         next[3] = cur % SIZE * 10 + cur / SIZE;
-        for (int i = 0; i < COUNT_STATE; i++) {
-            if (next[i] % 10 != 0 && next[i] < SIZE * 10 && from[next[i]] == UNDEF) {
-                from[next[i]] = cur;
-                inProcess.push(next[i]);
+        for (int n : next) {
+            if (n % 10 != 0 && n < SIZE * 10 && from[n] == UNDEF) {
+                from[n] = cur;
+                inProcess.push(n);
             }
         }
     }
