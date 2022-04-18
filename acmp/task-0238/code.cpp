@@ -51,10 +51,12 @@ void bfs(Coord start,
 	while (!inProcess.empty()) {
 		Coord cur = inProcess.front();
 		inProcess.pop();
-		Coord curTunnel = tunnels[cur];
-		if (curTunnel.i != UNDEF && dist[curTunnel.i][curTunnel.j] == UNDEF) {
-			dist[curTunnel.i][curTunnel.j] = dist[cur.i][cur.j] + 1;
-			inProcess.push(curTunnel);
+		if (tunnels[cur].i != UNDEF) {
+			Coord curTunnel = tunnels[cur];
+			if (dist[curTunnel.i][curTunnel.j] == UNDEF) {
+				dist[curTunnel.i][curTunnel.j] = dist[cur.i][cur.j] + 1;
+				inProcess.push(curTunnel);
+			}
 		}
 		for (int di = -1; di <= 1; di++) {
 			for (int dj = -1; dj <= 1; dj++) {
