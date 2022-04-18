@@ -56,13 +56,13 @@ void bfs(Coord start,
 			dist[curTunnel.i][curTunnel.j] = dist[cur.i][cur.j] + 1;
 			inProcess.push(curTunnel);
 		}
-		for (int i = -1; i <= 1; i++) {
-			for (int j = -1; j <= 1; j++) {
-				if (i * i + j * j != 1) {
+		for (int di = -1; di <= 1; di++) {
+			for (int dj = -1; dj <= 1; dj++) {
+				if (di * di + dj * dj != 1) {
 					continue;
 				}
-				int newI = cur.i + i;
-				int newJ = cur.j + j;
+				int newI = cur.i + di;
+				int newJ = cur.j + dj;
 				if (0 <= newI && newI < sizeI &&
 					0 <= newJ && newJ < sizeJ &&
 					state[newI][newJ] &&
