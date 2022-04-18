@@ -36,13 +36,13 @@ int bfs(Coord start,
         if (cur.i == end.i && cur.j == end.j) {
             return dist[end.i][end.j];
         }
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (i * i + j * j != 1) {
+        for (int di = -1; di <= 1; di++) {
+            for (int dj = -1; dj <= 1; dj++) {
+                if (di * di + dj * dj != 1) {
                     continue;
                 }
-                int newI = cur.i + i;
-                int newJ = cur.j + j;
+                int newI = cur.i + di;
+                int newJ = cur.j + dj;
                 if (0 <= newI && newI <= sizeI + 1 &&
                     0 <= newJ && newJ <= sizeJ + 1 &&
                     dist[newI][newJ] == UNDEF &&
