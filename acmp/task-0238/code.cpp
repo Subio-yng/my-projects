@@ -14,16 +14,6 @@ struct Coord {
 
 	int j;
 
-	Coord() 
-		: i(UNDEF)
-		, j(UNDEF)
-	{}
-
-	Coord(int i, int j)
-		: i(i)
-		, j(j)
-	{}
-
 	static Coord read() {
 		int i, j;
 		scanf("%d %d", &i, &j);
@@ -51,7 +41,7 @@ void bfs(Coord start,
 	while (!inProcess.empty()) {
 		Coord cur = inProcess.front();
 		inProcess.pop();
-		if (tunnels[cur].i != UNDEF) {
+		if (tunnels.find(cur) != tunnels.end()) {
 			Coord curTunnel = tunnels[cur];
 			if (dist[curTunnel.i][curTunnel.j] == UNDEF) {
 				dist[curTunnel.i][curTunnel.j] = dist[cur.i][cur.j] + 1;
