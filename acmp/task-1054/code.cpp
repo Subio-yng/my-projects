@@ -35,16 +35,20 @@ int bfs(Coord start,
                 if (di * di + dj * dj != 1) {
                     continue;
                 }
-                for (int newI = cur.i + di, newJ = cur.j + dj;
-                    0 <= newI && newI < sizeI && 0 <= newJ && newJ < sizeJ && state[newI][newJ];
-                    newI += di, newJ += dj
-                ) {
-                    if (dist[newI][newJ] == UNDEF || dist[newI][newJ] > dist[cur.i][cur.j] + 1) {
+                int newI = cur.i + di;
+                int newJ = cur.j + dj;
+                while (0 <= newI && newI < sizeI && 0 <= newJ && newJ < sizeJ) {
+                    if (state[newI][newJ] &&
+                        (dist[newI][newJ] == UNDEF || 
+                        dist[newI][newJ] > dist[cur.i][cur.j] + 1)
+                    ) {
                         dist[newI][newJ] = dist[cur.i][cur.j] + 1;
                         inProcess.push({newI, newJ});
                     } else {
                         break;
                     }
+                    newI += di;
+                    newJ += dj;
                 }
             }
         }
