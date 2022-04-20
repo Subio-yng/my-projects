@@ -6,11 +6,11 @@
 // Space complexity: O(sizeI * sizeJ)
 
 const int UNDEF = -1;
-const int N_LEVELS = 4;
+const int N_DIRS = 4;
 
 struct Coord {
 
-    int level;
+    int dir;
 
     int i;
 
@@ -23,9 +23,9 @@ int bfs(Coord start,
         int sizeJ,
         const std::vector<std::vector<bool>> &state
 ) {
-    std::vector<std::vector<std::vector<int>>> dist(N_LEVELS, std::vector<std::vector<int>>(sizeI, std::vector<int>(sizeJ, UNDEF)));
+    std::vector<std::vector<std::vector<int>>> dist(N_DIRS, std::vector<std::vector<int>>(sizeI, std::vector<int>(sizeJ, UNDEF)));
     std::queue<Coord> inProcess;
-    for (int z = 0; z < N_LEVELS; z++) {
+    for (int z = 0; z < N_DIRS; z++) {
         dist[z][start.i][start.j] = 0;
         inProcess.push({z, start.i, start.j});
     }
@@ -33,16 +33,16 @@ int bfs(Coord start,
         Coord cur = inProcess.front();
         inProcess.pop();
         if (cur.i == end.i && cur.j == end.j) {
-            return dist[cur.level][cur.i][cur.j];
+            return dist[cur.dir][cur.i][cur.j];
         }
-        for (int dz = 0; dz <= 1; dz++) {
-            int newZ = (cur.level + dz) % N_LEVELS;
+        for (int ddir = 0; ddir <= 1; ddir++) {
+            int newDir = (cur.dir + ddir) % N_DIRS;
             for (int di = -1; di <= 1; di++) {
                 for (int dj = -1; dj <= 1; dj++) {
-                    if (newZ == 0 && (di != 0 || dj != 1) ||
-                        newZ == 1 && (di != 1 || dj != 0) ||
-                        newZ == 2 && (di != 0 || dj != -1) ||
-                        newZ == 3 && (di != -1 || dj != 0)
+                    if (newDir == 0 && (di != 0 || dj != 1) ||
+                        newDir == 1 && (di != 1 || dj != 0) ||
+                        newDir == 2 && (di != 0 || dj != -1) ||
+                        newDir == 3 && (di != -1 || dj != 0)
                     ) {
                         continue;
                     }
@@ -50,10 +50,10 @@ int bfs(Coord start,
                     int newJ = cur.j + dj;
                     if (0 <= newI && newI < sizeI &&
                         0 <= newJ && newJ < sizeJ &&
-                        state[newI][newJ] && dist[newZ][newI][newJ] == UNDEF
+                        state[newI][newJ] && dist[newDir][newI][newJ] == UNDEF
                     ) {
-                        dist[newZ][newI][newJ] = dist[cur.level][cur.i][cur.j] + 1;
-                        inProcess.push({newZ, newI, newJ});
+                        dist[newDir][newI][newJ] = dist[cur.dir][cur.i][cur.j] + 1;
+                        inProcess.push({newDir, newI, newJ});
                     }
                 }
             }
