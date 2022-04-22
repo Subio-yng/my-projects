@@ -2,6 +2,9 @@
 #include <vector>
 #include <queue>
 
+// Time complexity: O(sizeI * sizeJ)
+// Space complexity: O(sizeI * sizeJ)
+
 const int UNDEF = -1;
 
 enum State {
