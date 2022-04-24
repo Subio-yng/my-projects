@@ -3,8 +3,8 @@
 #include <vector>
 #include <queue>
 
-// Time complexity: O(sizeI * sizeJ * power)
-// Space complexity: O(sizeI * sizeJ * battary)
+// Time complexity: O(sizeI * sizeJ * battery)
+// Space complexity: O(sizeI * sizeJ * battery)
 
 const int UNDEF = -1;
 
@@ -14,7 +14,7 @@ struct Coord {
 
 	int j;
 
-	int battary;
+	int restBattery;
 
 	static Coord read() {
 		int j, i;
@@ -30,15 +30,15 @@ int bfs(Coord start,
 		int power, 
 		const std::vector<std::vector<int>> &field
 ) {
-	std::vector<std::vector<std::vector<int>>> dist(sizeI, std::vector<std::vector<int>>(sizeJ, std::vector<int>(start.battary + 1, UNDEF)));
+	std::vector<std::vector<std::vector<int>>> dist(sizeI, std::vector<std::vector<int>>(sizeJ, std::vector<int>(start.restBattery + 1, UNDEF)));
 	std::queue<Coord> inProcess;
 	inProcess.push(start);
-	dist[start.i][start.j][start.battary] = 0;
+	dist[start.i][start.j][start.restBattery] = 0;
 	while (!inProcess.empty()) {
 		Coord cur = inProcess.front();
 		inProcess.pop();
 		if (cur.i == end.i && cur.j == end.j) {
-			return dist[cur.i][cur.j][cur.battary];
+			return dist[cur.i][cur.j][cur.restBattery];
 		}
 		for (int di = -1; di <= 1; di++) {
 			for (int dj = -1; dj <= 1; dj++) {
@@ -51,31 +51,31 @@ int bfs(Coord start,
 					0 <= newJ && newJ < sizeJ &&
 					field[newI][newJ] != 0 &&
 					abs(field[newI][newJ] - field[cur.i][cur.j]) <= 1 &&
-					dist[newI][newJ][cur.battary] == UNDEF
+					dist[newI][newJ][cur.restBattery] == UNDEF
 				) {
-					dist[newI][newJ][cur.battary] = dist[cur.i][cur.j][cur.battary] + 1;
-					inProcess.push({newI, newJ, cur.battary});
+					dist[newI][newJ][cur.restBattery] = dist[cur.i][cur.j][cur.restBattery] + 1;
+					inProcess.push({newI, newJ, cur.restBattery});
 				}
-				if (cur.battary == 0) {
+				if (cur.restBattery == 0) {
 					continue;
 				}
 				int maxH = field[cur.i][cur.j];
-				int p = 1;
-				while (0 <= newI && newI < sizeI && 0 <= newJ && newJ < sizeJ && p <= power) {
+				int curPower = 1;
+				while (0 <= newI && newI < sizeI && 0 <= newJ && newJ < sizeJ && curPower <= power) {
 					if (field[newI][newJ] > maxH) {
-						p += field[newI][newJ] - maxH;
+						curPower += field[newI][newJ] - maxH;
 						maxH = field[newI][newJ];
 					}
 					if (field[newI][newJ] != 0 &&
-						p + maxH - field[newI][newJ] <= power && 
-						dist[newI][newJ][cur.battary - 1] == UNDEF
+						curPower + maxH - field[newI][newJ] <= power && 
+						dist[newI][newJ][cur.restBattery - 1] == UNDEF
 					) {
-						dist[newI][newJ][cur.battary - 1] = dist[cur.i][cur.j][cur.battary] + 1;
-						inProcess.push({newI, newJ, cur.battary - 1});
+						dist[newI][newJ][cur.restBattery - 1] = dist[cur.i][cur.j][cur.restBattery] + 1;
+						inProcess.push({newI, newJ, cur.restBattery - 1});
 					}
 					newI += di;
 					newJ += dj;
-					p++;
+					curPower++;
 				}
 			}
 		}
