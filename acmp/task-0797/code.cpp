@@ -4,7 +4,7 @@
 #include <algorithm>
  
 // Time complexity: O(n)
-// Space complexity: O(n)
+// Space complexity: O(size)
 
 const int SIZE = 50;
 const int UNDEF = -1;
