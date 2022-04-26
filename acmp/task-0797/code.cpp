@@ -3,7 +3,7 @@
 #include <queue>
 #include <algorithm>
  
-// Time complexity: O(n)
+// Time complexity: O(2^size * n^2)
 // Space complexity: O(size)
 
 const int SIZE = 50;
