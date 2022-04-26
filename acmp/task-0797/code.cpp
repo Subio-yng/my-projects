@@ -4,7 +4,7 @@
 #include <algorithm>
  
 // Time complexity: O(2^size * n^2)
-// Space complexity: O(size)
+// Space complexity: O(2^size)
 
 const int SIZE = 50;
 const int UNDEF = -1;
