@@ -4,17 +4,6 @@
 // Time complexity: O(2^sizeJ * sizeI)
 // Space complexity: O(sizeJ)
 
-int getSize(int n) {
-	int count = 0;
-	while (n > 0) {
-		if (n % 2 == 1) {
-			count++;
-		}
-		n >>= 1;
-	}
-	return count;
-}
-
 int main() {
 	int sizeI, sizeJ;
 	scanf("%d %d", &sizeI, &sizeJ);
@@ -45,9 +34,9 @@ int main() {
 	if (bestAttack == 0) {
 		printf("Impossible");
 	} else {
-		printf("%d\n", getSize(bestAttack));
+		printf("%d\n", minStep);
 		for (int j = sizeJ; j > 0; j--) {
-			if (bestAttack % 2 == 1) {
+			if (bestAttack & 1 != 0) {
 				printf("%d ", j);
 			}
 			bestAttack >>= 1;
