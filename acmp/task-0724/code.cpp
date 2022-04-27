@@ -36,10 +36,9 @@ int main() {
 	} else {
 		printf("%d\n", minStep);
 		for (int j = sizeJ; j > 0; j--) {
-			if (bestAttack & 1 != 0) {
+			if ((bestAttack >> sizeJ - j) & 1 != 0) {
 				printf("%d ", j);
 			}
-			bestAttack >>= 1;
 		}
 	}
 	return 0;
