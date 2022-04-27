@@ -4,6 +4,17 @@
 // Time complexity: O(2^sizeJ * sizeI)
 // Space complexity: O(sizeJ)
 
+int getSize(int n) {
+	int count = 0;
+	while (n > 0) {
+		if (n % 2 == 1) {
+			count++;
+		}
+		n >>= 1;
+	}
+	return count;
+}
+
 int main() {
 	int sizeI, sizeJ;
 	scanf("%d %d", &sizeI, &sizeJ);
@@ -12,17 +23,12 @@ int main() {
 		for (int j = 0; j < sizeJ; j++) {
 			char val;
 			scanf(" %c", &val);
-			table[j] += val - '0';
-			table[j] <<= 1;
+			table[j] = table[j] * 2 + val - '0';
 		}
-	}
-	for (int j = 0; j < sizeJ; j++) {
-		table[j] >>= 1;
 	}
 	int bestAttack = 0;
 	int minStep = 0;
 	for (int attack = 1; attack < 1 << sizeJ; attack++) {
-		std::vector<int> curAttack;
 		int curStep = 0;
 		int defense = (1 << sizeI) - 1;
 		for (int j = 0; j < sizeJ; j++) {
@@ -36,19 +42,15 @@ int main() {
 			minStep = curStep;
 		}
 	}
-	std::vector<int> ans;
-	for (int j = sizeJ; j > 0; j--) {
-		if (bestAttack % 2 == 1) {
-			ans.push_back(j);
-		}
-		bestAttack >>= 1;
-	}
-	if (ans.empty()) {
+	if (bestAttack == 0) {
 		printf("Impossible");
 	} else {
-		printf("%d\n", (int) ans.size());
-		for (int next : ans) {
-			printf("%d ", next);
+		printf("%d\n", getSize(bestAttack));
+		for (int j = sizeJ; j > 0; j--) {
+			if (bestAttack % 2 == 1) {
+				printf("%d ", j);
+			}
+			bestAttack >>= 1;
 		}
 	}
 	return 0;
