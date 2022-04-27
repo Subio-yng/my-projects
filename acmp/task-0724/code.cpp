@@ -10,9 +10,9 @@ int main() {
 	std::vector<int> table(sizeJ, 0);
 	for (int i = 0; i < sizeI; i++) {
 		for (int j = 0; j < sizeJ; j++) {
-			char val;
-			scanf(" %c", &val);
-			table[j] = table[j] * 2 + val - '0';
+			int val;
+			scanf("%d", &val);
+			table[j] = (table[j] << 1) + val;
 		}
 	}
 	int bestAttack = 0;
