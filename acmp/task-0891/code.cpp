@@ -23,6 +23,33 @@ struct Cube {
 	// down
 	char d1L, d1R, d2L, d2R;
 
+	static Cube read() {
+		char f1L, f1R, f2L, f2R;
+		char l1L, l1R, l2L, l2R;
+		char b1L, b1R, b2L, b2R;
+		char r1L, r1R, r2L, r2R;
+		char u1L, u1R, u2L, u2R;
+		char d1L, d1R, d2L, d2R;
+		scanf(" %c%c", &f1L, &f1R);
+		scanf(" %c%c", &l1L, &l1R);
+		scanf(" %c%c", &b1L, &b1R);
+		scanf(" %c%c", &r1L, &r1R);
+		scanf(" %c%c", &u1L, &u1R);
+		scanf(" %c%c", &d1L, &d1R);
+		scanf(" %c%c", &f2L, &f2R);
+		scanf(" %c%c", &l2L, &l2R);
+		scanf(" %c%c", &b2L, &b2R);
+		scanf(" %c%c", &r2L, &r2R);
+		scanf(" %c%c", &u2L, &u2R);
+		scanf(" %c%c", &d2L, &d2R);
+		return {f1L, f1R, f2L, f2R,
+				l1L, l1R, l2L, l2R,
+				b1L, b1R, b2L, b2R,
+				r1L, r1R, r2L, r2R,
+				u1L, u1R, u2L, u2R,
+				d1L, d1R, d2L, d2R};
+	}
+
 	bool operator ==(const Cube &a) const {
 		return f1L == a.f1L && f2L == a.f2L &&
 			l1L == a.l1L && l2L == a.l2L &&
@@ -102,13 +129,10 @@ struct Cube {
 		if (d2L != a.d2L) {
 			return d2L < a.d2L;
 		}
-		if (d2R != a.d2R) {
-			return d2R < a.d2R;
-		}
-		return false;
+		return d2R < a.d2R;
 	}
 
-	bool check() const {
+	bool isSolved() const {
 		return f1L == f1R && f1L == f2L && f1L == f2R &&
 			l1L == l1R && l1L == l2L && l1L == l2R &&
 			b1L == b1R && b1L == b2L && b1L == b2R &&
@@ -215,7 +239,7 @@ void printWay(Cube &start, const Cube &end, std::map<Cube, Prev> &from) {
 }
 
 void bfs(const Cube &start) {
-	if (start.check()) {
+	if (start.isSolved()) {
 		printf("Solved");
 		return;
 	}
@@ -224,11 +248,11 @@ void bfs(const Cube &start) {
 	inProcess.push(start);
 	Cube cur = inProcess.front();
 	std::random_device rd;
-    std::mt19937 gen(rd());
+	std::mt19937 gen(rd());
 	while (!inProcess.empty()) {
 		std::swap(cur, inProcess.front());
 		inProcess.pop();
-		if (cur.check()) {
+		if (cur.isSolved()) {
 			printWay(cur, start, from);
 			return;
 		}
@@ -249,19 +273,7 @@ void bfs(const Cube &start) {
 }
 
 int main() {
-	Cube start;
-	scanf(" %c%c", &start.f1L, &start.f1R);
-	scanf(" %c%c", &start.l1L, &start.l1R);
-	scanf(" %c%c", &start.b1L, &start.b1R);
-	scanf(" %c%c", &start.r1L, &start.r1R);
-	scanf(" %c%c", &start.u1L, &start.u1R);
-	scanf(" %c%c", &start.d1L, &start.d1R);
-	scanf(" %c%c", &start.f2L, &start.f2R);
-	scanf(" %c%c", &start.l2L, &start.l2R);
-	scanf(" %c%c", &start.b2L, &start.b2R);
-	scanf(" %c%c", &start.r2L, &start.r2R);
-	scanf(" %c%c", &start.u2L, &start.u2R);
-	scanf(" %c%c", &start.d2L, &start.d2R);
+	Cube start = Cube::read();
 	bfs(start);
 	return 0;
 }
