@@ -15,7 +15,8 @@ int main() {
 	std::sort(list.begin(), list.end());
 	int curSum = 0;
 	int maxSum = 0;
-	int left = 0, right = 0;
+	int left = 0;
+	int right = 0;
 	while (right < n) {
 		if (left + 1 < n && list[left] + list[left + 1] < list[right]) {
 			curSum -= list[left];
