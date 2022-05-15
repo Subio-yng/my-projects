@@ -60,9 +60,9 @@ int main() {
 			}
 		}
 	}
-	for (int from = 0; from < nV; from++) {
-		for (int to = 0; to < nV; to++) {
-			for (int cur = 0; cur < nV; cur++) {
+	for (int cur = 0; cur < nV; cur++) {
+		for (int from = 0; from < nV; from++) {
+			for (int to = 0; to < nV; to++) {
 				if (edges[from][cur].s != State::NOT_CONNECTED && 
 					edges[cur][to].s != State::NOT_CONNECTED &&
 					edges[cur][cur].weight > 0
@@ -72,25 +72,21 @@ int main() {
 			}
 		}
 	}
-	std::vector<int> list(nC);
+	std::vector<int> towns(nC);
 	for (int i = 0; i < nC; i++) {
-		scanf("%d", &list[i]);
-		list[i]--;
+		scanf("%d", &towns[i]);
+		towns[i]--;
 	}
 	int count = 0;
 	for (int i = 1; i < nC; i++) {
-		if (edges[list[i - 1]][list[i]].s == State::IN_CYCLE) {
-			printf("infinitely kind");
-			return 0;
-		}
-		int cur = list[i - 1];
-		while (cur != list[i]) {
+		int cur = towns[i - 1];
+		while (cur != towns[i]) {
 			count++;
 			if (edges[cur][cur].s == State::IN_CYCLE) {
 				printf("infinitely kind");
 				return 0;
 			}
-			cur = edges[cur][edges[cur][list[i]].toV].toV;
+			cur = edges[cur][edges[cur][towns[i]].toV].toV;
 		}
 		if (edges[cur][cur].s == State::IN_CYCLE) {
 			printf("infinitely kind");
@@ -99,10 +95,11 @@ int main() {
 	}
 	printf("%d\n", count);
 	for (int i = 1; i < nC; i++) {
-		int cur = list[i - 1];
-		while (cur != list[i]) {
-			printf("%d ", edges[cur][edges[cur][list[i]].toV].id);
-			cur = edges[cur][edges[cur][list[i]].toV].toV;
+		int cur = towns[i - 1];
+		while (cur != towns[i]) {
+			Edge next = edges[cur][edges[cur][towns[i]].toV];
+			printf("%d ", next.id);
+			cur = next.toV;
 		}
 	}
 	return 0;
