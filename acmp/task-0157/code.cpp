@@ -24,7 +24,7 @@ int main() {
 	}
 	long long ans = getFactorial((int) str.length());
 	for (int i = 0; i < ALPHABET_SIZE; i++) {
-		if (words[i] > 0) {
+		if (words[i] > 1) {
 			ans /= getFactorial(words[i]);
 		}
 	}
