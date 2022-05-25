@@ -43,7 +43,10 @@ int main() {
 	while (hasChanged) {
 		hasChanged = false;
 		for (Edge nextE : edges) {
-			if (dist[nextE.fromV] <= nextE.fromT && dist[nextE.toV] > nextE.toT) {
+			if (dist[nextE.fromV] < INF && 
+				dist[nextE.fromV] <= nextE.fromT && 
+				dist[nextE.toV] > nextE.toT
+			) {
 				dist[nextE.toV] = nextE.toT;
 				hasChanged = true;
 			}
