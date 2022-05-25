@@ -35,9 +35,12 @@ int main() {
         dist[curV] = 0;
         for (int i = 1; i < nV; i++) {
             for (Edge nextE : edges) {
-                if (dist[nextE.from] < INF && dist[nextE.to] > dist[nextE.from] + nextE.weight) {
-                    dist[nextE.to] = dist[nextE.from] + nextE.weight;
-                    prev[nextE.to] = nextE.from;
+                if (dist[nextE.from] < INF) {
+                    int newDist = dist[nextE.from] + nextE.weight;
+                    if (newDist < dist[nextE.to]) {
+                        dist[nextE.to] = newDist;
+                        prev[nextE.to] = nextE.from;
+                    }
                 }
             }
         }
