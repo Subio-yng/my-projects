@@ -2,8 +2,8 @@
 #include <vector>
 #include <algorithm>
 
-// Time complexity: O(nV * nE)
-// Space complexity: O(nE)
+// Time complexity: O(nV^2 * nE)
+// Space complexity: O(nV * nE)
 
 struct Edge {
 
@@ -37,24 +37,24 @@ int main() {
 		}
 	}
 	const int INF = 1'000'000'000 + 1;
-	std::vector<int> minT(nV, INF);
-	minT[0] = 0;
+	std::vector<int> minTime(nV, INF);
+	minTime[0] = 0;
 	bool hasChanged = true;
 	while (hasChanged) {
 		hasChanged = false;
 		for (Edge nextE : edges) {
-			if (minT[nextE.fromV] <= nextE.fromT &&
-				minT[nextE.toV] > nextE.toT
+			if (minTime[nextE.fromV] <= nextE.fromT &&
+				minTime[nextE.toV] > nextE.toT
 			) {
-				minT[nextE.toV] = nextE.toT;
+				minTime[nextE.toV] = nextE.toT;
 				hasChanged = true;
 			}
 		}
 	}
-	if (minT[endV - 1] == INF) {
+	if (minTime[endV - 1] == INF) {
 		printf("-1");
 	} else {
-		printf("%d", minT[endV - 1]);
+		printf("%d", minTime[endV - 1]);
 	}
 	return 0;
 }
