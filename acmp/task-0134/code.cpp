@@ -7,11 +7,11 @@
 
 struct Edge {
 
-	int fromT;
+	int fromTime;
 
 	int to;
 
-	int toT;
+	int toTime;
 
 	static Edge read() {
 		int fT, t, tT;
@@ -66,11 +66,11 @@ int main() {
 		}
 		isFinal[bestFrom.id] = true;
 		for (Edge nextE : edges[bestFrom.id]) {
-			if (bestFrom.time <= nextE.fromT && 
-				(dist[nextE.to] == UNDEF || dist[nextE.to] > nextE.toT)
+			if (bestFrom.time <= nextE.fromTime && 
+				(dist[nextE.to] == UNDEF || dist[nextE.to] > nextE.toTime)
 			) {
-				dist[nextE.to] = nextE.toT;
-				inProcess.push({nextE.to, nextE.toT});
+				dist[nextE.to] = nextE.toTime;
+				inProcess.push({nextE.to, nextE.toTime});
 			}
 		}
 	}
