@@ -31,7 +31,7 @@ struct Vertex {
 const int MAX_MINUTES = 1440;
 const int INF = 1'000'000'000 + 5000;
 
-bool canReach(int nV, int nE, int curWeight, const std::vector<std::vector<Edge>> &edges) {
+bool canReach(const int nV, const int nE, const int curWeight, const std::vector<std::vector<Edge>> &edges) {
 	std::vector<int> dist(nV, INF);
 	std::priority_queue<Vertex> inProcess;
 	std::vector<bool> isFinal(nV, false);
@@ -70,9 +70,6 @@ int main() {
 		int from, to, minutes, maxW;
 		scanf("%d %d %d %d", &from, &to, &minutes, &maxW);
 		maxW -= WEIGHT_TRUCK;
-		if (maxW < 0) {
-			continue;
-		}
 		from--;
 		to--;
 		edges[from].push_back({to, minutes, maxW});
@@ -80,7 +77,7 @@ int main() {
 	}
 	const int MAX_WEIGHT = 1'000'000'000;
 	int rightWeight = MAX_WEIGHT + 1;
-	int leftWeight = -1;
+	int leftWeight = 0;
 	while (leftWeight + 1 < rightWeight) {
 		int midWeight = (leftWeight + rightWeight) / 2;
 		if (canReach(nV, nE, midWeight, edges)) {
