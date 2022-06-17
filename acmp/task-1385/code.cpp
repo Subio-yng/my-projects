@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <vector>
  
-// Time complexity: O(nV)
+// Time complexity: O(nV * alpha(nV))
 // Space complexity: O(nV)
  
 struct DSU {
