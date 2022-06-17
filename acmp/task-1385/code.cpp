@@ -4,17 +4,19 @@
 // Time complexity: O(a(nV))
 // Space complexity: O(nV)
 
-const int UNDEF = -1;
-
 struct DSU {
 
 	std::vector<int> parent;
 
 	std::vector<int> rank;
 
-	void make_set(int v) {
-		parent[v] = v;
-		rank[v] = 0;
+	DSU(int nV) {
+		parent.resize(nV);
+		rank.resize(nV);
+		for (int i = 0; i < nV; i++) {
+			parent[i] = i;
+			rank[i] = 0;
+		}
 	}
 
 	int get(int n) {
@@ -43,36 +45,18 @@ struct DSU {
 		}
 		return a != b;
 	}
-
-	DSU(int nV) {
-		parent.resize(nV, UNDEF);
-		rank.resize(nV, UNDEF);
-	}
 };
-
-void printEdges(const DSU &a, int n) {
-	if (a.parent[n] != n) {
-		printEdges(a, a.parent[n]);
-		printf("%d %d", a.parent[n] + 1, n + 1);
-	}
-}
 
 int main() {
 	int nV, nE;
 	scanf("%d %d", &nV, &nE);
-	DSU arr(nV);
+	DSU dsu(nV);
 	for (int i = 0; i < nE; i++) {
 		int from, to;
 		scanf("%d %d", &from, &to);
 		from--;
 		to--;
-		if (arr.parent[from] == UNDEF) {
-			arr.make_set(from);
-		}
-		if (arr.parent[to] == UNDEF) {
-			arr.make_set(to);
-		}
-		if (arr.union_sets(from, to)) {
+		if (dsu.union_sets(from, to)) {
 			printf("%d %d\n", from + 1, to + 1);
 		}
 	}
