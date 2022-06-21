@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <math.h>
 
-// Time complexity: O(nV^2)
-// Space complexity: O(nV)
+// Time complexity: O(nV^2 * log(nV))
+// Space complexity: O(nV^2)
 
 struct DSU {
 
