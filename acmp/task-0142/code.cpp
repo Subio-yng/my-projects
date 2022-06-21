@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 
-// Time complexity: O(nE * alpha(nV))
+// Time complexity: O(nE * log(nE))
 // Space complexity: O(nE)
 
 struct Edge {
