@@ -6,11 +6,11 @@
 // Space complexity: O(nE)
 
 struct DSU {
- 
+
     std::vector<int> parent;
- 
+
     std::vector<int> rank;
- 
+
     DSU(int nV) {
         parent.resize(nV);
         rank.resize(nV);
@@ -19,14 +19,14 @@ struct DSU {
             rank[i] = 0;
         }
     }
- 
+
     int getRoot(int n) {
         if (parent[n] == n) {
             return n;
         }
         return parent[n] = getRoot(parent[n]);
     }
- 
+
     bool unionSets(int a, int b) {
         a = getRoot(a);
         b = getRoot(b);
@@ -45,35 +45,35 @@ struct DSU {
 
 struct Edge {
 
-	int from;
+    int from;
 
-	int to;
+    int to;
 
-	int weight;
+    int weight;
 
-	static Edge read() {
-		int f, t, w;
-		scanf("%d %d %d", &f, &t, &w);
-		return {f - 1, t - 1, w};
-	}
+    static Edge read() {
+        int f, t, w;
+        scanf("%d %d %d", &f, &t, &w);
+        return {f - 1, t - 1, w};
+    }
 };
 
 int main() {
-	int nV, nE;
+    int nV, nE;
     scanf("%d %d", &nV, &nE);
-	std::vector<Edge> edges(nE);
-	for (int i = 0; i < nE; i++) {
-		edges[i] = Edge::read();
-	}
-	std::sort(edges.begin(), edges.end(), [](const Edge &left, const Edge &right) {
-		if (left.weight == right.weight) {
-			if (left.from == right.from) {
-				return left.to < right.to;
-			}
-			return left.from < right.from;
-		}
-		return left.weight < right.weight;
-	});
+    std::vector<Edge> edges(nE);
+    for (int i = 0; i < nE; i++) {
+        edges[i] = Edge::read();
+    }
+    std::sort(edges.begin(), edges.end(), [](const Edge &left, const Edge &right) {
+        if (left.weight == right.weight) {
+            if (left.from == right.from) {
+                return left.to < right.to;
+            }
+            return left.from < right.from;
+        }
+        return left.weight < right.weight;
+    });
     int sumWeight = 0;
     DSU dsu(nV);
     for (Edge nextE : edges) {
@@ -82,5 +82,5 @@ int main() {
         }
     }
     printf("%d", sumWeight);
-	return 0;
+    return 0;
 }

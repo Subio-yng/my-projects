@@ -28,7 +28,7 @@ struct Edge {
 };
 
 int main() {
-	int nV, nE;
+    int nV, nE;
     scanf("%d %d", &nV, &nE);
     std::vector<std::vector<Edge>> edges(nV);
     for (int i = 0; i < nE; i++) {
@@ -61,5 +61,5 @@ int main() {
         }
     }
     printf("%d", sumWeight);
-	return 0;
+    return 0;
 }
