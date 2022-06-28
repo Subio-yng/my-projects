@@ -52,9 +52,13 @@ struct Edge {
     char d;
 };
 
+int encode(int i, int sizeJ, int j) {
+    return i * sizeJ + j;
+}
+
 int main() {
-    int sizeI, sizeJ;
-    scanf("%d %d", &sizeI, &sizeJ);
+	int sizeI, sizeJ;
+	scanf("%d %d", &sizeI, &sizeJ);
     DSU dsu(sizeI * sizeJ);
     for (int v = 0; v < sizeI * sizeJ; v++) {
         char val;
@@ -70,7 +74,7 @@ int main() {
     std::vector<Edge> ans;
     for (int i = 0; i < sizeI - 1; i++) {
         for (int j = 0; j < sizeJ; j++) {
-            if (dsu.unionSets(i * sizeJ + j, (i + 1) * sizeJ + j)) {
+            if (dsu.unionSets(encode(i, sizeJ, j), encode(i + 1, sizeJ, j))) {
                 ans.push_back({i, j, '1'});
                 cost++;
             }
@@ -78,7 +82,7 @@ int main() {
     }
     for (int i = 0; i < sizeI; i++) {
         for (int j = 0; j < sizeJ - 1; j++) {
-            if (dsu.unionSets(i * sizeJ + j, i * sizeJ + j + 1)) {
+            if (dsu.unionSets(encode(i, sizeJ, j), encode(i, sizeJ, j + 1))) {
                 ans.push_back({i, j, '2'});
                 cost += 2;
             }
@@ -88,5 +92,5 @@ int main() {
     for (Edge next : ans) {
         printf("\n%d %d %c", next.i + 1, next.j + 1, next.d);
     }
-    return 0;
+	return 0;
 }
