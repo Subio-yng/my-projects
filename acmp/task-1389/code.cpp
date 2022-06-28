@@ -11,16 +11,12 @@ struct DSU {
 
     std::vector<int> rank;
 
-    std::vector<char> type;
-
     DSU(int nV) {
         parent.resize(nV);
         rank.resize(nV);
-        type.resize(nV);
         for (int i = 0; i < nV; i++) {
             parent[i] = i;
             rank[i] = 0;
-            type[i] = '0';
         }
     }
 
@@ -47,9 +43,18 @@ struct DSU {
     }
 };
 
+struct Edge {
+
+    int i;
+
+    int j;
+
+    char d;
+};
+
 int main() {
-	int sizeI, sizeJ;
-	scanf("%d %d", &sizeI, &sizeJ);
+    int sizeI, sizeJ;
+    scanf("%d %d", &sizeI, &sizeJ);
     DSU dsu(sizeI * sizeJ);
     for (int v = 0; v < sizeI * sizeJ; v++) {
         char val;
@@ -62,12 +67,11 @@ int main() {
         }
     }
     int cost = 0;
-    int count = 0;
+    std::vector<Edge> ans;
     for (int i = 0; i < sizeI - 1; i++) {
         for (int j = 0; j < sizeJ; j++) {
             if (dsu.unionSets(i * sizeJ + j, (i + 1) * sizeJ + j)) {
-                dsu.type[i * sizeJ + j]++;
-                count++;
+                ans.push_back({i, j, '1'});
                 cost++;
             }
         }
@@ -75,20 +79,14 @@ int main() {
     for (int i = 0; i < sizeI; i++) {
         for (int j = 0; j < sizeJ - 1; j++) {
             if (dsu.unionSets(i * sizeJ + j, i * sizeJ + j + 1)) {
-                dsu.type[i * sizeJ + j] += 2;
-                count++;
+                ans.push_back({i, j, '2'});
                 cost += 2;
             }
         }
     }
-    printf("%d %d", count, cost);
-    for (int i = 0; i < sizeI * sizeJ; i++) {
-        if (dsu.type[i] == '1' || dsu.type[i] == '3') {
-            printf("\n%d %d 1", i / sizeJ + 1, i % sizeJ + 1);
-        }
-        if (dsu.type[i] == '2' || dsu.type[i] == '3') {
-            printf("\n%d %d 2", i / sizeJ + 1, i % sizeJ + 1);
-        }
+    printf("%d %d", (int) ans.size(), cost);
+    for (Edge next : ans) {
+        printf("\n%d %d %c", next.i + 1, next.j + 1, next.d);
     }
-	return 0;
+    return 0;
 }
