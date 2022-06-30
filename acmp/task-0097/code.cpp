@@ -1,29 +1,38 @@
 #include <stdio.h>
 #include <vector>
 
-// Time complexity: O(nV^2)
+// Time complexity: O(nV^2 * alpha(nV))
 // Space complexity: O(nV)
 
-struct Coord {
+struct Rectangle {
 
 	int left;
 
-	int top;
+	int bottom;
 
 	int right;
 
-	int bottom;
+	int top;
 
-	static Coord read() {
+	static Rectangle read() {
 		int x1, y1, x2, y2, r;
 		scanf("%d %d %d %d %d", &x1, &y1, &x2, &y2, &r);
 		if (x1 > x2) {
 			std::swap(x1, x2);
 		}
-		if (y2 > y1) {
+		if (y1 > y2) {
 			std::swap(y1, y2);
 		}
-		return {x1 - r, y1 + r, x2 + r, y2 - r};
+		return {x1 - r, y1 - r, x2 + r, y2 + r};
+	}
+
+	bool intersectsWith(Rectangle b) const {
+		Rectangle a = *this;
+		if (a.left > b.left) {
+			std::swap(a, b);
+		}
+		return a.right >= b.left && (a.top >= b.top && a.bottom <= b.top || 
+						a.top <= b.top && b.bottom <= a.top);
 	}
 };
 
@@ -65,26 +74,18 @@ struct DSU {
 	}
 };
 
-bool check(Coord a, Coord b) {
-	if (a.left > b.left) {
-		std::swap(a, b);
-	}
-	return a.right >= b.left && (a.top >= b.top && a.bottom <= b.top || 
-					a.top <= b.top && b.bottom <= a.top);
-}
-
 int main() {
 	int nV;
 	scanf("%d", &nV);
-	std::vector<Coord> field(nV);
+	std::vector<Rectangle> field(nV);
 	for (int i = 0; i < nV; i++) {
-		field[i] = Coord::read();
+		field[i] = Rectangle::read();
 	}
 	DSU dsu(nV);
 	int count = nV;
 	for (int i = 0; i < nV - 1; i++) {
 		for (int j = i + 1; j < nV; j++) {
-			if (check(field[i], field[j]) && dsu.unionSets(i, j)) {
+			if (field[i].intersectsWith(field[j]) && dsu.unionSets(i, j)) {
 				count--;
 			}
 		}
