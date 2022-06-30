@@ -57,8 +57,8 @@ int encode(int i, int sizeJ, int j) {
 }
 
 int main() {
-	int sizeI, sizeJ;
-	scanf("%d %d", &sizeI, &sizeJ);
+    int sizeI, sizeJ;
+    scanf("%d %d", &sizeI, &sizeJ);
     DSU dsu(sizeI * sizeJ);
     for (int v = 0; v < sizeI * sizeJ; v++) {
         char val;
@@ -92,5 +92,5 @@ int main() {
     for (Edge next : ans) {
         printf("\n%d %d %c", next.i + 1, next.j + 1, next.d);
     }
-	return 0;
+    return 0;
 }
