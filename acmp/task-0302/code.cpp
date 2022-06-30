@@ -57,7 +57,9 @@ struct Coord {
 	}
 
 	double getDistTo(const Coord &a) const {
-		return sqrt(pow(x - a.x, 2) + pow(y - a.y, 2));
+		double dx = x - a.x;
+		double dy = y - a.y;
+		return sqrt(dx * dx + dy * dy);
 	}
 };
 
@@ -75,7 +77,8 @@ int main() {
 		}
 	}
 	double leftDist = 0;
-	while (leftDist + 0.01 < rightDist) {
+	const double EPS = 0.01;
+	while (leftDist + EPS < rightDist) {
 		double midDist = (leftDist + rightDist) / 2.0;
 		DSU dsu(nV);
 		int count = 0;
