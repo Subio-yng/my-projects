@@ -70,7 +70,7 @@ bool check(Coord a, Coord b) {
 		std::swap(a, b);
 	}
 	return a.right >= b.left && (a.top >= b.top && a.bottom <= b.top || 
-								a.top <= b.top && b.bottom <= a.top);
+					a.top <= b.top && b.bottom <= a.top);
 }
 
 int main() {
