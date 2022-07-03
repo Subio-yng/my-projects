@@ -83,13 +83,15 @@ void solve(int nV, int nE) {
 }
 
 int main() {
-	int nV;
-	scanf("%d", &nV);
-	while (nV != 0) {
+	while (true) {
+		int nV;
+		scanf("%d", &nV);
+		if (nV == 0) {
+			break;
+		}
 		int nE;
 		scanf("%d", &nE);
 		solve(nV, nE);
-		scanf("%d", &nV);
 	}
 	return 0;
 }
