@@ -3,7 +3,7 @@
 #include <math.h>
 #include <algorithm>
 
-// Time complexity: O(nV^2 * log(nV^2))
+// Time complexity: O(nV^2 * log(nV))
 // Space complexity: O(nV^2)
 
 struct DSU {
@@ -56,10 +56,10 @@ struct Coord {
 		return {x, y};
 	}
 	
-	double getDistTo(const Coord &a) {
+	int getDistTo(const Coord &a) {
 		int dx = x - a.x;
 		int dy = y - a.y;
-		return sqrt(dx * dx + dy * dy);
+		return dx * dx + dy * dy;
 	}
 };
 
@@ -69,7 +69,7 @@ struct Edge {
 
 	int to;
 
-	double weight;
+	int weight;
 };
 
 int main() {
@@ -98,7 +98,7 @@ int main() {
 	double sum = 0;
 	for (Edge nextE : edges) {
 		if (dsu.unionSets(nextE.from, nextE.to)) {
-			sum += nextE.weight;
+			sum += sqrt(nextE.weight);
 		}
 	}
 	printf("%.2f", sum);
