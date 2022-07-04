@@ -75,18 +75,22 @@ int main() {
         return left.weight < right.weight;
     });
     DSU dsu(nV);
-    std::vector<Edge> used;
+    std::vector<bool> hubs(nE, false);
     int maxWeight = 0;
-    for (Edge nextE : edges) {
-        if (dsu.unionSets(nextE.from, nextE.to)) {
-            maxWeight = nextE.weight;
-            used.push_back(nextE);
+    int count = 0;
+    for (int i = 0; i < nE; i++) {
+        if (dsu.unionSets(edges[i].from, edges[i].to)) {
+            maxWeight = edges[i].weight;
+            hubs[i] = true;
+            count++;
         }
     }
     printf("%d\n", maxWeight);
-    printf("%d", (int) used.size());
-    for (Edge nextE : used) {
-        printf("\n%d %d", nextE.from + 1, nextE.to + 1);
+    printf("%d", count);
+    for (int i = 0; i < nE; i++) {
+        if (hubs[i]) {
+            printf("\n%d %d", edges[i].from + 1, edges[i].to + 1);
+        }
     }
-	return 0;
+    return 0;
 }
