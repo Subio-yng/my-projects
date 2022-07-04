@@ -106,5 +106,5 @@ int main() {
             printf("%d %d\n", nextE.from + 1, nextE.to + 1);
         }
     }
-	return 0;
+    return 0;
 }
