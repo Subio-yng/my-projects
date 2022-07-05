@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <vector>
-#include <algorithm>
 
-// Time complexity: O(nE * log(nE))
-// Space complexity: O(nE)
+// Time complexity: O(nV * alpha(nV))
+// Space complexity: O(nV)
 
 struct DSU {
 
@@ -56,20 +55,6 @@ struct Date {
 		scanf("%d/%d/%d", &d, &m, &y);
 		return {d, m, y};
 	}
-
-	bool operator ==(const Date &a) const {
-		return day == a.day && month == a.month && year == a.year;
-	}
-
-	bool operator <(const Date &a) const {
-		if (year == a.year) {
-			if (month == a.month) {
-				return day < a.day;
-			}
-			return month < a.month;
-		}
-		return year < a.year;
-	}
 };
 
 struct Edge {
@@ -90,27 +75,15 @@ struct Edge {
 int main() {
 	int nV, nE;
 	scanf("%d %d", &nV, &nE);
-	std::vector<Edge> edges(nE);
-	for (int i = 0; i < nE; i++) {
-		edges[i] = Edge::read();
-	}
-	std::sort(edges.begin(), edges.end(), [](const Edge &left, const Edge &right) {
-		if (left.date == right.date) {
-			if (left.from == right.from) {
-				return left.to < right.to;
-			}
-			return left.from < right.from;
-		}
-		return left.date < right.date;
-	});
 	DSU dsu(nV);
 	int count = 0;
-	for (Edge nextE : edges) {
-		if (dsu.unionSets(nextE.from, nextE.to)) {
+	for (int i = 0; i < nE; i++) {
+		Edge curE = Edge::read();
+		if (dsu.unionSets(curE.from, curE.to)) {
 			count++;
 		}
 		if (count == nV - 1) {
-			printf("%02d/%02d/%04d", nextE.date.day, nextE.date.month, nextE.date.year);
+			printf("%02d/%02d/%04d", curE.date.day, curE.date.month, curE.date.year);
 			break;
 		}
 	}
