@@ -1,28 +1,23 @@
 #include <stdio.h>
 #include <vector>
 
-// Time complexity: O(sizeI * q)
+// Time complexity: O(sizeI * sizeJ)
 // Space complexity: O(sizeI * sizeJ)
 
 int main() {
 	int sizeI, sizeJ, q;
 	scanf("%d %d %d", &sizeI, &sizeJ, &q);
-	std::vector<std::vector<int>> prefixSum(sizeI + 1, std::vector<int>(sizeJ + 1, 0));
+	std::vector<std::vector<long long>> prefixSum(sizeI + 1, std::vector<long long>(sizeJ + 1, 0));
 	for (int i = 1; i <= sizeI; i++) {
 		for (int j = 1; j <= sizeJ; j++) {
-			int cur;
-			scanf("%d", &cur);
-			prefixSum[i][j] = prefixSum[i - 1][j] + cur;
+			scanf("%d", &prefixSum[i][j]);
+			prefixSum[i][j] += prefixSum[i - 1][j] + prefixSum[i][j - 1] - prefixSum[i - 1][j - 1];
 		}
 	}
 	for (int i = 0; i < q; i++) {
-		int y1, x1, y2, x2;
-		scanf("%d %d %d %d", &y1, &x1, &y2, &x2);
-		long long sum = 0;
-		for (int j = x1; j <= x2; j++) {
-			sum += prefixSum[y2][j] - prefixSum[y1 - 1][j];
-		}
-		printf("%lld\n", sum);
+		int i1, j1, i2, j2;
+		scanf("%d %d %d %d", &i1, &j1, &i2, &j2);
+		printf("%lld\n", prefixSum[i2][j2] - prefixSum[i2][j1 - 1] - prefixSum[i1 - 1][j2] + prefixSum[i1 - 1][j1 - 1]);
 	}
 	return 0;
 }
