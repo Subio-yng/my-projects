@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <vector>
 
-// Time complexity: O(n)
+// Time complexity: O(n + q)
 // Space complexity: O(n)
 
 int main() {
