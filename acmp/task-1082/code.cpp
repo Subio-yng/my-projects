@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <vector>
 
-// Time complexity: O(sizeI * sizeJ)
+// Time complexity: O(sizeI * sizeJ + q)
 // Space complexity: O(sizeI * sizeJ)
 
 int nextChar() {
