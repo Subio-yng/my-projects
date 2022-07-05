@@ -45,11 +45,11 @@ int main() {
     int sizeJ = nextInt();
     int q = nextInt();
     std::vector<std::vector<long long>> prefixSum(sizeI + 1, std::vector<long long>(sizeJ + 1, 0));
-	for (int i = 1; i <= sizeI; i++) {
-		for (int j = 1; j <= sizeJ; j++) {
-			prefixSum[i][j] = nextInt() + prefixSum[i - 1][j] + prefixSum[i][j - 1] - prefixSum[i - 1][j - 1];
-		}
-	}
+    for (int i = 1; i <= sizeI; i++) {
+        for (int j = 1; j <= sizeJ; j++) {
+            prefixSum[i][j] = nextInt() + prefixSum[i - 1][j] + prefixSum[i][j - 1] - prefixSum[i - 1][j - 1];
+        }
+    }
     for (int i = 0; i < q; i++) {
         int i1 = nextInt();
         int j1 = nextInt();
@@ -57,5 +57,5 @@ int main() {
         int j2 = nextInt();
         printf("%lld\n", prefixSum[i2][j2] - prefixSum[i2][j1 - 1] - prefixSum[i1 - 1][j2] + prefixSum[i1 - 1][j1 - 1]);
     }
-	return 0;
+    return 0;
 }
