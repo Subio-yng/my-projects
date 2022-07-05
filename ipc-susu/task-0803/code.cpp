@@ -80,6 +80,7 @@ int main() {
     for (Edge nextE : edges) {
         if (dsu.unionSets(nextE.from, nextE.to)) {
             maxWeight = nextE.weight;
+            hubs.push_back(nextE);
         }
     }
     printf("%d\n", maxWeight);
