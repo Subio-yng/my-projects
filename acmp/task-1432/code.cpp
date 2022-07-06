@@ -27,7 +27,11 @@ int main() {
         if (left > right) {
             std::swap(left, right);
         }
-        sum = (1LL + INT_MAX + sum + prefSum[right] - prefSum[left - 1]) & INT_MAX;
+        int curSum = prefSum[right] - prefSum[left - 1];
+        if (curSum < 0) {
+            curSum += INT_MAX;
+        }
+        sum = (sum + curSum) & INT_MAX;
     }
     printf("%d", sum);
     return 0;
