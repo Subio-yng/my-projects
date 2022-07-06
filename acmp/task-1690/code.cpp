@@ -13,7 +13,9 @@ int main() {
             for (int j = 1; j <= sizeJ; j++) {
                 char val;
                 scanf(" %c", &val);
-                prefSum[z][i][j] = val - '0' + prefSum[z - 1][i][j] + prefSum[z][i - 1][j] + prefSum[z][i][j - 1] + prefSum[z - 1][i - 1][j - 1] - prefSum[z][i - 1][j - 1] - prefSum[z - 1][i][j - 1] - prefSum[z - 1][i - 1][j];
+                prefSum[z][i][j] = val - '0' + 
+                    prefSum[z][i - 1][j] + prefSum[z][i][j - 1] - prefSum[z][i - 1][j - 1] + 
+                    prefSum[z - 1][i - 1][j - 1] - prefSum[z - 1][i][j - 1] + prefSum[z - 1][i][j] - prefSum[z - 1][i - 1][j];
             }
         }
     }
@@ -29,7 +31,8 @@ int main() {
         if (j1 > j2) {
             std::swap(j1, j2);
         }
-        int curSum = prefSum[z2][i2][j2] - prefSum[z1 - 1][i2][j2] - prefSum[z2][i1 - 1][j2] - prefSum[z2][i2][j1 - 1] - prefSum[z1 - 1][i1 - 1][j1 - 1] + prefSum[z2][i1 - 1][j1 - 1] + prefSum[z1 - 1][i2][j1 - 1] + prefSum[z1 - 1][i1 - 1][j2];
+        int curSum = prefSum[z2][i2][j2] - prefSum[z2][i1 - 1][j2] + prefSum[z2][i1 - 1][j1 - 1] - prefSum[z2][i2][j1 - 1] + 
+            prefSum[z1 - 1][i1 - 1][j2] - prefSum[z1 - 1][i2][j2] + prefSum[z1 - 1][i2][j1 - 1] - prefSum[z1 - 1][i1 - 1][j1 - 1];
         printf("%d\n", curSum);
     }
     return 0;
