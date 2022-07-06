@@ -62,5 +62,5 @@ int main() {
         }
     }
     printf("%d", maxSum);
-	return 0;
+    return 0;
 }
