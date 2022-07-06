@@ -45,11 +45,11 @@ int main() {
     int sizeI = nextInt();
     int sizeJ = nextInt();
     std::vector<std::vector<int>> prefixSum(sizeI + 1, std::vector<int>(sizeJ + 1, 0));
-	for (int i = 1; i <= sizeI; i++) {
-		for (int j = 1; j <= sizeJ; j++) {
-			prefixSum[i][j] = nextInt() + prefixSum[i - 1][j] + prefixSum[i][j - 1] - prefixSum[i - 1][j - 1];
-		}
-	}
+    for (int i = 1; i <= sizeI; i++) {
+        for (int j = 1; j <= sizeJ; j++) {
+            prefixSum[i][j] = nextInt() + prefixSum[i - 1][j] + prefixSum[i][j - 1] - prefixSum[i - 1][j - 1];
+        }
+    }
     int maxSum = prefixSum[1][1];
     for (int i1 = 1; i1 <= sizeI; i1++) {
         for (int j1 = 1; j1 <= sizeJ; j1++) {
