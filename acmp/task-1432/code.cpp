@@ -18,7 +18,7 @@ int main() {
     std::vector<int> prefSum(n + 1);
     prefSum[0] = 0;
     for (int i = 1; i <= n; i++) {
-        prefSum[i] = (prefSum[i - 1] + getR15(curR31)) & INT_MAX;
+        prefSum[i] = prefSum[i - 1] + getR15(curR31);
     }
     int sum = 0;
     for (int i = 0; i < q; i++) {
@@ -28,9 +28,6 @@ int main() {
             std::swap(left, right);
         }
         int curSum = prefSum[right] - prefSum[left - 1];
-        if (curSum < 0) {
-            curSum += INT_MAX;
-        }
         sum = (sum + curSum) & INT_MAX;
     }
     printf("%d", sum);
