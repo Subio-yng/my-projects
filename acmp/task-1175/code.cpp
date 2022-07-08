@@ -41,32 +41,31 @@ int nextInt() {
     return n * coef;
 }
 
-int getLog(int n) {
-    int res = 0;
-    while (n > 1) {
-        res++;
-        n /= 2;
-    }
-    return res;
-}
-
 int main() {
     int n = nextInt();
-    std::vector<std::vector<int>> st(n, std::vector<int>(getLog(n) + 1));
+    std::vector<std::vector<int>> st(1, std::vector<int>(n));
     for (int i = 0; i < n; i++) {
-        st[i][0] = nextInt();
+        st[0][i] = nextInt();
     }
-    for (int len = 1; (1 << len) <= n; len++) {
-        for (int i = 0; i + (1 << len) <= n; i++) {
-            st[i][len] = std::min(st[i][len - 1], st[i + (1 << (len - 1))][len - 1]);
+    int len = 1;
+    for (int i = 1; len * 2 <= n; i++) {
+        st.push_back(st.back());
+        for (int j = 0; j + len < n; j++) {
+            st[i][j] = std::min(st[i][j], st[i][j + len]);
         }
+        len *= 2;
+    }
+    std::vector<int> log2(n + 1, 0);
+    for (int i = 2; i <= n; i++) {
+        log2[i] = log2[i >> 1] + 1;
     }
     int q = nextInt();
     for (int i = 0; i < q; i++) {
         int left = nextInt() - 1;
         int right = nextInt() - 1;
-        int curLog = getLog(right - left + 1);
-        printf("%d ", std::min(st[left][curLog], st[right - (1 << curLog) + 1][curLog]));
+        int len = right - left + 1;
+        int level = log2[len];
+        printf("%d ", std::min(st[level][left], st[level][right - (1 << level) + 1]));
     }
     return 0;
 }
