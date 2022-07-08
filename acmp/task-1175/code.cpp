@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 
-// Time complexity: O((n + q) * log(n))
+// Time complexity: O(n * log(n) + q)
 // Space complexity: O(n * log(n))
 
 int nextChar() {
@@ -52,28 +52,21 @@ int getLog(int n) {
 
 int main() {
     int n = nextInt();
-    int logN = getLog(n);
-    std::vector<std::vector<int>> st(n, std::vector<int>(logN + 1));
+    std::vector<std::vector<int>> st(n, std::vector<int>(getLog(n) + 1));
     for (int i = 0; i < n; i++) {
         st[i][0] = nextInt();
     }
-    for (int j = 1; j <= logN; j++) {
-        for (int i = 0; i + (1 << j) <= n; i++) {
-            st[i][j] = std::min(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
+    for (int len = 1; (1 << len) <= n; len++) {
+        for (int i = 0; i + (1 << len) <= n; i++) {
+            st[i][len] = std::min(st[i][len - 1], st[i + (1 << (len - 1))][len - 1]);
         }
     }
     int q = nextInt();
     for (int i = 0; i < q; i++) {
         int left = nextInt() - 1;
         int right = nextInt() - 1;
-        int curMin = st[right][0];
-        for (int j = logN; j >= 0; j--) {
-            if ((1 << j) <= right - left + 1) {
-                curMin = std::min(curMin, st[left][j]);
-                left += 1 << j;
-            }
-        }
-        printf("%d ", curMin);
+        int curLog = getLog(right - left + 1);
+        printf("%d ", std::min(st[left][curLog], st[right - (1 << curLog) + 1][curLog]));
     }
     return 0;
 }
