@@ -13,49 +13,25 @@ int getGcd(int a, int b) {
 	return a;
 }
 
-std::vector<int> a;
+void buildTree(int v, int left, int right, std::vector<int> &tree, const std::vector<int> &a) {
+	if (left == right) {
+		tree[v] = a[left];
+		return;
+	}
+	int mid = (left + right) / 2;
+	buildTree(2 * v, left, mid, tree, a);
+	buildTree(2 * v + 1, mid + 1, right, tree, a);
+	tree[v] = getGcd(tree[2 * v], tree[2 * v + 1]);
+}
 
 struct Tree {
 	
 	std::vector<int> tree;
 
-	void build(int v, int left, int right) {
-		if (left == right) {
-			tree[v] = a[left];
-			return;
-		}
-		int mid = (left + right) / 2;
-		build(2 * v, left, mid);
-		build(2 * v + 1, mid + 1, right);
-		tree[v] = getGcd(tree[2 * v], tree[2 * v + 1]);
-	}
-
-	Tree() {
-		int n = 1;
-		while (n < (int) a.size()) {
-			n <<= 1;
-		}
-		a.resize(n);
-		tree.resize(2 * n);
-		build(1, 0, n - 1);
-	}
-	
-	void updateTree(int v, int left, int right, int i, int val) {
-		if (i < left || right < i) {
-			return;
-		}
-		if (left == right) {
-			tree[v] = val;
-			return;
-		}
-		int mid = (left + right) / 2;
-		updateTree(2 * v, left, mid, i, val);
-		updateTree(2 * v + 1, mid + 1, right, i, val);
-		tree[v] = getGcd(tree[2 * v], tree[2 * v + 1]);
-	}
-
-	void update(int i, int val) {
-		updateTree(1, 0, (int) a.size() - 1, i, val);
+	Tree(const std::vector<int> &a) {
+		int size = (int) a.size();
+		tree.resize(4 * size);
+		buildTree(1, 0, size - 1, tree, a);
 	}
 
 	int gcdTree(int v, int left, int right, int qLeft, int qRight) {
@@ -71,18 +47,18 @@ struct Tree {
 	}
 
 	int gcd(int qLeft, int qRight) {
-		return gcdTree(1, 0, (int) a.size() - 1, qLeft, qRight);
+		return gcdTree(1, 0, (int) tree.size() / 4 - 1, qLeft, qRight);
 	}
 };
 
 int main() {
 	int n;
 	scanf("%d", &n);
-	a.resize(n);
+	std::vector<int> a(n);
 	for (int i = 0; i < n; i++) {
 		scanf("%d", &a[i]);
 	}
-	Tree tree;
+	Tree tree(a);
 	int q;
 	scanf("%d", &q);
 	for (int i = 0; i < q; i++) {
