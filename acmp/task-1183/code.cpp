@@ -4,7 +4,7 @@
 // Time complexity: O((n + q) * log(n))
 // Space complexity: O(n)
 
-int getGcd(int a, int b) {
+int gcd(int a, int b) {
 	while (b > 0) {
 		int t = a % b;
 		a = b;
@@ -21,7 +21,7 @@ void buildTree(int v, int left, int right, std::vector<int> &tree, const std::ve
 	int mid = (left + right) / 2;
 	buildTree(2 * v, left, mid, tree, a);
 	buildTree(2 * v + 1, mid + 1, right, tree, a);
-	tree[v] = getGcd(tree[2 * v], tree[2 * v + 1]);
+	tree[v] = gcd(tree[2 * v], tree[2 * v + 1]);
 }
 
 struct Tree {
@@ -42,11 +42,11 @@ struct Tree {
 			return 0;
 		}
 		int mid = (left + right) / 2;
-		return getGcd(gcdTree(2 * v, left, mid, qLeft, qRight),  
+		return gcd(gcdTree(2 * v, left, mid, qLeft, qRight),  
 			gcdTree(2 * v + 1, mid + 1, right, qLeft, qRight));
 	}
 
-	int gcd(int qLeft, int qRight) {
+	int getGcd(int qLeft, int qRight) {
 		return gcdTree(1, 0, (int) tree.size() / 4 - 1, qLeft, qRight);
 	}
 };
@@ -64,7 +64,7 @@ int main() {
 	for (int i = 0; i < q; i++) {
 		int left, right;
 		scanf("%d %d", &left, &right);
-		printf("%d ", tree.gcd(left - 1, right - 1));
+		printf("%d ", tree.getGcd(left - 1, right - 1));
 	}
 	return 0;
 }
