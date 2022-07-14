@@ -35,17 +35,17 @@ private:
             sumTree(2 * v + 1, mid + 1, right, qLeft, qRight);
     }
 
-    void updateTree(int v, int left, int right, int i, int val) {
-        if (i < left || right < i) {
+    void updateTree(int v, int left, int right, int qPos, int qVal) {
+        if (qPos < left || right < qPos) {
             return;
         }
         if (left == right) {
-            tree[v] = val;
+            tree[v] = qVal;
             return;
         }
         int mid = (left + right) / 2;
-        updateTree(2 * v, left, mid, i, val);
-        updateTree(2 * v + 1, mid + 1, right, i, val);
+        updateTree(2 * v, left, mid, qPos, qVal);
+        updateTree(2 * v + 1, mid + 1, right, qPos, qVal);
         tree[v] = tree[2 * v] + tree[2 * v + 1];
     }
 
@@ -62,8 +62,8 @@ public:
         return sumTree(1, 0, size - 1, qLeft, qRight);
     }
 
-    void update(int i, int val) {
-        updateTree(1, 0, size - 1, i, val);
+    void updateValue(int qPow, int qVal) {
+        updateTree(1, 0, size - 1, qPow, qVal);
     }
 };
 
@@ -81,9 +81,9 @@ int main() {
         char type;
         scanf(" %c", &type);
         if (type == 'u') {
-            int i, val;
-            scanf("%d %d", &i, &val);
-            tree.update(i - 1, val);
+            int pos, val;
+            scanf("%d %d", &pos, &val);
+            tree.updateValue(pos - 1, val);
         } else if (type == 's') {
             int left, right;
             scanf("%d %d", &left, &right);
