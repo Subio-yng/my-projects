@@ -4,7 +4,7 @@
 // Time complexity: O((n + q) * log(n))
 // Space complexity: O(n)
 
-class Tree {
+class SegmentTree {
 
 private:
 
@@ -51,7 +51,7 @@ private:
 
 public:
 
-    Tree(const std::vector<int> &a)
+    SegmentTree(const std::vector<int> &a)
         : size((int) a.size())
     {
         tree.resize(4 * size);
@@ -74,10 +74,10 @@ int main() {
     for (int i = 0; i < n; i++) {
         scanf("%d", &a[i]);
     }
-    Tree tree(a);
-    int q;
-    scanf("%d", &q);
-    for (int qI = 0; qI < q; qI++) {
+    SegmentTree tree(a);
+    int nQueries;
+    scanf("%d", &nQueries);
+    for (int qI = 0; qI < nQueries; qI++) {
         char type;
         scanf(" %c", &type);
         if (type == 'u') {
