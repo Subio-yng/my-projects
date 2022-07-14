@@ -53,7 +53,7 @@ public:
         buildTree(1, 0, size - 1, a);
     }
 
-    int getgetGcdOnRange(int qLeft, int qRight) {
+    int getGcdOnRange(int qLeft, int qRight) {
         return gcdTree(1, 0, size - 1, qLeft, qRight);
     }
 };
@@ -71,7 +71,7 @@ int main() {
     for (int i = 0; i < q; i++) {
         int left, right;
         scanf("%d %d", &left, &right);
-        printf("%d ", tree.getgetGcdOnRange(left - 1, right - 1));
+        printf("%d ", tree.getGcdOnRange(left - 1, right - 1));
     }
     return 0;
 }
