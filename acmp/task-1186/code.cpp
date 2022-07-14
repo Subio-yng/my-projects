@@ -62,8 +62,8 @@ public:
         return sumTree(1, 0, size - 1, qLeft, qRight);
     }
 
-    void updateValue(int qPow, int qVal) {
-        updateTree(1, 0, size - 1, qPow, qVal);
+    void updateValue(int qPos, int qVal) {
+        updateTree(1, 0, size - 1, qPos, qVal);
     }
 };
 
