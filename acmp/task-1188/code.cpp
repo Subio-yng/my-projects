@@ -12,16 +12,28 @@ private:
 
     std::vector<long long> tree;
 
-    void boostTree(int v, int left, int right, long long &boost, int qPos) {
-        if (qPos < left || right < qPos) {
+    void buildTree(int v, int left, int right, const std::vector<int> &a) {
+        if (left == right) {
+            tree[v] = a[left];
             return;
         }
-        boost += tree[v];
-        if (left != right) {
-            int mid = (left + right) / 2;
-            boostTree(2 * v, left, mid, boost, qPos);
-            boostTree(2 * v + 1, mid + 1, right, boost, qPos);
+        int mid = (left + right) / 2;
+        buildTree(2 * v, left, mid, a);
+        buildTree(2 * v + 1, mid + 1, right, a);
+        tree[v] = 0;
+    }
+
+    long long valueTree(int v, int left, int right, int qPos) {
+        if (qPos < left || right < qPos) {
+            return 0;
         }
+        if (left == qPos && qPos == right) {
+            return tree[v];
+        }
+        int mid = (left + right) / 2;
+        return tree[v] + 
+            valueTree(2 * v, left, mid, qPos) +
+            valueTree(2 * v + 1, mid + 1, right, qPos);
     }
 
     void updateTree(int v, int left, int right, int qLeft, int qRight, int qVal) {
@@ -30,28 +42,27 @@ private:
         }
         if (qLeft <= left && right <= qRight) {
             tree[v] += qVal;
-        } else {
-            int mid = (left + right) / 2;
-            updateTree(2 * v, left, mid, qLeft, qRight, qVal);
-            updateTree(2 * v + 1, mid + 1, right, qLeft, qRight, qVal);
+            return;
         }
+        int mid = (left + right) / 2;
+        updateTree(2 * v, left, mid, qLeft, qRight, qVal);
+        updateTree(2 * v + 1, mid + 1, right, qLeft, qRight, qVal);
     }
 
 public:
 
-    SegmentTree(int size)
-        : size(size)
+    SegmentTree(const std::vector<int> &a)
+        : size((int) a.size())
     {
-        tree.resize(4 * size, 0);
+        tree.resize(4 * size);
+        buildTree(1, 0, size - 1, a);
     }
 
-    long long getBoostOnRange(int qPos) {
-        long long sumBoost = 0;
-        boostTree(1, 0, size - 1, sumBoost, qPos);
-        return sumBoost;
+    long long getValueByPos(int qPos) {
+        return valueTree(1, 0, size - 1, qPos);;
     }
 
-    void updateRange(int qLeft, int qRight, int qVal) {
+    void updateOnRange(int qLeft, int qRight, int qVal) {
         updateTree(1, 0, size - 1, qLeft, qRight, qVal);
     }
 };
@@ -63,7 +74,7 @@ int main() {
     for (int i = 0; i < n; i++) {
         scanf("%d", &a[i]);
     }
-    SegmentTree tree(n);
+    SegmentTree tree(a);
     int nQueries;
     scanf("%d", &nQueries);
     for (int qI = 0; qI < nQueries; qI++) {
@@ -72,11 +83,11 @@ int main() {
         if (type == 'g') {
             int pos;
             scanf("%d", &pos);
-            printf("%lld ", tree.getBoostOnRange(pos - 1) + a[pos - 1]);
+            printf("%lld ", tree.getValueByPos(pos - 1));
         } else if (type == 'a') {
             int left, right, val;
             scanf("%d %d %d", &left, &right, &val);
-            tree.updateRange(left - 1, right - 1, val);
+            tree.updateOnRange(left - 1, right - 1, val);
         } else {
             throw 1;
         }
