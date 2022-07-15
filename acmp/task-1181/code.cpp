@@ -12,13 +12,9 @@ private:
 
     std::vector<int> tree;
 
-    void buildTree(int v, int left, int right, const std::vector<bool> &a) {
+    void buildTree(int v, int left, int right, const std::vector<int> &a) {
         if (left == right) {
-            if (a[left]) {
-                tree[v] = 1;
-            } else {
-                tree[v] = 0;
-            }
+            tree[v] = a[left];
             return;
         }
         int mid = (left + right) / 2;
@@ -41,7 +37,7 @@ private:
 
 public:
 
-    SegmentTree(const std::vector<bool> &a)
+    SegmentTree(const std::vector<int> &a)
         : size((int) a.size())
     {
         tree.resize(4 * size);
@@ -56,11 +52,15 @@ public:
 int main() {
     int n;
     scanf("%d", &n);
-    std::vector<bool> a(n);
+    std::vector<int> a(n);
     for (int i = 0; i < n; i++) {
         int val;
         scanf("%d", &val);
-        a[i] = val == 0;
+        if (val == 0) {
+            a[i] = 1;
+        } else {
+            a[i] = 0;
+        }
     }
     SegmentTree tree(a);
     int nQueries;
