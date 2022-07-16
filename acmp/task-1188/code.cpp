@@ -59,10 +59,10 @@ public:
     }
 
     long long getValueByPos(int qPos) {
-        return valueTree(1, 0, size - 1, qPos);;
+        return valueTree(1, 0, size - 1, qPos);
     }
 
-    void updateOnRange(int qLeft, int qRight, int qVal) {
+    void addOnRange(int qLeft, int qRight, int qVal) {
         updateTree(1, 0, size - 1, qLeft, qRight, qVal);
     }
 };
@@ -87,7 +87,7 @@ int main() {
         } else if (type == 'a') {
             int left, right, val;
             scanf("%d %d %d", &left, &right, &val);
-            tree.updateOnRange(left - 1, right - 1, val);
+            tree.addOnRange(left - 1, right - 1, val);
         } else {
             throw 1;
         }
