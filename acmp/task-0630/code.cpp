@@ -5,11 +5,12 @@
 // Time complexity: O(nTests * (nGuards + range))
 // Space complexity: O(nGuards + range)
 
-bool isCorrectTest(const int RANGE) {
+bool isCorrectTest() {
+    static const int MAX_TIMELINE = 10000;
     int nGuards;
     scanf("%d", &nGuards);
-    std::vector<int> countDiff(RANGE + 1, 0);
-    std::vector<int> sumDiff(RANGE + 1, 0);
+    std::vector<int> countDiff(MAX_TIMELINE + 1, 0);
+    std::vector<int> sumDiff(MAX_TIMELINE + 1, 0);
     for (int i = 0; i < nGuards; i++) {
         int in, out;
         scanf("%d %d", &in, &out);
@@ -21,8 +22,8 @@ bool isCorrectTest(const int RANGE) {
     std::vector<bool> isSingle(nGuards, false);
     int curCount = 0;
     int curSum = 0;
-    int minCount = RANGE;
-    for (int i = 0; i < RANGE; i++) {
+    int minCount = MAX_TIMELINE;
+    for (int i = 0; i < MAX_TIMELINE; i++) {
         curCount += countDiff[i];
         curSum += sumDiff[i];
         minCount = std::min(minCount, curCount);
@@ -42,11 +43,10 @@ bool isCorrectTest(const int RANGE) {
 }
 
 int main() {
-    const int MAX_TIMELINE = 10000;
     int nTests;
     scanf("%d", &nTests);
     for (int i = 0; i < nTests; i++) {
-        if (isCorrectTest(MAX_TIMELINE)) {
+        if (isCorrectTest()) {
             printf("Accepted");
         } else {
             printf("Wrong Answer");

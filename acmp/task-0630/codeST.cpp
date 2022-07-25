@@ -50,24 +50,25 @@ struct Gap {
     }
 };
 
-bool isCorrectTest(const int RANGE) {
+bool isCorrectTest() {
+    static const int MAX_TIMELINE = 10000;
     int nGuards;
     scanf("%d", &nGuards);
     std::vector<Gap> guards(nGuards);
-    std::vector<int> base(RANGE + 1, 0);
+    std::vector<int> base(MAX_TIMELINE + 1, 0);
     for (int i = 0; i < nGuards; i++) {
         guards[i] = Gap::read();
         base[guards[i].in]++;
         base[guards[i].out]--;
     }
     int curCount = 0;
-    std::vector<int> countGuardsOnTimeline(RANGE + 1, 0);
-    for (int i = 0; i <= RANGE; i++) {
+    std::vector<int> countGuardsOnTimeline(MAX_TIMELINE + 1, 0);
+    for (int i = 0; i <= MAX_TIMELINE; i++) {
         countGuardsOnTimeline[i] = curCount;
         curCount += base[i];
     }
-    SparseTable st(RANGE + 1, countGuardsOnTimeline);
-    if (st.getMin(1, RANGE) != 1) {
+    SparseTable st(MAX_TIMELINE + 1, countGuardsOnTimeline);
+    if (st.getMin(1, MAX_TIMELINE) != 1) {
         return false;
     }
     for (int i = 0; i < nGuards; i++) {
@@ -79,11 +80,10 @@ bool isCorrectTest(const int RANGE) {
 }
 
 int main() {
-    const int MAX_TIMELINE = 10000;
     int nTests;
     scanf("%d", &nTests);
     for (int i = 0; i < nTests; i++) {
-        if (isCorrectTest(MAX_TIMELINE)) {
+        if (isCorrectTest()) {
             printf("Accepted");
         } else {
             printf("Wrong Answer");
