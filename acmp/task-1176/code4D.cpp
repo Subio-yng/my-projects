@@ -2,8 +2,8 @@
 #include <vector>
 #include <algorithm>
 
-// Time complexity: O(log(sizeI) * sizeI * log(sizeJ) * sizeJ + nQueries)
-// Space complexity: O(log(sizeI) * sizeI * log(sizeJ) * sizeJ)
+// Time complexity: O(log(sizeI) * log(sizeJ) * sizeI * sizeJ + nQueries)
+// Space complexity: O(log(sizeI) * log(sizeJ) * sizeI * sizeJ)
 
 int nextChar() {
     static char buffer[1 << 16];
@@ -41,60 +41,79 @@ int nextInt() {
     return n * coef;
 }
 
+class SparseTable {
+
+private:
+
+    std::vector<std::vector<std::vector<std::vector<int>>>> st;
+
+    std::vector<int> log2;
+
+public:
+
+    SparseTable(int sizeI, int sizeJ, const std::vector<std::vector<int>> &base) {
+        st.resize(1, std::vector<std::vector<std::vector<int>>>(1, base));
+        int lenJ = 1;
+        for (int logJ = 1; 2 * lenJ <= sizeJ; logJ++) {
+            st[0].push_back(st[0].back());
+            for (int i = 0; i < sizeI; i++) {
+                for (int j = 0; j + lenJ < sizeJ; j++) {
+                    st[0][logJ][i][j] = std::min(st[0][logJ][i][j], st[0][logJ][i][j + lenJ]);
+                }
+            }
+            lenJ <<= 1;
+        }
+        int lenI = 1;
+        for (int logI = 1; 2 * lenI <= sizeI; logI++) {
+            st.push_back(st.back());
+            for (int i = 0; i + lenI < sizeI; i++) {
+                for (int j = 0; j < sizeJ; j++) {
+                    st[logI][0][i][j] = std::min(st[logI][0][i][j], st[logI][0][i + lenI][j]);
+                }
+                lenJ = 1;
+                for (int logJ = 1; 2 * lenJ <= sizeJ; logJ++) {
+                    for (int j = 0; j < sizeJ; j++) {
+                        st[logI][logJ][i][j] = std::min(st[logI][logJ][i][j], st[logI][logJ][i + lenI][j]);
+                    }
+                    lenJ <<= 1;
+                }
+            }
+            lenI <<= 1;
+        }
+        int logSize = std::max(sizeI, sizeJ);
+        log2.resize(logSize + 1);
+        for (int i = 2; i <= logSize; i++) {
+            log2[i] = log2[i >> 1] + 1;
+        }
+    }
+
+    int getMin(int i1, int j1, int i2, int j2) {
+        int levelI = log2[i2 - i1 + 1];
+        int levelJ = log2[j2 - j1 + 1];
+        int lenI = (1 << levelI) - 1;
+        int lenJ = (1 << levelJ) - 1;
+        return std::min({st[levelI][levelJ][i1][j1], st[levelI][levelJ][i1][j2 - lenJ],
+            st[levelI][levelJ][i2 - lenI][j1], st[levelI][levelJ][i2 - lenI][j2 - lenJ]});
+    }
+};
+
 int main() {
     int sizeI = nextInt();
     int sizeJ = nextInt();
     int nQueries = nextInt();
-    std::vector<std::vector<std::vector<std::vector<int>>>> st
-    (1, std::vector<std::vector<std::vector<int>>>(sizeI, std::vector<std::vector<int>>(1, std::vector<int>(sizeJ))));
+    std::vector<std::vector<int>> base(sizeI, std::vector<int>(sizeJ));
     for (int i = 0; i < sizeI; i++) {
         for (int j = 0; j < sizeJ; j++) {
-            st[0][i][0][j] = nextInt();
-        }
-        int lenJ = 1;
-        for (int logJ = 1; 2 * lenJ <= sizeJ; logJ++) {
-            st[0][i].push_back(st[0][i].back());
-            for (int j = 0; j + lenJ < sizeJ; j++) {
-                st[0][i][logJ][j] = std::min(st[0][i][logJ][j], st[0][i][logJ][j + lenJ]);
-            }
-            lenJ <<= 1;
+            base[i][j] = nextInt();
         }
     }
-    int lenI = 1;
-    for (int logI = 1; 2 * lenI <= sizeI; logI++) {
-        st.push_back(st.back());
-        for (int i = 0; i + lenI < sizeI; i++) {
-            for (int j = 0; j < sizeJ; j++) {
-                st[logI][i][0][j] = std::min(st[logI][i][0][j], st[logI][i + lenI][0][j]);
-            }
-            int lenJ = 1;
-            for (int logJ = 1; 2 * lenJ <= sizeJ; logJ++) {
-                for (int j = 0; j < sizeJ; j++) {
-                    st[logI][i][logJ][j] = std::min({st[logI][i][logJ][j], st[logI][i + lenI][logJ][j]});
-                }
-                lenJ <<= 1;
-            }
-        }
-        lenI <<= 1;
-    }
-    std::vector<int> iLog2(sizeI + 1, 0);
-    for (int i = 2; i <= sizeI; i++) {
-        iLog2[i] = iLog2[i >> 1] + 1;
-    }
-    std::vector<int> jLog2(sizeJ + 1, 0);
-    for (int j = 2; j <= sizeJ; j++) {
-        jLog2[j] = jLog2[j >> 1] + 1;
-    }
+    SparseTable st(sizeI, sizeJ, base);
     for (int i = 0; i < nQueries; i++) {
         int i1 = nextInt() - 1;
         int j1 = nextInt() - 1;
         int i2 = nextInt() - 1;
         int j2 = nextInt() - 1;
-        int levelI = iLog2[i2 - i1 + 1];
-        int levelJ = jLog2[j2 - j1 + 1];
-        int min1 = std::min(st[levelI][i1][levelJ][j1], st[levelI][i1][levelJ][j2 - (1 << levelJ) + 1]);
-        int min2 = std::min(st[levelI][i2 - (1 << levelI) + 1][levelJ][j1], st[levelI][i2 - (1 << levelI) + 1][levelJ][j2 - (1 << levelJ) + 1]);
-        printf("%d\n", std::min(min1, min2));
+        printf("%d\n", st.getMin(i1, j1, i2, j2));
     }
     return 0;
 }
