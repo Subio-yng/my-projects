@@ -5,7 +5,7 @@
 // Time complexity: O(n + nQ * log(n))
 // Space complexity: O(n)
  
-class TreeFenwick {
+class FenwickTree {
  
 private:
      
@@ -13,18 +13,18 @@ private:
      
     std::vector<long long> tree;
      
-    long long getPrefSum(int qI) {
+    long long getPrefSum(int pos) {
         long long sum = 0;
-        while (qI > 0) {
-            sum += tree[qI];
-            qI = (qI & (qI + 1)) - 1;
+        while (pos > 0) {
+            sum += tree[pos];
+            pos = (pos & (pos + 1)) - 1;
         }
         return sum;
     }
      
 public:
  
-    TreeFenwick(int size)
+    FenwickTree(int size)
         : size(size)
     {
         tree.resize(size + 1, 0);
@@ -45,7 +45,7 @@ public:
 int main() {
     int n, nQ;
     scanf("%d %d", &n, &nQ);
-    TreeFenwick tree(n);
+    FenwickTree tree(n);
     for (int i = 0; i < nQ; i++) {
         char buf[1 + 3];
         scanf(" %s", &buf);
