@@ -2,8 +2,8 @@
 #include <vector>
 #include <string>
 
-// Time complexity: O(n^2 + nQ * log(n))
-// Space complexity: O(n^2)
+// Time complexity: O(size^2 + nQ * log(size))
+// Space complexity: O(size^2)
 
 class FenwickTree {
 
