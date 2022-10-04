@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <vector>
 #include <algorithm>
+#include <climits>
 
-// Time complexity: O(n + nQ * log(n))
+// Time complexity: O((n + nQ) * log(n))
 // Space complexity: O(n)
 
 struct Place {
@@ -18,18 +19,18 @@ struct Place {
     }
 };
 
-Place binSeach(const std::vector<Place> &list, int qPos, bool type) {
+Place binSeach(const std::vector<Place> &list, int qPos, bool isLeftWay) {
     int left = -1;
     int right = (int) list.size();
     while (left + 1 < right) {
         int mid = (left + right) / 2;
-        if (list[mid].pos < qPos || list[mid].pos == qPos && type) {
+        if (list[mid].pos < qPos || list[mid].pos == qPos && isLeftWay) {
             left = mid;
         } else {
             right = mid;
         }
     }
-    if (type && left != -1 || right == (int) list.size()) {
+    if (isLeftWay && left != -1 || right == (int) list.size()) {
         return list[left];
     }
     return list[right];
@@ -66,13 +67,12 @@ int main() {
         }
     }
     std::reverse(bestRight.begin(), bestRight.end());
-    const long long INF = 8'000'000'000'000'000'000;
     for (int i = 0; i < nQ; i++) {
         int qPos;
         scanf("%d", &qPos);
         Place left = binSeach(bestLeft, qPos, true);
         Place right = binSeach(bestRight, qPos, false);
-        long long bestDist = INF;
+        long long bestDist = LLONG_MAX;
         if (left.pos <= qPos) {
             bestDist = left.cost + 1LL * (qPos - left.pos) * cost;
         }
