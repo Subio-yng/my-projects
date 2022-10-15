@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <vector>
 
-// Time complexity: O(nS)
+// Time complexity: O(nS^2)
 // Space complexity: O(nS)
 
 struct Sensor {
@@ -45,6 +45,10 @@ void dfs(int cur,
 }
 
 int main() {
+    const int UP = 0;
+    const int LEFT = 1;
+    const int BOTTOM = 2;
+    const int RIGHT = 3;
     int sizeI, sizeJ, nS;
     scanf("%d %d %d", &sizeI, &sizeJ, &nS);
     std::vector<Sensor> sensors(nS);
@@ -52,17 +56,17 @@ int main() {
     for (int i = 0; i < nS; i++) {
         Sensor cur = Sensor::read();
         sensors[i] = cur;
-        if (cur.i - cur.dist <= 0) { // up
-            canTouch[0][i] = true;
+        if (cur.i - cur.dist <= 0) {
+            canTouch[UP][i] = true;
         }
-        if (cur.j - cur.dist <= 0) { // left
-            canTouch[1][i] = true;
+        if (cur.j - cur.dist <= 0) {
+            canTouch[LEFT][i] = true;
         }
-        if (cur.i + cur.dist >= sizeI) { // bottom
-            canTouch[2][i] = true;
+        if (cur.i + cur.dist >= sizeI) {
+            canTouch[BOTTOM][i] = true;
         }
-        if (cur.j + cur.dist >= sizeJ) { // right
-            canTouch[3][i] = true;
+        if (cur.j + cur.dist >= sizeJ) {
+            canTouch[RIGHT][i] = true;
         }
     }
     std::vector<bool> visited(nS, false);
@@ -72,9 +76,9 @@ int main() {
         }
     }
     for (int i = 0; i < nS; i++) {
-        if ((canTouch[0][i] || canTouch[3][i]) &&
-            (canTouch[1][i] || canTouch[2][i])
-            ) {
+        if ((canTouch[UP][i] || canTouch[RIGHT][i]) &&
+            (canTouch[LEFT][i] || canTouch[BOTTOM][i])
+        ) {
             printf("NO");
             return 0;
         }
