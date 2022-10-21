@@ -1,13 +1,15 @@
 #include <stdio.h>
-#include <algorithm>
+
+// Time complexity: O(1)
+// Space complexity: O(1)
 
 int main() {
     int a, b, x, y;
     scanf("%d %d %d %d", &a, &b, &x, &y);
-    int ans = std::min(a + x, b + y);
-    if (y - b == x - a) {
-        ans = std::min(ans, abs(y - b));
+    if (x + y == b - a || x - y == b - a) {
+        printf("%d", a + x);
+    } else {
+        printf("%d", a - x);
     }
-    printf("%d", ans);
     return 0;
 }
