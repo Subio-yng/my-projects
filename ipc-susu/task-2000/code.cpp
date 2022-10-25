@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+// Time complexity: O(1)
+// Space complexity: O(1)
+
 int main() {
     int a, b;
     scanf("%d %d", &a, &b);
