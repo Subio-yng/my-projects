@@ -3,7 +3,7 @@
 #include <queue>
 
 // Time complexity: O((sizeI * sizeJ)^2)
-// Space complexity: O((sizeI * sizeJ)^2)
+// Space complexity: O(sizeI * sizeJ)
 
 struct Coord {
 
