@@ -16,9 +16,9 @@ const int UNDEF = -1;
 
 int bfs(int i,
         int j,
-        int sizeI,
-        int sizeJ,
-        int maxDist,
+        const int sizeI,
+        const int sizeJ,
+        const int maxDist,
         const std::vector<std::vector<int>> &field
 ) {
     std::vector<std::vector<int>> dist(sizeI, std::vector<int>(sizeJ, UNDEF));
@@ -84,6 +84,7 @@ int main() {
             }
         }
     }
-    printf("%d\n%d %d", maxSum, bestI + 1, bestJ + 1);
+    printf("%d\n", maxSum);
+    printf("%d %d", bestI + 1, bestJ + 1);
     return 0;
 }
