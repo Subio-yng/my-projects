@@ -47,7 +47,7 @@ int bfs(int i,
                     0 <= nextJ && nextJ < sizeJ &&
                     field[nextI][nextJ] != UNDEF &&
                     dist[nextI][nextJ] == UNDEF
-                    ) {
+                ) {
                     dist[nextI][nextJ] = dist[cur.i][cur.j] + 1;
                     inProcess.push({nextI, nextJ});
                 }
