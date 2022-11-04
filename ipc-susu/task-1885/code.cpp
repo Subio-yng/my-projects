@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
-// Time complexity: O(n^2)
-// Space complexity: O(n^2)
+// Time complexity: O(len^2)
+// Space complexity: O(len^2)
 
 int main() {
     const int MOD = 1'000'000'000 + 9;
