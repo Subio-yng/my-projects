@@ -9,7 +9,7 @@ int main() {
     int cnt = 0;
     if (std::min(endPos, startPos) <= start && start <= std::max(endPos, startPos) &&
         (endPos - startPos) * (end - start) > 0
-        ) {
+    ) {
         cnt += abs(startPos - end);
         if (std::min(start, end) < endPos && endPos < std::max(start, end)) {
             cnt++;
