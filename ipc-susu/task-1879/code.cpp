@@ -6,7 +6,7 @@
 int main() {
     int n, k;
     scanf("%d %d", &n, &k);
-    while (!(n < k)) {
+    while (n >= k) {
         if (n > 100) {
             k += 5;
         } else {
