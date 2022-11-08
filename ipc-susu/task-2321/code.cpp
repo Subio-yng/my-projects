@@ -19,7 +19,7 @@ int main() {
         for (int j = 0; j < SIZE_SNOWFLAKE; j++) {
             if (snowflake.find(cur) != snowflake.end() ||
                 snowflake.find(revCur) != snowflake.end()
-                ) {
+            ) {
                 find = true;
                 break;
             }
