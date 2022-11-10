@@ -29,9 +29,10 @@ public:
         int plus = 0;
         while (i >= 0 && j >= 0) {
             num[i] += a.num[j] - '0' + plus;
-            plus = (num[i] - '0') / 10;
+            plus = 0;
             while (num[i] > '9') {
                 num[i] -= 10;
+                plus++;
             }
             i--;
             j--;
@@ -42,9 +43,10 @@ public:
         }
         while (i >= 0 && plus > 0) {
             num[i] += plus;
-            plus = (num[i] - '0') / 10;
+            plus = 0;
             if (num[i] > '9') {
                 num[i] -= 10;
+                plus++;
             }
             i--;
         }
