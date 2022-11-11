@@ -53,9 +53,10 @@ public:
         std::reverse(num.begin(), num.end());
         while (j >= 0) {
             num.push_back(a.num[j] + plus);
-            plus = (num.back() - '0') / 10;
+            plus = 0;
             while (num.back() > '9') {
                 num.back() -= 10;
+                plus++;
             }
             j--;
         }
