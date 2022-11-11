@@ -9,74 +9,74 @@ private:
 
     int len;
 
-    std::string num;
+    std::vector<int> num;
 
 public:
 
-    BigInteger(const std::string &str)
-        : len((int) str.length())
-        , num(str)
-    {}
-
-    void operator =(const std::string &str) {
-        len = (int) str.length();
-        num = str;
+    BigInteger(int n) {
+        num.push_back(n);
+        len = 1;
     }
 
-    void operator += (const BigInteger &a) {
-        int j = a.len - 1;
+    void operator +=(const BigInteger &a) {
+        static int RANGE = 1'000'000'000;
         int i = len - 1;
+        int j = a.len - 1;
         int plus = 0;
         while (i >= 0 && j >= 0) {
-            num[i] += a.num[j] - '0' + plus;
+            num[i] += a.num[j] + plus;
             plus = 0;
-            while (num[i] > '9') {
-                num[i] -= 10;
+            if (num[i] >= RANGE) {
+                num[i] -= RANGE;
                 plus++;
             }
-            i--;
             j--;
+            i--;
         }
         if (j < 0 && plus == 0) {
-            len = (int) num.length();
             return;
+        }
+        while (j >= 0) {
+            num.insert(num.begin(), a.num[j] + plus);
+            plus = 0;
+            if (num.front() >= RANGE) {
+                num.front() -= RANGE;
+                plus++;
+            }
+            j--;
         }
         while (i >= 0 && plus > 0) {
             num[i] += plus;
             plus = 0;
-            if (num[i] > '9') {
-                num[i] -= 10;
+            if (num[i] >= RANGE) {
+                num[i] -= RANGE;
                 plus++;
             }
-            i--;
-        }
-        std::reverse(num.begin(), num.end());
-        while (j >= 0) {
-            num.push_back(a.num[j] + plus);
-            plus = 0;
-            while (num.back() > '9') {
-                num.back() -= 10;
-                plus++;
-            }
-            j--;
         }
         if (plus > 0) {
-            num.push_back(plus + '0');
+            num.insert(num.begin(), plus);
         }
-        std::reverse(num.begin(), num.end());
-        len = (int) num.length();
+        len = (int) num.size();
     }
 
-    void print() {
-        printf("%s", num.c_str());
+    std::string toString() const {
+        std::string res = std::to_string(num.front());
+        for (int i = 1; i < len; i++) {
+            std::string cur = std::to_string(num[i]);
+            for (int j = 0; j <= 8 - (int) cur.length(); j++) {
+                res += '0';
+            }
+            res += cur;
+        }
+        return res;
     }
 };
 
 int main() {
     int n, sum;
     scanf("%d %d", &n, &sum);
-    std::vector<std::vector<BigInteger>> cnt(n + 1, std::vector<BigInteger>(sum + 1, BigInteger("0")));
-    cnt[0][0] = "1";
+    std::vector<std::vector<BigInteger>> cnt(n + 1, std::vector<BigInteger>(sum + 1, 0));
+    cnt[0][0] = 1;
     for (int len = 1; len <= n; len++) {
         for (int curSum = 0; curSum <= sum; curSum++) {
             for (int last = 0; last <= std::min(curSum, 9); last++) {
@@ -84,6 +84,6 @@ int main() {
             }
         }
     }
-    cnt[n][sum].print();
+    printf("%s", cnt[n][sum].toString().c_str());
     return 0;
 }
