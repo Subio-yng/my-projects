@@ -20,48 +20,49 @@ public:
 
     void operator +=(const BigInteger &a) {
         static int RANGE = 1'000'000'000;
-        int i = len - 1;
-        int j = a.len - 1;
+        int i = 0;
+        int j = 0;
         int plus = 0;
-        while (i >= 0 && j >= 0) {
+        while (i < len && j < a.len) {
             num[i] += a.num[j] + plus;
             plus = 0;
             if (num[i] >= RANGE) {
                 num[i] -= RANGE;
                 plus++;
             }
-            j--;
-            i--;
+            j++;
+            i++;
         }
-        if (j < 0 && plus == 0) {
+        if (j == a.len && plus == 0) {
             return;
         }
-        while (j >= 0) {
-            num.insert(num.begin(), a.num[j] + plus);
+        while (j < a.len) {
+            num.push_back(a.num[j] + plus);
             plus = 0;
-            if (num.front() >= RANGE) {
-                num.front() -= RANGE;
+            if (num.back() >= RANGE) {
+                num.back() -= RANGE;
                 plus++;
             }
-            j--;
+            j++;
         }
-        while (i >= 0 && plus > 0) {
+        while (i < len && plus > 0) {
             num[i] += plus;
             plus = 0;
             if (num[i] >= RANGE) {
                 num[i] -= RANGE;
                 plus++;
             }
+            i++;
         }
         if (plus > 0) {
-            num.insert(num.begin(), plus);
+            num.push_back(plus);
         }
         len = (int) num.size();
     }
 
     std::string toString() const {
-        std::string res = std::to_string(num.front());
-        for (int i = 1; i < len; i++) {
+        std::string res = std::to_string(num.back());
+        for (int i = len - 2; i >= 0; i--) {
             std::string cur = std::to_string(num[i]);
             for (int j = 0; j <= 8 - (int) cur.length(); j++) {
                 res += '0';
