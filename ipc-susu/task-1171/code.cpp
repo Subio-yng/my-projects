@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
 // Time complexity: O(n * sum)
-// Space complexity: O(n * sum)
+// Space complexity: O(sum)
 
 class BigInteger {
 
@@ -73,15 +73,18 @@ public:
 int main() {
     int n, sum;
     scanf("%d %d", &n, &sum);
-    std::vector<std::vector<BigInteger>> cnt(n + 1, std::vector<BigInteger>(sum + 1, 0));
-    cnt[0][0] = 1;
+    std::vector<BigInteger> prev(sum + 1, 0);
+    std::vector<BigInteger> cur(sum + 1, 0);
+    cur[0] = 1;
     for (int len = 1; len <= n; len++) {
+        std::swap(cur, prev);
         for (int curSum = 0; curSum <= sum; curSum++) {
-            for (int last = 0; last <= std::min(curSum, 9); last++) {
-                cnt[len][curSum] += cnt[len - 1][curSum - last];
+            cur[curSum] = 0;
+            for (int last = 0; last <= std::min(9, curSum); last++) {
+                cur[curSum] += prev[curSum - last];
             }
         }
     }
-    printf("%s", cnt[n][sum].toString().c_str());
+    printf("%s", cur[sum].toString().c_str());
     return 0;
 }
