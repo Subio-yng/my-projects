@@ -13,10 +13,6 @@ private:
 
 public:
 
-    BigInteger()
-        : len(0)
-    {}
-
     BigInteger(int n) {
         num.push_back(n);
         len = 1;
