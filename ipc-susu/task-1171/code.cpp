@@ -21,7 +21,7 @@ public:
         if ((int) res.num.size() < (int) a.num.size()) {
             std::swap(res, a);
         }
-        static int RANGE = 1'000'000'000;
+        static const int RANGE = 1'000'000'000;
         int i = 0;
         int j = 0;
         int plus = 0;
@@ -55,12 +55,12 @@ public:
     }
 
     std::string toString() const {
-        static int SIZE_NUM = 8;
+        static const int SIZE_NUM = 9;
         std::string res;
         for (int i = (int) num.size() - 1; i >= 0; i--) {
             std::string cur = std::to_string(num[i]);
             if (i < (int) num.size() - 1) {
-                for (int j = 0; j <= SIZE_NUM - (int) cur.length(); j++) {
+                for (int j = 0; j < SIZE_NUM - (int) cur.length(); j++) {
                     res += '0';
                 }
             }
