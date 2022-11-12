@@ -7,24 +7,25 @@ class BigInteger {
 
 private:
 
-    int len;
-
     std::vector<int> num;
 
 public:
 
     BigInteger(int n) {
         num.push_back(n);
-        len = 1;
     }
 
-    BigInteger operator +(const BigInteger &a) const {
+    BigInteger operator +(const BigInteger &tmp) const {
         BigInteger res = *this;
+        BigInteger a = tmp;
+        if ((int) res.num.size() < (int) a.num.size()) {
+            std::swap(res, a);
+        }
         static int RANGE = 1'000'000'000;
         int i = 0;
         int j = 0;
         int plus = 0;
-        while (j < a.len) {
+        while (j < (int) a.num.size()) {
             res.num[i] += a.num[j] + plus;
             plus = 0;
             if (res.num[i] >= RANGE) {
@@ -34,7 +35,7 @@ public:
             j++;
             i++;
         }
-        while (plus > 0 && i < len) {
+        while (plus > 0 && i < (int) res.num.size()) {
             res.num[i] += plus;
             plus = 0;
             if (res.num[i] >= RANGE) {
@@ -45,25 +46,23 @@ public:
         }
         if (plus > 0) {
             res.num.push_back(plus);
-            res.len++;
         }
         return res;
     }
 
     void operator +=(const BigInteger &a) {
-        if (len > a.len) {
-            *this = *this + a;
-        } else {
-            *this = a + *this;
-        }
+        *this = *this + a;
     }
 
     std::string toString() const {
-        std::string res = std::to_string(num.back());
-        for (int i = len - 2; i >= 0; i--) {
+        static int SIZE_NUM = 8;
+        std::string res;
+        for (int i = (int) num.size() - 1; i >= 0; i--) {
             std::string cur = std::to_string(num[i]);
-            for (int j = 0; j <= 8 - (int) cur.length(); j++) {
-                res += '0';
+            if (i < (int) num.size() - 1) {
+                for (int j = 0; j <= SIZE_NUM - (int) cur.length(); j++) {
+                    res += '0';
+                }
             }
             res += cur;
         }
