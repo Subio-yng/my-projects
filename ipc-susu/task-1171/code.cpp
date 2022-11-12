@@ -13,51 +13,53 @@ private:
 
 public:
 
+    BigInteger()
+        : len(0)
+    {}
+
     BigInteger(int n) {
         num.push_back(n);
         len = 1;
     }
 
-    void operator +=(const BigInteger &a) {
+    BigInteger operator +(const BigInteger &a) const {
+        BigInteger res = *this;
         static int RANGE = 1'000'000'000;
         int i = 0;
         int j = 0;
         int plus = 0;
-        while (i < len && j < a.len) {
-            num[i] += a.num[j] + plus;
+        while (j < a.len) {
+            res.num[i] += a.num[j] + plus;
             plus = 0;
-            if (num[i] >= RANGE) {
-                num[i] -= RANGE;
+            if (res.num[i] >= RANGE) {
+                res.num[i] -= RANGE;
                 plus++;
             }
             j++;
             i++;
         }
-        if (j == a.len && plus == 0) {
-            return;
-        }
-        while (j < a.len) {
-            num.push_back(a.num[j] + plus);
+        while (plus > 0 && i < len) {
+            res.num[i] += plus;
             plus = 0;
-            if (num.back() >= RANGE) {
-                num.back() -= RANGE;
-                plus++;
-            }
-            j++;
-        }
-        while (i < len && plus > 0) {
-            num[i] += plus;
-            plus = 0;
-            if (num[i] >= RANGE) {
-                num[i] -= RANGE;
+            if (res.num[i] >= RANGE) {
+                res.num[i] -= RANGE;
                 plus++;
             }
             i++;
         }
         if (plus > 0) {
-            num.push_back(plus);
+            res.num.push_back(plus);
+            res.len++;
         }
-        len = (int) num.size();
+        return res;
+    }
+
+    void operator +=(const BigInteger &a) {
+        if (len > a.len) {
+            *this = *this + a;
+        } else {
+            *this = a + *this;
+        }
     }
 
     std::string toString() const {
