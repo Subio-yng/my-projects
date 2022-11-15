@@ -1,45 +1,30 @@
 #include <bits/stdc++.h>
 
-// Time complexity: O(n * log(n))
-// Space complexity: O(n)
-
-struct Cell {
-
-    int val;
-
-    int id;
-};
+// Time complexity: O(n)
+// Space complexity: O(1)
 
 int main() {
     const int MOD = 1'000'000;
+    const int UNDEF = -1;
     int n;
     scanf("%d", &n);
-    std::vector<Cell> prefSum(n + 1);
-    prefSum[0] = {0, 0};
+    int start = UNDEF;
+    int minDist = n + 1;
+    std::vector<int> pos(MOD, UNDEF);
+    pos[0] = 0;
+    int curSum = 0;
     for (int i = 1; i <= n; i++) {
         int val;
         scanf("%d", &val);
-        prefSum[i] = {(prefSum[i - 1].val + val) % MOD, i};
-    }
-    std::sort(prefSum.begin(), prefSum.end(), [](const Cell &left, const Cell &right) {
-        if (left.val == right.val) {
-            return left.id < right.id;
-        }
-        return left.val < right.val;
-    });
-    const int UNDEF = -1;
-    int minDist = n + 1;
-    int start = UNDEF;
-    for (int i = 1; i <= n; i++) {
-        if (prefSum[i].val == prefSum[i - 1].val) {
-            int curDist = prefSum[i].id - prefSum[i - 1].id;
-            if (minDist > curDist ||
-                minDist == curDist && start > prefSum[i - 1].id
-                ) {
+        curSum = (curSum + val) % MOD;
+        if (pos[curSum] != UNDEF) {
+            int curDist = i - pos[curSum];
+            if (curDist < minDist) {
                 minDist = curDist;
-                start = prefSum[i - 1].id;
+                start = pos[curSum];
             }
         }
+        pos[curSum] = i;
     }
     if (start == UNDEF) {
         printf("-1");
