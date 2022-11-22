@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
 
-// Time complexity: O(1)
-// Space complexity: O(1)
-
 class BigInteger {
 
 private:
