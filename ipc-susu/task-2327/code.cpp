@@ -13,10 +13,8 @@ struct Comp {
 };
 
 int main() {
-    int nTypes;
-    scanf("%d", &nTypes);
-    int n;
-    scanf("%d", &n);
+    int nTypes, n;
+    scanf("%d %d", &nTypes, &n);
     std::vector<std::vector<Comp>> comps(nTypes);
     for (int i = 0; i < n; i++) {
         int cost, score, type;
@@ -27,10 +25,6 @@ int main() {
     int startScore = 0;
     int maxSize = 0;
     for (int i = 0; i < nTypes; i++) {
-        if (comps[i].empty()) {
-            printf("-1");
-            return 0;
-        }
         std::sort(comps[i].begin(), comps[i].end(), [](const Comp &left, const Comp &right) {
             if (left.cost == right.cost) {
                 return left.score > right.score;
