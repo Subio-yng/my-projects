@@ -14,7 +14,7 @@ bool canPlace(int type, int sizeI, int sizeJ, int i, int j, std::vector<std::vec
             if (nextI < 0 || sizeI <= nextI ||
                 nextJ < 0 || sizeJ <= nextJ ||
                 used[nextI][nextJ]
-                ) {
+            ) {
                 return false;
             }
         }
