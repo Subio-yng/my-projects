@@ -19,7 +19,7 @@ int getFloor(int n, int k, int x, int y, long long cur) {
             left = mid;
         }
     }
-    return left + 1;
+    return right;
 }
 
 int main() {
