@@ -7,19 +7,19 @@ enum State {
     VOID, VISITED, IN_PROCESS
 };
 
-void dfs(int curV, std::vector<int> &cnt, std::vector<State> &vertex, const std::vector<std::vector<int>> &edges) {
+bool dfs(int curV, int prevV, std::vector<State> &vertex, const std::vector<std::vector<int>> &edges) {
     vertex[curV] = State::IN_PROCESS;
-    for (int next : edges[curV]) {
-        if (vertex[next] == State::VOID) {
-            cnt[next] = cnt[curV] + 1;
-            dfs(next, cnt, vertex, edges);
-            cnt[next] = 0;
-        } else if (vertex[next] == State::IN_PROCESS && cnt[curV] - cnt[next] >= 2) {
-            printf("YES");
-            exit(0);
+    for (int nextV : edges[curV]) {
+        if (vertex[nextV] == State::VOID) {
+            if (dfs(nextV, curV, vertex, edges)) {
+                return true;
+            }
+        } else if (vertex[nextV] == State::IN_PROCESS && nextV != prevV) {
+            return true;
         }
     }
     vertex[curV] = State::VISITED;
+    return false;
 }
 
 int main() {
@@ -35,10 +35,10 @@ int main() {
         edges[to].push_back(from);
     }
     std::vector<State> vertex(nV, State::VOID);
-    std::vector<int> cnt(nV, 0);
     for (int i = 0; i < nV; i++) {
-        if (vertex[i] == State::VOID) {
-            dfs(i, cnt, vertex, edges);
+        if (vertex[i] == State::VOID && dfs(i, i, vertex, edges)) {
+            printf("YES");
+            return 0;
         }
     }
     printf("NO");
