@@ -11,7 +11,7 @@ int main() {
     if (abs(sumX) == INF_POINT ||
         abs(sumY) == INF_POINT ||
         sumX == 0 || sumY == 0
-        ) {
+    ) {
         printf("NO");
         return 0;
     }
