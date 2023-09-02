@@ -1,11 +1,7 @@
-#include <stdio.h>
-#include <vector>
-#include <queue>
+#include <bits/stdc++.h>
 
 // Time complexity: O(sizeI * sizeJ)
 // Space complexity: O(sizeI * sizeJ)
-
-const int UNDEF = -1;
 
 enum State {
 	VOID, FOREST, WATER
@@ -24,12 +20,13 @@ struct Coord {
 	}
 };
 
-int bfs(Coord start, 
+int bfs(Coord start,
 		Coord end,
 		int sizeI,
-		int sizeJ, 
+		int sizeJ,
 		std::vector<std::vector<State>> &field
 ) {
+	static const int UNDEF = -1;
 	std::vector<std::vector<int>> dist(sizeI, std::vector<int>(sizeJ, UNDEF));
 	std::queue<Coord> inProcess;
 	inProcess.push(start);
@@ -44,27 +41,27 @@ int bfs(Coord start,
 			continue;
 		}
 		if (cur.i == end.i && cur.j == end.j) {
-			return dist[end.i][end.j];
+			break;
 		}
 		for (int di = -1; di <= 1; di++) {
 			for (int dj = -1; dj <= 1; dj++) {
 				if (di * di + dj * dj != 1) {
 					continue;
 				}
-				int newI = cur.i + di;
-				int newJ = cur.j + dj;
-				if (0 <= newI && newI < sizeI &&
-					0 <= newJ && newJ < sizeJ &&
-					field[newI][newJ] != State::WATER &&
-					dist[newI][newJ] == UNDEF
+				int nextI = cur.i + di;
+				int nextJ = cur.j + dj;
+				if (0 <= nextI && nextI < sizeI &&
+					0 <= nextJ && nextJ < sizeJ &&
+					field[nextI][nextJ] != State::WATER &&
+					dist[nextI][nextJ] == UNDEF
 				) {
-					dist[newI][newJ] = dist[cur.i][cur.j] + 1;
-					inProcess.push({newI, newJ});
+					dist[nextI][nextJ] = dist[cur.i][cur.j] + 1;
+					inProcess.push({nextI, nextJ});
 				}
 			}
 		}
 	}
-	return UNDEF;
+	return dist[end.i][end.j];
 }
 
 int main() {
@@ -79,12 +76,12 @@ int main() {
 			scanf(" %c", &val);
 			if (val == 'W') {
 				field[i][j] = State::FOREST;
-			}
-			if (val == '#') {
+			} else if (val == '#') {
 				field[i][j] = State::WATER;
 			}
 		}
 	}
+	field[start.i][start.j] = State::VOID;
 	printf("%d", bfs(start, end, sizeI, sizeJ, field));
 	return 0;
 }
