@@ -3,10 +3,8 @@
 // Time complexity: O(sizeI * sizeJ)
 // Space complexity: O(sizeI * sizeJ)
 
-const int UNDEF = -1;
-
 enum State {
-    VOID,  FOREST, WATER
+    VOID, FOREST, WATER
 };
 
 struct Coord {
@@ -28,6 +26,7 @@ int bfs(Coord start,
         int sizeJ,
         std::vector<std::vector<State>> &field
 ) {
+    static const int UNDEF = -1;
     std::vector<std::vector<int>> dist(sizeI, std::vector<int>(sizeJ, UNDEF));
     std::queue<Coord> inProcess;
     inProcess.push(start);
@@ -49,15 +48,15 @@ int bfs(Coord start,
                 if (di * di + dj * dj != 1) {
                     continue;
                 }
-                int newI = cur.i + di;
-                int newJ = cur.j + dj;
-                if (0 <= newI && newI < sizeI &&
-                    0 <= newJ && newJ < sizeJ &&
-                    field[newI][newJ] != State::WATER &&
-                    dist[newI][newJ] == UNDEF
+                int nextI = cur.i + di;
+                int nextJ = cur.j + dj;
+                if (0 <= nextI && nextI < sizeI &&
+                    0 <= nextJ && nextJ < sizeJ &&
+                    field[nextI][nextJ] != State::WATER &&
+                    dist[nextI][nextJ] == UNDEF
                 ) {
-                    dist[newI][newJ] = dist[cur.i][cur.j] + 1;
-                    inProcess.push({newI, newJ});
+                    dist[nextI][nextJ] = dist[cur.i][cur.j] + 1;
+                    inProcess.push({nextI, nextJ});
                 }
             }
         }
@@ -68,17 +67,16 @@ int bfs(Coord start,
 int main() {
     int sizeI, sizeJ;
     scanf("%d %d", &sizeI, &sizeJ);
+    std::vector<std::vector<State>> field(sizeI, std::vector<State>(sizeJ, State::VOID));
     Coord start = Coord::read();
     Coord end = Coord::read();
-    std::vector<std::vector<State>> field(sizeI, std::vector<State>(sizeJ, State::VOID));
     for (int i = 0; i < sizeI; i++) {
         for (int j = 0; j < sizeJ; j++) {
             char val;
             scanf(" %c", &val);
             if (val == 'W') {
                 field[i][j] = State::FOREST;
-            }
-            if (val == '#') {
+            } else if (val == '#') {
                 field[i][j] = State::WATER;
             }
         }
