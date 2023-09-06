@@ -26,8 +26,10 @@ int main() {
     char buf[1 + 1'000'000];
     scanf(" %s", &buf);
     std::string str(buf);
-    for (int next : getZFunction(str, (int) str.length())) {
-        printf("%d ", next);
+    int len = (int) str.length();
+    std::vector<int> z = getZFunction(str, len);
+    for (int i = 0; i < len; i++) {
+        printf("%d ", z[i]);
     }
     return 0;
 }
