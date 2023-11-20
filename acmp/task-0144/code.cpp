@@ -42,12 +42,12 @@ private:
 public:
 
     BigInteger()
-            : sign(1)
+        : sign(1)
     {}
 
     BigInteger(const short &setSign, const std::vector<int> &setValue)
-            : sign(setSign)
-            , value(setValue)
+        : sign(setSign)
+        , value(setValue)
     {}
 
     static BigInteger valueOf(long long num) {
@@ -56,9 +56,10 @@ public:
             sign = -1;
             num *= -1;
         }
-        std::vector<int> value(1, num % MOD);
-        if (num >= MOD) {
-            value.push_back(num / MOD);
+        std::vector<int> value;
+        while (num > 0) {
+            value.push_back(num % MOD);
+            num /= MOD;
         }
         return {sign, value};
     }
