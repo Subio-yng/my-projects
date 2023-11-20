@@ -296,6 +296,54 @@ public:
         *this = *this / a;
     }
 
+    BigInteger operator %(const BigInteger &b) {
+        if (b == ZERO()) {
+            throw 1;
+        }
+        if (abs(*this) < abs(b)) {
+            return *this;
+        }
+        BigInteger a;
+        int last = (int) value.size() - (int) b.value.size();
+        for (int i = last; i < (int) value.size(); i++) {
+            a.value.push_back(value[i]);
+        }
+        if (a < b) {
+            last--;
+            a.value.insert(a.value.begin(), value[last]);
+        }
+        while (true) {
+            int left = 0;
+            int right = MOD + 1;
+            while (left + 1 < right) {
+                int mid = (left + right) >> 1;
+                if (a < b * mid) {
+                    right = mid;
+                } else {
+                    left = mid;
+                }
+            }
+            a -= b * left;
+            last--;
+            if (last < 0) {
+                break;
+            }
+            if (a.value.back() == 0) {
+                a.value.pop_back();
+            }
+            a.value.insert(a.value.begin(), value[last]);
+        }
+        return a;
+    }
+
+    BigInteger operator %(long long num) {
+        return *this % valueOf(num);
+    }
+
+    void operator %=(const BigInteger &a) {
+        *this = *this % a;
+    }
+
     static BigInteger pow(const BigInteger &value, long long ext) {
         if (ext == 0) {
             return ONE();
