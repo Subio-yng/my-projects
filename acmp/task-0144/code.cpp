@@ -17,7 +17,7 @@ private:
     }
 
     static const BigInteger TEN() {
-        return valueOf(MOD);
+        return valueOf(10);
     }
 
     short sign;
@@ -56,10 +56,9 @@ public:
             sign = -1;
             num *= -1;
         }
-        std::vector<int> value;
-        while (num > 0) {
-            value.push_back(num % MOD);
-            num /= MOD;
+        std::vector<int> value(1, num % MOD);
+        if (num >= MOD) {
+            value.push_back(num / MOD);
         }
         return {sign, value};
     }
@@ -297,7 +296,7 @@ public:
         *this = *this / a;
     }
 
-    BigInteger operator %(const BigInteger &b) {
+    BigInteger operator %(BigInteger &b) {
         if (b == ZERO()) {
             throw 1;
         }
@@ -335,14 +334,6 @@ public:
             a.value.insert(a.value.begin(), value[last]);
         }
         return a;
-    }
-
-    BigInteger operator %(long long num) {
-        return *this % valueOf(num);
-    }
-
-    void operator %=(const BigInteger &a) {
-        *this = *this % a;
     }
 
     static BigInteger pow(const BigInteger &value, long long ext) {
@@ -398,6 +389,6 @@ int main() {
     BigInteger a = BigInteger::valueOf(buf);
     scanf(" %s", &buf);
     BigInteger b = BigInteger::valueOf(buf);
-    printf("%s", (a * b).toString().c_str());
+    printf("%s", (a % b).toString().c_str());
     return 0;
 }
