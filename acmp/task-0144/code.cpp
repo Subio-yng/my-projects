@@ -389,6 +389,6 @@ int main() {
     BigInteger a = BigInteger::valueOf(buf);
     scanf(" %s", &buf);
     BigInteger b = BigInteger::valueOf(buf);
-    printf("%s", (a % b).toString().c_str());
+    printf("%s", (a * b).toString().c_str());
     return 0;
 }
