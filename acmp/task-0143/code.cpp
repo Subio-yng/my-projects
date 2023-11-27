@@ -42,12 +42,12 @@ private:
 public:
 
     BigInteger()
-            : sign(1)
+        : sign(1)
     {}
 
     BigInteger(const short &setSign, const std::vector<int> &setValue)
-            : sign(setSign)
-            , value(setValue)
+        : sign(setSign)
+        , value(setValue)
     {}
 
     static BigInteger valueOf(long long num) {
@@ -151,6 +151,10 @@ public:
         *this = *this + a;
     }
 
+    void operator +=(long long num) {
+        *this = *this + num;
+    }
+
     BigInteger operator -(const BigInteger &a) const {
         if (sign != a.sign) {
             return *this + -a;
@@ -183,6 +187,10 @@ public:
 
     void operator -=(const BigInteger &a) {
         *this = *this - a;
+    }
+
+    void operator -=(long long num) {
+        *this = *this - num;
     }
 
     BigInteger operator -() const {
@@ -245,6 +253,10 @@ public:
         *this = *this * a;
     }
 
+    void operator *=(long long num) {
+        *this = *this * num;
+    }
+
     BigInteger operator /(const BigInteger &b) const {
         if (b == ZERO()) {
             throw 1;
@@ -296,6 +308,10 @@ public:
         *this = *this / a;
     }
 
+    void operator /=(long long num) {
+        *this = *this / num;
+    }
+
     BigInteger operator %(const BigInteger &b) {
         if (b == ZERO()) {
             throw 1;
@@ -342,6 +358,10 @@ public:
 
     void operator %=(const BigInteger &a) {
         *this = *this % a;
+    }
+
+    void operator %=(long long num) {
+        *this = *this % num;
     }
 
     static BigInteger pow(const BigInteger &value, long long ext) {
