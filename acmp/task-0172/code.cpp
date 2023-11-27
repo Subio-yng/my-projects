@@ -415,7 +415,8 @@ int main() {
     char buf[1 + 100];
     scanf(" %s", &buf);
     BigInteger a = BigInteger::valueOf(buf);
-    scanf(" %s", &buf);
-    printf("%s", (a % BigInteger::valueOf(buf)).toString().c_str());
+    int b;
+    scanf("%d", &b);
+    printf("%s", (a % b).toString().c_str());
     return 0;
 }
