@@ -413,9 +413,15 @@ public:
 
 int main() {
     const std::vector<std::vector<int>> FROM_POS = {{4, 6},
-                                                    {6, 8}, {7, 9}, {4, 8},
-                                                    {3, 9, 0}, {}, {1, 7, 0},
-                                                    {2, 6}, {1, 3}, {2, 4}};
+                                                    {6, 8},
+                                                    {7, 9},
+                                                    {4, 8},
+                                                    {0, 3, 9},
+                                                    {},
+                                                    {0, 1, 7},
+                                                    {2, 6},
+                                                    {1, 3},
+                                                    {2, 4}};
     const int SIZE_NUMBERS = 10;
     int n;
     scanf("%d", &n);
