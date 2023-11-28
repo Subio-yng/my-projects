@@ -8,18 +8,6 @@ private:
 
     static const int CELL_SIZE = 9;
 
-    static const BigInteger ZERO() {
-        return valueOf(0);
-    }
-
-    static const BigInteger ONE() {
-        return valueOf(1);
-    }
-
-    static const BigInteger TEN() {
-        return valueOf(10);
-    }
-
     short sign;
 
     std::vector<int> value;
@@ -40,6 +28,18 @@ private:
     }
 
 public:
+
+    static const BigInteger ZERO() {
+        return valueOf(0);
+    }
+
+    static const BigInteger ONE() {
+        return valueOf(1);
+    }
+
+    static const BigInteger TEN() {
+        return valueOf(10);
+    }
 
     BigInteger()
         : sign(1)
@@ -412,30 +412,29 @@ public:
 };
 
 int main() {
+    const std::vector<std::vector<int>> FROM_POS = {{4, 6},
+                                                    {6, 8}, {7, 9}, {4, 8},
+                                                    {3, 9, 0}, {}, {1, 7, 0},
+                                                    {2, 6}, {1, 3}, {2, 4}};
     const int SIZE_NUMBERS = 10;
     int n;
     scanf("%d", &n);
-    std::vector<BigInteger> nextDp(10, BigInteger::valueOf(1));
-    nextDp[8] = BigInteger::valueOf(0);
-    nextDp[0] = BigInteger::valueOf(0);
-    std::vector<BigInteger> dp = nextDp;
+    std::vector<BigInteger> curSum(10, BigInteger::ONE());
+    curSum[8] = BigInteger::ZERO();
+    curSum[0] = BigInteger::ZERO();
+    std::vector<BigInteger> prevSum = curSum;
     for (int len = 1; len < n; len++) {
-        nextDp[0] = dp[4] + dp[6];
-        nextDp[1] = dp[6] + dp[8];
-        nextDp[2] = dp[7] + dp[9];
-        nextDp[3] = dp[4] + dp[8];
-        nextDp[4] = dp[3] + dp[9] + dp[0];
-        nextDp[5] = BigInteger::valueOf(0);
-        nextDp[6] = dp[1] + dp[7] + dp[0];
-        nextDp[7] = dp[2] + dp[6];
-        nextDp[8] = dp[1] + dp[3];
-        nextDp[9] = dp[2] + dp[4];
-        nextDp[0] = dp[4] + dp[6];
-        std::swap(dp, nextDp);
+        std::swap(prevSum, curSum);
+        for (int curI = 0; curI < 10; curI++) {
+            curSum[curI] = BigInteger::ZERO();
+            for (int prevI : FROM_POS[curI]) {
+                curSum[curI] += prevSum[prevI];
+            }
+        }
     }
-    BigInteger sum = BigInteger::valueOf(0);
+    BigInteger sum = BigInteger::ZERO();
     for (int i = 0; i < SIZE_NUMBERS; i++) {
-        sum += dp[i];
+        sum += curSum[i];
     }
     printf("%s", sum.toString().c_str());
     return 0;
