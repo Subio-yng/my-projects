@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-// Time complexity: O(n^2)
+// Time complexity: O(n * log(n))
 // Space complexity: O(n)
 
 struct Mass {
@@ -48,15 +48,11 @@ int main() {
     for (int i = 0; i < n; i++) {
         list[i] = Mass::read();
     }
-    for (int i = 0; i < n; i++) {
-        for (int j = 1; j < n - i; j++) {
-            if (list[j].realVal < list[j - 1].realVal) {
-                std::swap(list[j], list[j - 1]);
-            }
-        }
-    }
-    for (int i = 0; i < n; i++) {
-        printf("%d %s\n", list[i].val, list[i].type.c_str());
+    std::stable_sort(list.begin(), list.end(), [](const Mass &left, const Mass &right) {
+        return left.realVal < right.realVal;
+    });
+    for (const Mass &next : list) {
+        printf("%d %s\n", next.val, next.type.c_str());
     }
     return 0;
 }
