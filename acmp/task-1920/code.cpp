@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
 
+// Time complexity: O(1)
+// Space complexity: O(1)
+
 int main() {
     int nLine, nCircle;
     scanf("%d %d", &nLine, &nCircle);
