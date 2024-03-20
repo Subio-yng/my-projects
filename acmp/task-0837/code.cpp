@@ -7,9 +7,9 @@ void solve() {
     long long n, m;
     scanf("%lld %lld", &n, &m);
     if (m <= (n - 1) * (n - 2) / 2 && n != 1) {
-        printf("Yes");
+        printf("Yes\n");
     } else {
-        printf("No");
+        printf("No\n");
     }
 }
 
