@@ -18,7 +18,6 @@ int main() {
     scanf("%d", &t);
     while (t--) {
         solve();
-        printf("\n");
     }
     return 0;
 }
