@@ -11,7 +11,7 @@ struct Matrix {
 
     std::vector<std::vector<int>> m;
 
-    Matrix(int sizeI, int sizeJ, int val = 0)
+    Matrix(int sizeI, int sizeJ, int val)
             : sizeI(sizeI)
             , sizeJ(sizeJ)
     {
@@ -20,7 +20,7 @@ struct Matrix {
 
     Matrix operator *(const Matrix &a) const {
         int sizeK = a.sizeJ;
-        Matrix res(sizeI, sizeK);
+        Matrix res(sizeI, sizeK, 0);
         for (int i = 0; i < sizeI; i++) {
             for (int j = 0; j < sizeJ; j++) {
                 for (int k = 0; k < sizeK; k++) {
