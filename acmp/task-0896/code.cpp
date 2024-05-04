@@ -12,6 +12,6 @@ int getGcd(int a, int b) {
 int main() {
     int a, b;
     scanf("%d %d", &a, &b);
-    printf("%d", a + b);
+    printf("%d", a + b - getGcd(a, b));
     return 0;
 }
