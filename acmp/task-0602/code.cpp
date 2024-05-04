@@ -1,23 +1,24 @@
 #include <bits/stdc++.h>
 
-// Time complexity: O(n * log(n))
-// Space complexity: O(n)
+// Time complexity: O(n)
+// Space complexity: O(1)
 
 int main() {
+    const int INF = 30'000;
     int n;
     scanf("%d", &n);
-    std::vector<int> a(n);
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &a[i]);
-    }
-    std::sort(a.begin(), a.end());
-    int bestLeft = a.front();
-    int bestRight = a.back();
+    int bestLeft = -INF;
+    int bestRight = INF;
+    int left;
+    scanf("%d", &left);
     for (int i = 1; i < n; i++) {
-        if (a[i] - a[i - 1] < bestRight - bestLeft) {
-            bestRight = a[i];
-            bestLeft = a[i - 1];
+        int right;
+        scanf("%d", &right);
+        if (right - left < bestRight - bestLeft) {
+            bestRight = right;
+            bestLeft = left;
         }
+        left = right;
     }
     printf("%d %d", bestLeft, bestRight);
     return 0;
