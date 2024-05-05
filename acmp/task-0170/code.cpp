@@ -6,20 +6,12 @@
 int main() {
     int n;
     scanf("%d", &n);
-    int left = 0;
-    int right = n + 1;
-    while (left + 1 < right) {
-        int mid = (left + right) / 2;
-        if (1LL * mid * (mid + 1) / 2 > n) {
-            right = mid;
-        } else {
-            left = mid;
+    int maxLen = 1;
+    for (int len = 2; len * (len + 1) / 2 <= n; len++) {
+        if ((n - len * (len + 1) / 2) % len == 0) {
+            maxLen = len;
         }
     }
-    int len = left;
-    while ((n - len * (len + 1) / 2) % len != 0) {
-        len--;
-    }
-    printf("%d", len);
+    printf("%d", maxLen);
     return 0;
 }
