@@ -30,7 +30,7 @@ int main() {
         }
         if (0 <= nextI && nextI < n &&
             0 <= nextJ && nextJ < n
-                ) {
+        ) {
             std::swap(field[posI][posJ], field[nextI][nextJ]);
             posI = nextI;
             posJ = nextJ;
