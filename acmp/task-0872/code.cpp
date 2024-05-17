@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-// Time complexity: O(nV * len)
+// Time complexity: O(nV * len * log(ALPHABET_SIZE))
 // Space complexity: O(nV * len)
 
 struct Vertex {
