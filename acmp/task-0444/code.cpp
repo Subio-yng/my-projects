@@ -3,11 +3,22 @@
 // Time complexity: O(n * log(n))
 // Space complexity: O(n)
 
-void printMinStr(const std::string &s1, const std::string &s2) {
+void printMinStr(int left, int right, const std::vector<int> &a) {
+    std::string s1 = std::to_string(a[left]);
+    for (int i = left + 1; i <= right; i++) {
+        if (a[i] == a[i - 1]) {
+            continue;
+        }
+        s1 += ", " + std::to_string(a[i]);
+    }
+    std::string s2 = std::to_string(a[left]) + ", ..., " + std::to_string(a[right]);
     if (s1.length() < s2.length()) {
         printf("%s", s1.c_str());
     } else {
         printf("%s", s2.c_str());
+    }
+    if (right != (int) a.size() - 1) {
+        printf(", ");
     }
 }
 
@@ -19,21 +30,15 @@ int main() {
         scanf("%d", &a[i]);
     }
     std::sort(a.begin(), a.end());
-    std::string s1 = std::to_string(a[0]);
-    std::string s2 = std::to_string(a[0]);
-    for (int i = 1; i < n; i++) {
-        if (a[i] == a[i - 1]) {
-            continue;
+    int left = 0;
+    int right = 0;
+    while (right < n) {
+        while (right + 1 < n && a[right + 1] - a[right] <= 1) {
+            right++;
         }
-        std::string cur = ", " + std::to_string(a[i]);
-        if (a[i - 1] + 1 != a[i]) {
-            printMinStr(s1, s2 + ", ..., " + std::to_string(a[i - 1]));
-            s1 = cur;
-            std::swap(s2, cur);
-        } else {
-            s1 += cur;
-        }
+        printMinStr(left, right, a);
+        right++;
+        left = right;
     }
-    printMinStr(s1, s2 + ", ..., " + std::to_string(a.back()));
     return 0;
 }
