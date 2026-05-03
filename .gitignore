@@ -4,6 +4,7 @@
 *.sln
 *.vcxproj
 *.vcxproj.filters
+.DS_Store
 
 # Compiled Object files
 *.slo
@@ -34,5 +35,5 @@
 *.exe
 *.out
 *.app
-/.vs
+/.vscode
 /code
